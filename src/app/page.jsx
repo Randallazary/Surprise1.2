@@ -1,5 +1,4 @@
 "use client"; // Indicar que es un Client Component
-import logo from "../assets/Surprise-logo.jpg";
 
 import Image from 'next/image';
 import { useAuth } from '../context/authContext';
@@ -67,7 +66,7 @@ function HomePage() {
               <h2 className="text-xl font-bold mb-2">{producto.nombre}</h2>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mb-4`}>{producto.descripcion}</p>
               <p className="text-lg font-bold mb-4">{producto.precio}</p>
-              <button className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-pink-500">
+              <button className="bg-[#8dd5ed] text-white py-2 px-4 rounded hover:bg-green-500">
                 Agregar al carrito
               </button>
             </div>

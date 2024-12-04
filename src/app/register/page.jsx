@@ -20,7 +20,7 @@ function RegisterPage() {
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
   const [telefono, setTelefono] = useState("");
-  const [preguntaSecreta, setPreguntaSecreta] = useState("");
+  const [preguntaSecreta, setPreguntaSecreta] = useState("default");
   const [respuestaSecreta, setRespuestaSecreta] = useState("");
 
   // Función para manejar el token generado por el CAPTCHA
@@ -168,9 +168,19 @@ function RegisterPage() {
   const router = useRouter(); // Inicializa el hook de enrutamiento
 
   // Función para manejar el envío del formulario al backend
+  // Función para manejar el envío del formulario al backend
   const onSubmit = async (event) => {
     event.preventDefault();
     setOnSubmitLoading(true); // Mostrar loading al enviar
+    if (preguntaSecreta === "default") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor selecciona una pregunta secreta válida.",
+      });
+      setOnSubmitLoading(false); // Detener loading
+      return;
+    }
     try {
       const response = await fetch(`${CONFIGURACIONES.BASEURL2}/auth/signup`, {
         method: "POST",
@@ -182,28 +192,27 @@ function RegisterPage() {
           lastname: apellido,
           email,
           password,
-       
           user: nombre,
           telefono,
           preguntaSecreta,
           respuestaSecreta,
         }),
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         Swal.fire({
           icon: "success",
           title: "Registro exitoso",
-          text: "¡La cuenta se a registrado con exito!",
+          text: "¡Te has registrado con éxito!",
         }).then(() => {
           // Redireccionar al login después de que el usuario haga clic en "OK"
-          router.push('/login');
+          router.push("/login");
         });
       } else {
         Swal.fire({
           icon: "error",
-          title: "Lo sentimos",
+          title: "Oops...",
           text: data.message,
         });
       }
@@ -217,7 +226,7 @@ function RegisterPage() {
       setOnSubmitLoading(false); // Dejar de mostrar loading
     }
   };
-  
+
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -292,16 +301,20 @@ function RegisterPage() {
               </p>
             </div>
 
-           
 
+
+            {/* Pregunta Secreta */}
             {/* Pregunta Secreta */}
             <div className="mb-4">
               <label className="block text-gray-700">Pregunta Secreta</label>
-                <select
-                  value={preguntaSecreta}
-                  onChange={(e) => setPreguntaSecreta(e.target.value)}
-                  className="w-full border border-gray-300 p-2 rounded-lg"
-                >
+              <select
+                value={preguntaSecreta}
+                onChange={(e) => setPreguntaSecreta(e.target.value)}
+                className="w-full border border-gray-300 p-2 rounded-lg"
+              >
+                <option value="default" disabled>
+                  Selecciona una pregunta secreta
+                </option>
                 <option value="¿Cuál es el nombre de tu primera mascota?">
                   ¿Cuál es el nombre de tu primera mascota?
                 </option>
@@ -369,9 +382,8 @@ function RegisterPage() {
                 placeholder="Confirmar Contraseña"
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
-                className={`w-full border p-2 rounded-lg ${
-                  passwordMatch ? "border-gray-300" : "border-red-500"
-                }`}
+                className={`w-full border p-2 rounded-lg ${passwordMatch ? "border-gray-300" : "border-red-500"
+                  }`}
               />
               <button
                 type="button"
@@ -438,11 +450,10 @@ function RegisterPage() {
             {/* Botón de Crear Cuenta */}
             <button
               type="submit"
-              className={`w-full py-2 px-4 rounded-lg ${
-                passwordMatch && recaptchaToken && !onSubmitLoading
+              className={`w-full py-2 px-4 rounded-lg ${passwordMatch && recaptchaToken && !onSubmitLoading
                   ? "bg-purple-700"
                   : "bg-gray-400"
-              } text-white hover:bg-purple-600`}
+                } text-white hover:bg-purple-600`}
               disabled={!passwordMatch || !recaptchaToken || onSubmitLoading} // Deshabilitar cuando está cargando
             >
               {onSubmitLoading ? "Cargando..." : "Crear Cuenta"}
@@ -464,8 +475,8 @@ function RegisterPage() {
         </div>
       </div>
 
-     
-      
+
+
     </div>
   );
 }

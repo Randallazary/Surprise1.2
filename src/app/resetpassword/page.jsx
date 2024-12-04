@@ -1,11 +1,14 @@
 "use client"; // Para asegurar que es un componente del cliente
 //este es el que manda
 import { useState } from 'react';
+import { useAuth } from '../../context/authContext';
 import { CONFIGURACIONES } from '../config/config';
+
 function RequestPasswordResetPage() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const { theme } = useAuth();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -15,7 +18,7 @@ function RequestPasswordResetPage() {
     e.preventDefault();
 
     if (!email) {
-      setError('Por favor, ingresa un correo válido');
+      setError('Por favor, ingresa un correo Existente');
       return;
     }
 

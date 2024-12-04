@@ -5,9 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaUser, FaShoppingCart, FaBars, FaFileInvoice, FaMoon, FaSun } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
-import logo from "../assets/Surprise-logo.jpg";
+import { useLogo } from "../context/LogoContext";
 import { useAuth } from "../context/authContext"; // Importa el contexto de autenticación
 import { useRouter } from "next/navigation"; // Importa el hook de useRouter para la redirección
+import { CONFIGURACIONES } from "../app/config/config";
 
 function Navbar() {
   const { isAuthenticated, user, logout, theme, toggleTheme } = useAuth();
@@ -17,6 +18,7 @@ function Navbar() {
   const [documentAdminMenuOpen, setDocumentAdminMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const router = useRouter();
+  const {logoUrl} = useLogo();
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const toggleAdminMenu = () => setAdminMenuOpen(!adminMenuOpen);
@@ -36,21 +38,37 @@ function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const fetchLogo = async () => {
+    try {
+      const response = await fetch(`${CONFIGURACIONES.BASEURL2}/logo/ultimo`);
+      if (response.ok) {
+        const data = await response.json();
+        setLogoUrl(`${data.url}?timestamp=${new Date().getTime()}`);
+      }
+    } catch (error) {
+      console.error("Error al obtener el logo:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLogo(); // Cargar logo al iniciar la app
+  }, []);
+
   const handleLogout = async () => {
     await logout();
     router.push("/");
   };
 
   if (!isMounted) return null;
-
+  
   return (
     <>
       {/* Navbar principal */}
       <nav
         className={`sticky top-0 w-full z-50 shadow-md ${
           theme === "dark"
-            ? "bg-gray-900 border-gray-700 text-gray-200"
-            : "bg-[#ffd2bf] border-gray-200 text-gray-700"
+            ? "bg-gray-800 border-gray-700 text-gray-200"
+            : "bg-[#5B88B2] border-gray-200 text-gray-700"
         }`}
       >
         <div className="container mx-auto flex justify-between items-center py-4">
@@ -58,7 +76,7 @@ function Navbar() {
           <div className="flex items-center space-x-4">
             <Link href={"/"} className="flex items-center">
               <Image
-                src={logo}
+                src={logoUrl || "/fallback-logo.png"}
                 alt="surprise"
                 width={100}
                 height={40}
@@ -237,7 +255,18 @@ function Navbar() {
                                           
                                       }`}
                                     >
-                                      Administrar Deslinde
+                                       Administrar Deslinde
+                                    </p>
+                                  </Link>
+                                  <Link href="/adminLogo">
+                                    <p
+                                      className={`mt-2 ${
+                                        theme === "dark"
+                                          ? "hover:text-yellow-400"
+                                          : "hover:text-green-700"
+                                      }`}
+                                    >
+                                      Administrar Logo
                                     </p>
                                   </Link>
                                 </div>
@@ -259,24 +288,15 @@ function Navbar() {
             </div>
 
             <Link
-              href="/cotizador"
+              href="/ventaProducto"
               className={`flex flex-col items-center ${
                 theme === "dark"
                 
               }`}
             >
-              <FaFileInvoice className="w-6 h-6" />
-              <span className="text-sm">Cotizador</span>
-            </Link>
-            <Link
-              href="/carrito"
-              className={`flex flex-col items-center ${
-                theme === "dark"
-                  
-              }`}
-            >
+             
               <FaShoppingCart className="w-6 h-6" />
-              <span className="text-sm">Carrito</span>
+              <span className="text-sm">Compras</span>
             </Link>
             <button
               onClick={toggleTheme}

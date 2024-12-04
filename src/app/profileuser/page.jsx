@@ -59,10 +59,6 @@ function UserProfile() {
             <p className="text-lg text-gray-800">{userData.telefono}</p>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">Fecha de Nacimiento:</label>
-            <p className="text-lg text-gray-800">{new Date(userData.fechadenacimiento).toLocaleDateString()}</p>
-          </div>
-          <div className="mb-4">
             <label className="block text-gray-700 font-semibold">Pregunta Secreta:</label>
             <p className="text-lg text-gray-800">{userData.preguntaSecreta}</p>
           </div>
