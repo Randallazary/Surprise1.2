@@ -197,119 +197,131 @@ function DeslindePage() {
   return (
     <div
       className={`container mx-auto py-8 pt-36 ${
-        theme === "dark"
-          ? "bg-gray-900 text-gray-100"
-          : "bg-white text-gray-900"
+        theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"
       }`}
     >
-      <h1 className="text-3xl font-bold text-center mb-8">
+      <h1 className="text-4xl font-extrabold text-center mb-10 underline decoration-wavy decoration-purple-500">
         Gestión de Deslinde de Responsabilidad
       </h1>
-
-      {/* Crear o editar deslinde */}
-      <div className="shadow-md rounded-lg overflow-hidden p-6 mb-8">
-        <h2 className="text-2xl font-bold mb-4">
-          {editingDeslinde ? "Editar Deslinde" : "Crear Nuevo Deslinde"}
-        </h2>
-        <div className="mb-4">
-          <label className="block mb-2">Título</label>
-          <input
-            type="text"
-            value={editingDeslinde ? editingDeslinde.title : newDeslinde.title}
-            onChange={(e) =>
-              editingDeslinde
-                ? setEditingDeslinde({
-                    ...editingDeslinde,
-                    title: e.target.value,
-                  })
-                : setNewDeslinde({ ...newDeslinde, title: e.target.value })
-            }
-            className="w-full border p-2 rounded-lg"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Contenido</label>
-          <textarea
-            value={
-              editingDeslinde ? editingDeslinde.content : newDeslinde.content
-            }
-            onChange={(e) =>
-              editingDeslinde
-                ? setEditingDeslinde({
-                    ...editingDeslinde,
-                    content: e.target.value,
-                  })
-                : setNewDeslinde({ ...newDeslinde, content: e.target.value })
-            }
-            className="w-full border p-2 rounded-lg"
-            rows="6"
-          ></textarea>
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Fecha de Vigencia</label>
-          <input
-            type="date"
-            value={
-              editingDeslinde
-                ? editingDeslinde.effectiveDate
-                : newDeslinde.effectiveDate
-            }
-            onChange={(e) =>
-              editingDeslinde
-                ? setEditingDeslinde({
-                    ...editingDeslinde,
-                    effectiveDate: e.target.value,
-                  })
-                : setNewDeslinde({
-                    ...newDeslinde,
-                    effectiveDate: e.target.value,
-                  })
-            }
-            className="w-full border p-2 rounded-lg"
-            min={new Date().toISOString().split("T")[0]} // Fecha mínima: Hoy
-          />
-        </div>
-        <button
-          onClick={
-            editingDeslinde ? handleUpdateDeslinde : handleCreateDeslinde
-          }
-          className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600"
+  
+      {/* Contenedor con dos columnas */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Crear o editar deslinde */}
+        <div
+          className={`shadow-lg rounded-2xl p-8 mb-8 transform transition duration-300 ${
+            theme === "dark" ? "bg-gray-800 text-gray-100" : "bg-[#ffc5d5] text-gray-900"
+          }`}
         >
-          {editingDeslinde ? "Guardar Cambios" : "Crear Deslinde"}
-        </button>
-      </div>
-
-      {/* Mostrar el deslinde actual */}
-      {currentDeslinde && (
-        <div className="mb-8 shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-bold mb-4">Deslinde Actual</h2>
-          <p>
-            <strong>Título:</strong> {currentDeslinde.title}
-          </p>
-          <p>
-            <strong>Contenido:</strong> {currentDeslinde.content}
-          </p>
-          <p>
-            <strong>Fecha de Creación:</strong>{" "}
-            {new Date(currentDeslinde.createdAt).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Fecha de Vigencia:</strong>{" "}
-            {new Date(currentDeslinde.effectiveDate).toLocaleDateString()}
-          </p>
+          <h2 className="text-3xl font-bold mb-6 text-center text-pink-600">
+            {editingDeslinde ? "Editar Deslinde" : "Crear Nuevo Deslinde"}
+          </h2>
+  
+          {/* Campos del formulario */}
+          <div className="mb-6">
+            <label className="block mb-2 font-semibold text-lg">Título</label>
+            <input
+              type="text"
+              value={editingDeslinde ? editingDeslinde.title : newDeslinde.title}
+              onChange={(e) =>
+                editingDeslinde
+                  ? setEditingDeslinde({
+                      ...editingDeslinde,
+                      title: e.target.value,
+                    })
+                  : setNewDeslinde({ ...newDeslinde, title: e.target.value })
+              }
+              className="w-full border p-3 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-500 transition duration-200"
+            />
+          </div>
+  
+          <div className="mb-6">
+            <label className="block mb-2 font-semibold text-lg">Contenido</label>
+            <textarea
+              value={editingDeslinde ? editingDeslinde.content : newDeslinde.content}
+              onChange={(e) =>
+                editingDeslinde
+                  ? setEditingDeslinde({
+                      ...editingDeslinde,
+                      content: e.target.value,
+                    })
+                  : setNewDeslinde({ ...newDeslinde, content: e.target.value })
+              }
+              className="w-full border p-3 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-500 transition duration-200"
+              rows="6"
+            ></textarea>
+          </div>
+  
+          <div className="mb-6">
+            <label className="block mb-2 font-semibold text-lg">Fecha de Vigencia</label>
+            <input
+              type="date"
+              value={editingDeslinde ? editingDeslinde.effectiveDate : newDeslinde.effectiveDate}
+              onChange={(e) =>
+                editingDeslinde
+                  ? setEditingDeslinde({
+                      ...editingDeslinde,
+                      effectiveDate: e.target.value,
+                    })
+                  : setNewDeslinde({
+                      ...newDeslinde,
+                      effectiveDate: e.target.value,
+                    })
+              }
+              className="w-full border p-3 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-500 transition duration-200"
+              min={new Date().toISOString().split("T")[0]} // Fecha mínima: Hoy
+            />
+          </div>
+  
+          <button
+            onClick={editingDeslinde ? handleUpdateDeslinde : handleCreateDeslinde}
+            className="w-full py-3 px-6 rounded-full font-semibold text-white bg-green-500 hover:bg-green-600 transition-all duration-300 transform hover:scale-105"
+          >
+            {editingDeslinde ? "Guardar Cambios" : "Crear Deslinde"}
+          </button>
         </div>
-      )}
-
+  
+        {/* Mostrar el deslinde actual */}
+        <div
+          className="shadow-lg rounded-2xl p-8 mb-8 transform transition duration-300"
+        >
+          <h2 className="text-3xl font-bold mb-6 text-center text-yellow-500">
+            Deslinde Actual
+          </h2>
+          {currentDeslinde ? (
+            <>
+              <p className="text-lg">
+                <strong>Título:</strong> {currentDeslinde.title}
+              </p>
+              <p className="text-lg">
+                <strong>Contenido:</strong> {currentDeslinde.content}
+              </p>
+              <p className="text-lg">
+                <strong>Fecha de Creación:</strong>{" "}
+                {new Date(currentDeslinde.createdAt).toLocaleDateString()}
+              </p>
+              <p className="text-lg">
+                <strong>Fecha de Vigencia:</strong>{" "}
+                {new Date(currentDeslinde.effectiveDate).toLocaleDateString()}
+              </p>
+            </>
+          ) : (
+            <p>No hay deslinde actual.</p>
+          )}
+        </div>
+      </div>
+  
       {/* Listar deslindes */}
-      <div className="shadow-md rounded-lg overflow-hidden p-6">
-        <h2 className="text-2xl font-bold mb-4">Listado de Deslindes</h2>
+      <div className="shadow-lg rounded-2xl p-8 transform transition duration-300">
+        <h2 className="text-3xl font-bold mb-6 text-center text-purple-600">
+          Listado de Deslindes
+        </h2>
         <table className="min-w-full table-auto">
           <thead>
-            <tr>
-              <th className="px-4 py-2">Título</th>
-              <th className="px-4 py-2">Fecha de Creación</th>
-              <th className="px-4 py-2">Fecha de Vigencia</th>
-              <th className="px-4 py-2">Acciones</th>
+            <tr className="bg-purple-100">
+              <th className="px-6 py-3 text-lg font-semibold">Título</th>
+              <th className="px-6 py-3 text-lg font-semibold">Fecha de Creación</th>
+              <th className="px-6 py-3 text-lg font-semibold">Fecha de Vigencia</th>
+              <th className="px-6 py-3 text-lg font-semibold">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -317,58 +329,54 @@ function DeslindePage() {
               deslindes.map((deslinde) => (
                 <tr
                   key={deslinde._id}
-                  className={deslinde.isCurrent ? "bg-green-100" : ""} // Fondo verde claro si es el actual
+                  className={`${
+                    deslinde.isCurrent ? "bg-green-100" : "hover:bg-gray-100"
+                  } transition-all duration-200`}
                 >
-                  {/* Título con etiqueta "Actual" si aplica */}
-                  <td className="px-4 py-2">
+                  <td className="px-6 py-3">
                     {deslinde.title}{" "}
                     {deslinde.isCurrent && (
-                      <span className="text-green-500 font-semibold">
-                        (Actual)
-                      </span>
+                      <span className="text-green-500 font-semibold">(Actual)</span>
                     )}
                   </td>
-
-                  {/* Fecha de creación */}
-                  <td className="px-4 py-2">
+  
+                  <td className="px-6 py-3">
                     {new Date(deslinde.createdAt).toLocaleDateString()}
                   </td>
-
-                  {/* Fecha de vigencia */}
-                  <td className="px-4 py-2">
+  
+                  <td className="px-6 py-3">
                     {new Date(deslinde.effectiveDate).toLocaleDateString()}
                   </td>
-
-                  {/* Acciones */}
-                  <td className="px-4 py-2">
+  
+                  <td className="px-6 py-3 space-x-2">
                     {/* Botón Editar */}
                     <button
-                      className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600"
+                      className="bg-yellow-500 text-white px-3 py-2 rounded-full hover:bg-yellow-600 transition duration-200"
                       onClick={() => setEditingDeslinde(deslinde)}
                     >
                       Editar
                     </button>
-
-                    {/* Botón Establecer como Actual o deshabilitado si ya es actual */}
+  
+                    {/* Establecer como Actual */}
                     {deslinde.isCurrent ? (
                       <button
-                        className="bg-gray-500 text-white px-2 py-1 rounded mr-2 cursor-not-allowed"
+                        className="bg-gray-500 text-white px-3 py-2 rounded-full cursor-not-allowed"
                         disabled
                       >
                         Actual
                       </button>
                     ) : (
                       <button
-                        className="bg-blue-500 text-white px-2 py-1 rounded mr-2 hover:bg-blue-600"
+                        className="bg-blue-500 text-white px-3 py-2 rounded-full hover:bg-blue-600 transition duration-200"
                         onClick={() => handleSetCurrentDeslinde(deslinde._id)}
                       >
                         Establecer como Actual
                       </button>
                     )}
-
+  
                     {/* Botón Eliminar */}
                     <button
-                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      className="bg-red-500 text-white px-3 py-2 rounded-full hover:bg-red-600 transition duration-200"
                       onClick={() => handleDeleteDeslinde(deslinde._id)}
                     >
                       Eliminar
@@ -381,6 +389,7 @@ function DeslindePage() {
       </div>
     </div>
   );
+    
 }
 
 export default DeslindePage;

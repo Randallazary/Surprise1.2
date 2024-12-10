@@ -189,176 +189,180 @@ function TermsPage() {
 
   return (
     <div
-      className={`container mx-auto py-8 pt-36 ${
-        theme === "dark"
-          ? "bg-gray-900 text-gray-100"
-          : "bg-white text-gray-900"
-      }`}
+      className={`container mx-auto py-10 px-6 min-h-screen ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"
+        }`}
     >
-      <h1 className="text-3xl font-bold text-center mb-8">
-        Gestión de Términos y Condiciones
-      </h1>
-
-      {/* Crear o editar términos */}
-      <div className="shadow-md rounded-lg overflow-hidden p-6 mb-8">
-        <h2 className="text-2xl font-bold mb-4">
-          {editingTerms ? "Editar Términos" : "Crear Nuevos Términos"}
-        </h2>
-        <div className="mb-4">
-          <label className="block mb-2">Título</label>
-          <input
-            type="text"
-            value={editingTerms ? editingTerms.title : newTerms.title}
-            onChange={(e) =>
-              editingTerms
-                ? setEditingTerms({ ...editingTerms, title: e.target.value })
-                : setNewTerms({ ...newTerms, title: e.target.value })
-            }
-            className="w-full border p-2 rounded-lg"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Contenido</label>
-          <textarea
-            value={editingTerms ? editingTerms.content : newTerms.content}
-            onChange={(e) =>
-              editingTerms
-                ? setEditingTerms({
-                    ...editingTerms,
-                    content: e.target.value,
-                  })
-                : setNewTerms({ ...newTerms, content: e.target.value })
-            }
-            className="w-full border p-2 rounded-lg"
-            rows="6"
-          ></textarea>
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Fecha de Vigencia</label>
-          <input
-            type="date"
-            value={
-              editingTerms ? editingTerms.effectiveDate : newTerms.effectiveDate
-            }
-            onChange={(e) =>
-              editingTerms
-                ? setEditingTerms({
-                    ...editingTerms,
-                    effectiveDate: e.target.value,
-                  })
-                : setNewTerms({ ...newTerms, effectiveDate: e.target.value })
-            }
-            className="w-full border p-2 rounded-lg"
-            min={new Date().toISOString().split("T")[0]}
-          />
-        </div>
-        <button
-          onClick={editingTerms ? handleUpdateTerms : handleCreateTerms}
-          className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600"
-        >
-          {editingTerms ? "Guardar Cambios" : "Crear Términos"}
-        </button>
+      <div>
+        <h1 className="text-4xl font-extrabold text-center mb-10 underline decoration-wavy decoration-purple-500">
+          Gestión de Términos y Condiciones
+        </h1>
       </div>
-
-      {/* Mostrar los términos actuales */}
-      {currentTerms && (
-        <div className="mb-8 shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-bold mb-4">Términos Actuales</h2>
-          <p>
-            <strong>Título:</strong> {currentTerms.title}
-          </p>
-          <p>
-            <strong>Contenido:</strong> {currentTerms.content}
-          </p>
-          <p>
-            <strong>Fecha de Creación:</strong>{" "}
-            {new Date(currentTerms.createdAt).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Fecha de Vigencia:</strong>{" "}
-            {new Date(currentTerms.effectiveDate).toLocaleDateString()}
-          </p>
+  
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+  
+        {/* Crear o editar términos */}
+        <div className="shadow-lg rounded-lg overflow-hidden p-6 mb-8 bg-gradient-to-r from-purple-300 to-purple-400">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">
+            {editingTerms ? "Editar Términos" : "Crear Nuevos Términos"}
+          </h2>
+          <div className="mb-4">
+            <label className="block mb-2 text-gray-700">Título</label>
+            <input
+              type="text"
+              value={editingTerms ? editingTerms.title : newTerms.title}
+              onChange={(e) =>
+                editingTerms
+                  ? setEditingTerms({ ...editingTerms, title: e.target.value })
+                  : setNewTerms({ ...newTerms, title: e.target.value })
+              }
+              className="w-full border bg-white p-2 rounded-lg"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2 text-gray-700">Contenido</label>
+            <textarea
+              value={editingTerms ? editingTerms.content : newTerms.content}
+              onChange={(e) =>
+                editingTerms
+                  ? setEditingTerms({ ...editingTerms, content: e.target.value })
+                  : setNewTerms({ ...newTerms, content: e.target.value })
+              }
+              className="w-full border bg-white p-2 rounded-lg"
+              rows="6"
+            ></textarea>
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2 text-gray-700">Fecha de Vigencia</label>
+            <input
+              type="date"
+              value={editingTerms ? editingTerms.effectiveDate : newTerms.effectiveDate}
+              onChange={(e) =>
+                editingTerms
+                  ? setEditingTerms({ ...editingTerms, effectiveDate: e.target.value })
+                  : setNewTerms({ ...newTerms, effectiveDate: e.target.value })
+              }
+              className="w-full border bg-white p-2 rounded-lg"
+              min={new Date().toISOString().split("T")[0]}
+            />
+          </div>
+          <button
+            onClick={editingTerms ? handleUpdateTerms : handleCreateTerms}
+            className="py-2 px-4 bg-green-400 text-white rounded hover:bg-green-500"
+          >
+            {editingTerms ? "Guardar Cambios" : "Crear Términos"}
+          </button>
         </div>
-      )}
-
-      {/* Listar términos */}
-      <div className="shadow-md rounded-lg overflow-hidden p-6">
-        <h2 className="text-2xl font-bold mb-4">Listado de Términos</h2>
-        <table className="min-w-full table-auto">
-          <thead>
-            <tr>
-              <th className="px-4 py-2">Título</th>
-              <th className="px-4 py-2">Fecha de Creación</th>
-              <th className="px-4 py-2">Fecha de Vigencia</th>
-              <th className="px-4 py-2">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(terms) &&
-              terms.map((term) => (
-                <tr
-                  key={term._id}
-                  className={term.isCurrent ? "bg-green-100" : ""} // Fondo verde claro si es actual
-                >
-                  {/* Título con etiqueta "Actual" si aplica */}
-                  <td className="px-4 py-2">
-                    {term.title}{" "}
-                    {term.isCurrent && (
-                      <span className="text-green-500 font-semibold">
-                        (Actual)
-                      </span>
-                    )}
-                  </td>
-
-                  {/* Fecha de creación */}
-                  <td className="px-4 py-2">
-                    {new Date(term.createdAt).toLocaleDateString()}
-                  </td>
-
-                  {/* Fecha de vigencia */}
-                  <td className="px-4 py-2">
-                    {new Date(term.effectiveDate).toLocaleDateString()}
-                  </td>
-
-                  {/* Acciones */}
-                  <td className="px-4 py-2">
-                    {/* Botón Editar */}
-                    <button
-                      className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600"
-                      onClick={() => setEditingTerms(term)}
-                    >
-                      Editar
-                    </button>
-
-                    {/* Botón Establecer como Actual o deshabilitado si ya es actual */}
-                    {term.isCurrent ? (
-                      <button
-                        className="bg-gray-500 text-white px-2 py-1 rounded mr-2 cursor-not-allowed"
-                        disabled
-                      >
-                        Actual
-                      </button>
-                    ) : (
-                      <button
-                        className="bg-blue-500 text-white px-2 py-1 rounded mr-2 hover:bg-blue-600"
-                        onClick={() => handleSetCurrentTerms(term._id)}
-                      >
-                        Establecer como Actual
-                      </button>
-                    )}
-
-                    {/* Botón Eliminar */}
-                    <button
-                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                      onClick={() => handleDeleteTerms(term._id)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
+  
+        {/* Mostrar los términos actuales */}
+        {currentTerms && (
+          <div className="mb-8 shadow-lg rounded-lg p-6 bg-gradient-to-r from-purple-300 to-purple-400">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Términos Actuales</h2>
+            <p>
+              <strong>Título:</strong> {currentTerms.title}
+            </p>
+            <p>
+              <strong>Contenido:</strong> {currentTerms.content}
+            </p>
+            <p className={theme === "dark" ? "text-gray-200" : "text-gray-800"}>
+              <strong>Fecha de Creación:</strong>{" "}
+              {new Date(currentTerms.createdAt).toLocaleDateString()}
+            </p>
+            <p className={theme === "dark" ? "text-gray-200" : "text-gray-800"}>
+              <strong>Fecha de Vigencia:</strong>{" "}
+              {new Date(currentTerms.effectiveDate).toLocaleDateString()}
+            </p>
+          </div>
+        )}
+  
+        {/* Listar términos */}
+        <div>
+          <div className="shadow-lg rounded-lg overflow-hidden p-6 bg-gradient-to-r from-purple-300 to-purple-400">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Listado de Términos</h2>
+            <table className="w-full table-auto text-left border-collapse">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2">Título</th>
+                  <th className="px-4 py-2">Fecha de Creación</th>
+                  <th className="px-4 py-2">Fecha de Vigencia</th>
+                  <th className="px-4 py-2">Acciones</th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {Array.isArray(terms) &&
+                  terms.map((term) => (
+                    <tr
+                      key={term._id}
+                      className={term.isCurrent ? "bg-green-100" : ""} // Fondo verde claro si es actual
+                    >
+                      {/* Título con etiqueta "Actual" si aplica */}
+                      <td className="px-4 py-2">
+                        {term.title}{" "}
+                        {term.isCurrent && (
+                          <span className="text-green-500 font-semibold">
+                            (Actual)
+                          </span>
+                        )}
+                      </td>
+  
+                      {/* Fecha de creación */}
+                      <td className="px-4 py-2">
+                        <span
+                          className={`text-sm ${theme === "dark" ? "text-blue-900" : "text-gray-700"}`}
+                        >
+                          {new Date(term.createdAt).toLocaleDateString()}
+                        </span>
+                      </td>
+  
+                      <td className="px-4 py-2">
+                        <span
+                          className={`text-sm ${theme === "dark" ? "text-red-900" : "text-gray-700"}`}
+                        >
+                          {new Date(term.effectiveDate).toLocaleDateString()}
+                        </span>
+                      </td>
+  
+                      {/* Acciones */}
+                      <td className="px-4 py-2">
+                        {/* Botón Editar */}
+                        <button
+                          className="bg-yellow-400 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-500"
+                          onClick={() => setEditingTerms(term)}
+                        >
+                          Editar
+                        </button>
+  
+                        {/* Botón Establecer como Actual o deshabilitado si ya es actual */}
+                        {term.isCurrent ? (
+                          <button
+                            className="bg-gray-500 text-white px-2 py-1 rounded mr-2 cursor-not-allowed"
+                            disabled
+                          >
+                            Actual
+                          </button>
+                        ) : (
+                          <button
+                            className="bg-blue-400 text-white px-2 py-1 rounded mr-2 hover:bg-blue-500"
+                            onClick={() => handleSetCurrentTerms(term._id)}
+                          >
+                            Establecer termino
+                          </button>
+                        )}
+  
+                        {/* Botón Eliminar */}
+                        <button
+                          className="bg-red-400 text-white px-2 py-1 rounded hover:bg-red-500"
+                          onClick={() => handleDeleteTerms(term._id)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
       </div>
     </div>
   );

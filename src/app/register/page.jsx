@@ -344,7 +344,7 @@ function RegisterPage() {
               <label className="block text-gray-700">Contraseña</label>
               <input
                 type={passwordVisible ? "text" : "password"} // Cambia entre "text" y "password"
-                placeholder="Contraseña"
+                placeholder="Crear Contraseña"
                 value={password}
                 onChange={handlePasswordChange}
                 className="w-full border border-gray-300 p-2 rounded-lg"
@@ -354,7 +354,7 @@ function RegisterPage() {
                 onClick={togglePasswordVisibility}
                 className="absolute right-9 top-8 text-gray-600"
               >
-                {passwordVisible ? "Ocultar" : "Mostrar"}
+                {passwordVisible ? "(Ocultar)" : "(Mostrar)"}
               </button>
               {passwordWarning && (
                 <p className="text-red-500 text-sm mt-1">{passwordWarning}</p>
@@ -390,7 +390,7 @@ function RegisterPage() {
                 onClick={toggleConfirmPasswordVisibility}
                 className="absolute right-9 top-8 text-gray-600"
               >
-                {confirmPasswordVisible ? "Ocultar" : "Mostrar"}
+                {confirmPasswordVisible ? "(Ocultar)" : "(Mostrar)"}
               </button>
               {!passwordMatch && (
                 <p className="text-red-500 text-sm mt-1">

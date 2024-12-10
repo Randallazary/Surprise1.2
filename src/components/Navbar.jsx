@@ -146,14 +146,14 @@ function Navbar() {
                         className={`px-4 py-2 mb-2 w-full text-center rounded-lg ${
                           theme === "dark"
                             ? "border border-gray-500 text-gray-300 hover:bg-gray-700"
-                            : "bg-transparent border border-gray-500 text-gray-500 hover:bg-gray-100 hover:text-green-700"
+                            : "bg-transparent border border-gray-500 text-gray-500 hover:bg-gray-100 hover:text-purple-700"
                         }`}
                       >
                         Iniciar Sesión
                       </p>
                     </Link>
                     <Link href="/register">
-                      <p className="w-full text-center bg-green-700 text-white hover:bg-green-600 px-4 py-2 rounded-lg">
+                      <p className="w-full text-center bg-purple-700 text-white hover:bg-purple-600 px-4 py-2 rounded-lg">
                         Crear Cuenta
                       </p>
                     </Link>
@@ -308,12 +308,12 @@ function Navbar() {
               {theme === "dark" ? (
                 <>
                   <FaSun className="w-6 h-6" />
-                  <span className="text-sm">Claro</span>
+                  <span className="text-sm">Tema Claro</span>
                 </>
               ) : (
                 <>
                   <FaMoon className="w-6 h-6" />
-                  <span className="text-sm">Oscuro</span>
+                  <span className="text-sm">Tema obscuro</span>
                 </>
               )}
             </button>

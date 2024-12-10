@@ -75,28 +75,31 @@ function AdminLogoPage() {
 
   return (
     <div
-      className={`container mx-auto py-8 pt-36 ${
+      className={`container mx-auto py-8  ${
         theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"
       }`}
     >
-      <h1 className="text-3xl font-bold text-center mb-8">
+      <h1 className="text-4xl font-extrabold text-center mb-10 underline decoration-wavy decoration-purple-500">
         Administración de Logo
       </h1>
-
+  
       <div
-        className={`shadow-md rounded-lg overflow-hidden p-6 ${
+        className={`shadow-lg rounded-2xl p-8 transform transition duration-300 ${
           theme === "dark"
-            ? "bg-gray-800 text-gray-100"
-            : "bg-white text-gray-900"
+            ? "bg-gray-800 text-gray-100 "
+            : "bg-purple-200 text-gray-900 "
         }`}
       >
-        <h2 className="text-2xl font-bold mb-4">Subir Nuevo Logo</h2>
-
+        {/* Encabezado del formulario */}
+        <h2 className="text-3xl font-bold mb-6 text-center text-yellow-500">
+          Subir Nuevo Logo
+        </h2>
+  
         {/* Input para subir imágenes */}
-        <div className="mb-4">
+        <div className="mb-6">
           <label
-            className={`block mb-2 ${
-              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            className={`block mb-2 text-lg font-semibold ${
+              theme === "dark" ? "text-gray-300" : "text-purple-700"
             }`}
           >
             Selecciona un logo
@@ -105,34 +108,38 @@ function AdminLogoPage() {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className={`w-full border p-2 rounded-lg ${
+            className={`w-full border p-3 rounded-lg focus:outline-none focus:ring-4 transition ${
               theme === "dark"
-                ? "bg-gray-700 border-gray-600 text-gray-200"
-                : "border-gray-300"
+                ? "bg-gray-700 border-gray-600 text-gray-200 focus:ring-yellow-500"
+                : "border-purple-400 bg-purple-100 focus:ring-purple-500"
             }`}
           />
         </div>
-
+  
         {/* Botón para subir */}
-        <button
-          onClick={handleUploadLogo}
-          disabled={isLoading}
-          className={`py-2 px-4 rounded ${
-            isLoading
-              ? "bg-gray-400"
-              : theme === "dark"
-              ? "bg-green-600 text-white hover:bg-green-700"
-              : "bg-green-700 text-white hover:bg-green-800"
-          }`}
-        >
-          {isLoading ? "Subiendo..." : "Subir Logo"}
-        </button>
-
-        {/* Mostrar mensajes */}
+        <div className="text-center mb-6">
+          <button
+            onClick={handleUploadLogo}
+            disabled={isLoading}
+            className={`py-3 px-6 rounded-full font-bold text-lg shadow-md transform transition-all ${
+              isLoading
+                ? "bg-gray-400 text-gray-800 cursor-not-allowed"
+                : theme === "dark"
+                ? "bg-green-600 text-white hover:bg-green-500 hover:scale-110"
+                : "bg-pink-500 text-white hover:bg-pink-400 hover:scale-110"
+            }`}
+          >
+            {isLoading ? "Subiendo..." : "Subir Logo"}
+          </button>
+        </div>
+  
+        {/* Mensajes de estado */}
         {message && (
           <p
-            className={`mt-4 text-center ${
-              message.includes("Error") ? "text-red-500" : "text-green-500"
+            className={`mt-6 text-center text-xl font-semibold transition-all ${
+              message.includes("Error")
+                ? "text-red-500 animate-pulse"
+                : "text-green-500 animate-bounce"
             }`}
           >
             {message}
@@ -141,6 +148,7 @@ function AdminLogoPage() {
       </div>
     </div>
   );
+  
 }
 
 export default AdminLogoPage;

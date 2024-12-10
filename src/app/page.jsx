@@ -10,10 +10,10 @@ function HomePage() {
   const productos = [
     {
       id: 1,
-      nombre: 'Playera Xantolera',
+      nombre: 'Reloj unicornio rosa',
       descripcion: 'Player con estampado de esqueleto de gato.',
       precio: '$250 MXN',
-      imagen: '', 
+      imagen: '/assets/producto1.jpg', 
     },
     {
       id: 2,

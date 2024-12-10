@@ -195,181 +195,192 @@ function PrivacyPolicyPage() {
 
   return (
     <div
-      className={`container mx-auto py-8 pt-36 ${
-        theme === "dark"
-          ? "bg-gray-900 text-gray-100"
-          : "bg-white text-gray-900"
-      }`}
+      className={`container mx-auto py-10 px-6 min-h-screen ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-black-900"
+        }`}
     >
-      <h1 className="text-3xl font-bold text-center mb-8">
-        Gestión de Política de Privacidad
+      <h1 className="text-4xl font-extrabold text-center mb-10 underline decoration-wavy decoration-purple-500">
+        Gestión de Políticas de Privacidad
       </h1>
-
-      {/* Crear o editar política */}
-      <div className="shadow-md rounded-lg overflow-hidden p-6 mb-8">
-        <h2 className="text-2xl font-bold mb-4">
-          {editingPolicy ? "Editar Política" : "Crear Nueva Política"}
-        </h2>
-        <div className="mb-4">
-          <label className="block mb-2">Título</label>
-          <input
-            type="text"
-            value={editingPolicy ? editingPolicy.title : newPolicy.title}
-            onChange={(e) =>
-              editingPolicy
-                ? setEditingPolicy({ ...editingPolicy, title: e.target.value })
-                : setNewPolicy({ ...newPolicy, title: e.target.value })
-            }
-            className="w-full border p-2 rounded-lg"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Contenido</label>
-          <textarea
-            value={editingPolicy ? editingPolicy.content : newPolicy.content}
-            onChange={(e) =>
-              editingPolicy
-                ? setEditingPolicy({
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Formulario de Crear o Editar */}
+        <div
+          className={`shadow-lg rounded-lg p-6 ${theme === "dark" ? "bg-gray-100" : "bg-pink-100"
+            }`}
+        >
+          <h2 className="text-2xl font-semibold mb-4 text-purple-700">
+            {editingPolicy ? "Editar Política" : "Crear Nueva Política"}
+          </h2>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2 text-purple-600">Título</label>
+            <input
+              type="text"
+              value={editingPolicy ? editingPolicy.title : newPolicy.title}
+              onChange={(e) =>
+                editingPolicy
+                  ? setEditingPolicy({ ...editingPolicy, title: e.target.value })
+                  : setNewPolicy({ ...newPolicy, title: e.target.value })
+              }
+              className={`w-full border p-3 rounded-lg focus:outline-none focus:ring-2 ${theme === "dark"
+                ? "border-gray-700 bg-gray-700 text-gray-100 focus:ring-blue-500"
+                : "border-purple-300 bg-purple-50 text-gray-900 focus:ring-purple-500"
+                }`}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2 text-purple-600">Contenido</label>
+            <textarea
+              value={editingPolicy ? editingPolicy.content : newPolicy.content}
+              onChange={(e) =>
+                editingPolicy
+                  ? setEditingPolicy({
                     ...editingPolicy,
                     content: e.target.value,
                   })
-                : setNewPolicy({ ...newPolicy, content: e.target.value })
-            }
-            className="w-full border p-2 rounded-lg"
-            rows="6"
-          ></textarea>
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Fecha de Vigencia</label>
-          <input
-            type="date"
-            value={
-              editingPolicy
-                ? editingPolicy.effectiveDate
-                : newPolicy.effectiveDate
-            }
-            onChange={(e) =>
-              editingPolicy
-                ? setEditingPolicy({
+                  : setNewPolicy({ ...newPolicy, content: e.target.value })
+              }
+              className={`w-full border p-3 rounded-lg focus:outline-none focus:ring-2 ${theme === "dark"
+                ? "border-gray-700 bg-gray-700 text-gray-100 focus:ring-blue-500"
+                : "border-purple-300 bg-purple-50 text-gray-900 focus:ring-purple-500"
+                }`}
+              rows="6"
+            ></textarea>
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2 text-purple-600">Fecha de Vigencia</label>
+            <input
+              type="date"
+              value={editingPolicy ? editingPolicy.effectiveDate : newPolicy.effectiveDate}
+              onChange={(e) =>
+                editingPolicy
+                  ? setEditingPolicy({
                     ...editingPolicy,
                     effectiveDate: e.target.value,
                   })
-                : setNewPolicy({ ...newPolicy, effectiveDate: e.target.value })
-            }
-            className="w-full border p-2 rounded-lg"
-            min={new Date().toISOString().split("T")[0]} // Fecha actual como mínimo
-          />
+                  : setNewPolicy({ ...newPolicy, effectiveDate: e.target.value })
+              }
+              className={`w-full border p-3 rounded-lg focus:outline-none focus:ring-2 ${theme === "dark"
+                ? "border-gray-700 bg-gray-700 text-gray-100 focus:ring-blue-500"
+                : "border-purple-300 bg-purple-50 text-gray-900 focus:ring-purple-500"
+                }`}
+              min={new Date().toISOString().split("T")[0]}
+            />
+          </div>
+          <button
+            onClick={editingPolicy ? handleUpdatePolicy : handleCreatePolicy}
+            className={`w-full py-3 rounded-lg hover:bg-pink-300 transition ${theme === "dark" ? "bg-blue-500 text-white" : "bg-blue-500 text-black"
+              }`}
+          >
+            {editingPolicy ? "Guardar Cambios" : "Crear Política"}
+          </button>
         </div>
-        <button
-          onClick={editingPolicy ? handleUpdatePolicy : handleCreatePolicy}
-          className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600"
-        >
-          {editingPolicy ? "Guardar Cambios" : "Crear Política"}
-        </button>
-      </div>
-
-      {/* Mostrar la política actual */}
-      {currentPolicy && (
-        <div className="mb-8 shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-bold mb-4">Política Actual</h2>
-          <p>
-            <strong>Título:</strong> {currentPolicy.title}
-          </p>
-          <p>
-            <strong>Contenido:</strong> {currentPolicy.content}
-          </p>
-          <p>
-            <strong>Fecha de Creación:</strong>{" "}
-            {new Date(currentPolicy.createdAt).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Fecha de Vigencia:</strong>{" "}
-            {new Date(currentPolicy.effectiveDate).toLocaleDateString()}
-          </p>
-        </div>
-      )}
-
-      {/* Listar políticas */}
-      <div className="shadow-md rounded-lg overflow-hidden p-6">
-        <h2 className="text-2xl font-bold mb-4">Listado de Políticas</h2>
-        <table className="min-w-full table-auto">
-          <thead>
-            <tr>
-              <th className="px-4 py-2">Título</th>
-              <th className="px-4 py-2">Fecha de Creación</th>
-              <th className="px-4 py-2">Fecha de Vigencia</th>
-              <th className="px-4 py-2">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(policies) &&
-              policies.map((policy) => (
-                <tr
-                  key={policy._id}
-                  className={policy.isCurrent ? "bg-green-100" : ""} // Fondo verde claro si es actual
-                >
-                  {/* Título con etiqueta "Actual" si aplica */}
-                  <td className="px-4 py-2">
-                    {policy.title}{" "}
-                    {policy.isCurrent && (
-                      <span className="text-green-500 font-semibold">
-                        (Actual)
-                      </span>
-                    )}
-                  </td>
-
-                  {/* Fecha de creación */}
-                  <td className="px-4 py-2">
-                    {new Date(policy.createdAt).toLocaleDateString()}
-                  </td>
-
-                  {/* Fecha de vigencia */}
-                  <td className="px-4 py-2">
-                    {new Date(policy.effectiveDate).toLocaleDateString()}
-                  </td>
-
-                  {/* Acciones */}
-                  <td className="px-4 py-2">
-                    {/* Botón Editar */}
-                    <button
-                      className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600"
-                      onClick={() => setEditingPolicy(policy)}
-                    >
-                      Editar
-                    </button>
-
-                    {/* Botón Establecer como Actual o deshabilitado si ya es actual */}
-                    {policy.isCurrent ? (
-                      <button
-                        className="bg-gray-500 text-white px-2 py-1 rounded mr-2 cursor-not-allowed"
-                        disabled
-                      >
-                        Actual
-                      </button>
-                    ) : (
-                      <button
-                        className="bg-blue-500 text-white px-2 py-1 rounded mr-2 hover:bg-blue-600"
-                        onClick={() => handleSetCurrentPolicy(policy._id)}
-                      >
-                        Establecer como Actual
-                      </button>
-                    )}
-
-                    {/* Botón Eliminar */}
-                    <button
-                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                      onClick={() => handleDeletePolicy(policy._id)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
+  
+        {/* Mostrar la política actual */}
+        {currentPolicy && (
+          <div className="mb-8 shadow-md rounded-lg p-6 bg-pink-50">
+            <h2 className="text-2xl font-bold mb-4 text-purple-700">Política Actual</h2>
+            <p>
+              <strong>Título:</strong> {currentPolicy.title}
+            </p>
+            <p>
+              <strong>Contenido:</strong> {currentPolicy.content}
+            </p>
+            <p>
+              <strong>Fecha de Creación:</strong>{" "}
+              {new Date(currentPolicy.createdAt).toLocaleDateString()}
+            </p>
+            <p>
+              <strong>Fecha de Vigencia:</strong>{" "}
+              {new Date(currentPolicy.effectiveDate).toLocaleDateString()}
+            </p>
+          </div>
+        )}
+  
+        {/* Listado de Políticas */}
+        <div>
+          <div
+            className={`shadow-lg rounded-lg p-6 ${theme === "dark" ? "bg-gray-100" : "bg-pink-100"
+              }`}
+          >
+            <h2 className="text-2xl font-semibold mb-4 text-purple-700">Listado de Políticas</h2>
+            <table className="w-full table-auto text-left border-collapse">
+              <thead>
+                <tr>
+                  <th className="border-b py-2 px-4 text-purple-700">Título</th>
+                  <th className="border-b py-2 px-4 text-purple-700">Fecha de Creación</th>
+                  <th className="border-b py-2 px-4 text-purple-700">Fecha de Vigencia</th>
+                  <th className="border-b py-2 px-4 text-purple-700">Acciones</th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {Array.isArray(policies) &&
+                  policies.map((policy) => (
+                    <tr
+                      key={policy._id}
+                    >
+                      <td className="py-2 px-4">
+                        {policy.title}{" "}
+                        {policy.isCurrent && (
+                          <span className="text-green-500 font-semibold">
+                            (Actual)
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-2 px-4">
+                        {new Date(policy.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="py-2 px-4">
+                        {new Date(policy.effectiveDate).toLocaleDateString()}
+                      </td>
+                      <td className="py-2 px-4 space-x-2">
+                        <button
+                          className={`px-2 py-1 rounded ${theme === "dark"
+                            ? "bg-purple-300 text-gray-900 hover:bg-purple-400"
+                            : "bg-purple-300 text-black-1000 hover:bg-purple-400"
+                            }`}
+                          onClick={() => setEditingPolicy(policy)}
+                        >
+                          Editar
+                        </button>
+                        {policy.isCurrent ? (
+                          <button
+                            className="bg-gray-500 text-white px-2 py-1 rounded cursor-not-allowed"
+                            disabled
+                          >
+                            Actual
+                          </button>
+                        ) : (
+                          <button
+                            className={`px-2 py-1 rounded ${theme === "dark"
+                              ? "bg-blue-500 text-gray-900 hover:bg-blue-600"
+                              : "bg-blue-500 text-white hover:bg-blue-600"
+                              }`}
+                            onClick={() => handleSetCurrentPolicy(policy._id)}
+                          >
+                            Actualizar
+                          </button>
+                        )}
+                        <button
+                          className={`px-2 py-1 rounded ${theme === "dark"
+                            ? "bg-red-500 text-gray-900 hover:bg-red-600"
+                            : "bg-red-500 text-white hover:bg-red-600"
+                            }`}
+                          onClick={() => handleDeletePolicy(policy._id)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );
+  
+  
+
 }
 
 export default PrivacyPolicyPage;
