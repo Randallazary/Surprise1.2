@@ -58,7 +58,7 @@ function AdminPage() {
   return (
     <div className="container mx-auto py-8 pt-36">
       <h1 className="text-3xl font-bold text-center mb-8 text-purple-700">
-        Panel de Administración
+        Administracion de Usuarios
       </h1>
   
       <div className="bg-purple-200 shadow-md rounded-lg overflow-hidden p-6">
