@@ -98,7 +98,9 @@ function Navbar() {
           <button
             onClick={toggleMobileMenu}
             className="lg:hidden flex items-center text-xl"
+            
           >
+            <span className="text-sm">Menu</span>
             <FaBars />
           </button>
 
