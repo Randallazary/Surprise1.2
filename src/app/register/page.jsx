@@ -204,7 +204,7 @@ function RegisterPage() {
         Swal.fire({
           icon: "success",
           title: "Registro exitoso",
-          text: "¡Te has registrado con éxito!",
+          text: "¡Te has registrado con éxito! verifica tu correo electronico para activar tu cuenta",
         }).then(() => {
           // Redireccionar al login después de que el usuario haga clic en "OK"
           router.push("/login");
