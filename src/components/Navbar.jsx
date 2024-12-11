@@ -1,13 +1,11 @@
-"use client"; // Indicar que es un Client Component
-
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaUser, FaShoppingCart, FaBars, FaFileInvoice, FaMoon, FaSun } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { useLogo } from "../context/LogoContext";
-import { useAuth } from "../context/authContext"; // Importa el contexto de autenticación
-import { useRouter } from "next/navigation"; // Importa el hook de useRouter para la redirección
+import { useAuth } from "../context/authContext";
+import { useRouter } from "next/navigation";
 import { CONFIGURACIONES } from "../app/config/config";
 
 function Navbar() {
@@ -16,15 +14,19 @@ function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [adminMenuOpen, setAdminMenuOpen] = useState(false);
   const [documentAdminMenuOpen, setDocumentAdminMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // Para el menú móvil
   const dropdownRef = useRef(null);
   const router = useRouter();
-  const {logoUrl} = useLogo();
+  const { logoUrl } = useLogo();
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const toggleAdminMenu = () => setAdminMenuOpen(!adminMenuOpen);
   const toggleDocumentAdminMenu = () => setDocumentAdminMenuOpen(!documentAdminMenuOpen);
+  const toggleMobileMenu = () => setMenuOpen(!menuOpen); // Para alternar el menú móvil
 
-  // Este useEffect asegura que el componente se renderice solo después de que esté montado en el cliente
+  // Función para cerrar el menú móvil cuando se hace clic en un enlace
+  const closeMobileMenu = () => setMenuOpen(false);
+
   useEffect(() => {
     setIsMounted(true);
     const handleClickOutside = (event) => {
@@ -60,7 +62,7 @@ function Navbar() {
   };
 
   if (!isMounted) return null;
-  
+
   return (
     <>
       {/* Navbar principal */}
@@ -92,8 +94,16 @@ function Navbar() {
             </Link>
           </div>
 
+          {/* Menú de hamburguesa (solo en pantallas pequeñas) */}
+          <button
+            onClick={toggleMobileMenu}
+            className="lg:hidden flex items-center text-xl"
+          >
+            <FaBars />
+          </button>
+
           {/* Campo de Búsqueda */}
-          <div className="flex items-center w-1/2">
+          <div className="hidden lg:flex items-center w-1/2">
             <input
               type="text"
               placeholder="Buscar la mejor opción para regalar"
@@ -115,15 +125,14 @@ function Navbar() {
           </div>
 
           {/* Íconos de Usuario, Cotizador, Carrito y Menú */}
-          <div className="flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-6">
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={toggleDropdown}
                 className={`flex flex-col items-center ${
                   theme === "dark"
-                  ? "hover:text-purple-600"
-                                          : "hover:text-blue-600"
-                    
+                    ? "hover:text-purple-600"
+                    : "hover:text-blue-600"
                 }`}
               >
                 <FaUser className="w-6 h-6" />
@@ -136,43 +145,33 @@ function Navbar() {
               {dropdownOpen && (
                 <div
                   className={`absolute right-0 mt-2 w-64 shadow-lg rounded-lg py-4 z-50 ${
-                    theme === "dark"
-                      ? "bg-gray-800 text-gray-200"
-                      : "bg-white text-gray-700"
-                      
+                    theme === "dark" ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"
                   }`}
                 >
                   {!isAuthenticated ? (
                     <div className="flex flex-col items-center pb-4 border-b border-gray-300">
-                    <Link href="/login">
-                      <p
-                        className={`px-4 py-2 mb-2 w-full text-center rounded-lg ${
-                          theme === "dark"
-                            ? "border border-gray-500 text-gray-300 hover:bg-gray-700"
-                            : "bg-transparent border border-gray-500 text-gray-500 hover:bg-gray-100 hover:text-purple-700"
-                        }`}
-                      >
-                        Iniciar Sesión
-                      </p>
-                    </Link>
-                    <Link href="/register">
-                      <p className="w-full text-center bg-purple-700 text-white hover:bg-purple-600 px-4 py-2 rounded-lg">
-                        Crear Cuenta
-                      </p>
-                    </Link>
-                  </div>                  
+                      <Link href="/login" onClick={closeMobileMenu}>
+                        <p
+                          className={`px-4 py-2 mb-2 w-full text-center rounded-lg ${
+                            theme === "dark"
+                              ? "border border-gray-500 text-gray-300 hover:bg-gray-700"
+                              : "bg-transparent border border-gray-500 text-gray-500 hover:bg-gray-100 hover:text-purple-700"
+                          }`}
+                        >
+                          Iniciar Sesión
+                        </p>
+                      </Link>
+                      <Link href="/register" onClick={closeMobileMenu}>
+                        <p className="w-full text-center bg-purple-700 text-white hover:bg-purple-600 px-4 py-2 rounded-lg">
+                          Crear Cuenta
+                        </p>
+                      </Link>
+                    </div>
                   ) : (
                     <div className="px-4 py-2">
                       <p className="text-sm font-semibold">¡Hola, {user?.name}!</p>
-                      <Link href="/profileuser">
-                        <p
-                          className={`mt-2 font-semibold ${
-                            theme === "dark"
-                           
-                          }`}
-                        >
-                         
-                        </p>
+                      <Link href="/profileuser" onClick={closeMobileMenu}>
+                        <p className={`mt-2 font-semibold ${theme === "dark" ? "" : ""}`}></p>
                       </Link>
                       {user?.role === "admin" && (
                         <div className="mt-4">
@@ -180,9 +179,8 @@ function Navbar() {
                             onClick={toggleAdminMenu}
                             className={`w-full text-left font-semibold ${
                               theme === "dark"
-                              ? "hover:text-pink-400"
-                                          : "hover:text-green-600"
-                                
+                                ? "hover:text-pink-400"
+                                : "hover:text-green-600"
                             }`}
                           >
                             Opciones de Administrador
@@ -190,103 +188,18 @@ function Navbar() {
                           {adminMenuOpen && (
                             <div
                               className={`mt-2 border-t ${
-                                theme === "dark"
-                                  ? "bg-gray-800 border-gray-700"
-                                  : "bg-gray-50 border-gray-200"
+                                theme === "dark" ? "bg-gray-800 border-gray-700" : "bg-gray-50 border-gray-200"
                               }`}
                             >
-                              <Link href="/adminDashboard">
+                              <Link href="/adminDashboard" onClick={closeMobileMenu}>
                                 <p
                                   className={`mt-2 ${
-                                    theme === "dark"
-                                    ? "hover:text-purple-400"
-                                          : "hover:text-blue-400"
-                                     
+                                    theme === "dark" ? "hover:text-purple-400" : "hover:text-blue-400"
                                   }`}
                                 >
                                   Panel administrador
-                                  </p>
-                              </Link>
-                              <Link href="/adminUsuarios">
-                                <p
-                                  className={`mt-2 ${
-                                    theme === "dark"
-                                    ? "hover:text-purple-400"
-                                          : "hover:text-blue-400"
-                                      
-                                  }`}
-                                >
-                                  Administracion Usuarios
                                 </p>
                               </Link>
-                              {/* Menú adicional para gestión de documentos */}
-                              <button
-                                onClick={toggleDocumentAdminMenu}
-                                className={`mt-4 w-full text-left font-semibold ${
-                                  theme === "dark"
-                                   ? "hover:text-pink-400"
-                                          : "hover:text-green-600"
-                                  
-                                }`}
-                              >
-                                Gestión de Documentos
-                              </button>
-                              {documentAdminMenuOpen && (
-                                <div
-                                  className={`mt-2 border-t ${
-                                    theme === "dark"
-                                      ? "bg-gray-800 border-gray-700"
-                                      : "bg-gray-50 border-gray-200"
-                                  }`}
-                                >
-                                  <Link href="/adminDocumentos">
-                                    <p
-                                      className={`mt-2 ${
-                                        theme === "dark"
-                                       ? "hover:text-purple-400"
-                                          : "hover:text-blue-400"
-                                      }`}
-                                    >
-                                      Administrar Políticas
-                                    </p>
-                                  </Link>
-                                  <Link href="/adminDocumentos2">
-                                    <p
-                                      className={`mt-2 ${
-                                        theme === "dark"
-                                        ? "hover:text-purple-400"
-                                          : "hover:text-blue-400"
-                                         
-                                      }`}
-                                    >
-                                      Administrar Términos
-                                    </p>
-                                  </Link>
-                                  <Link href="/adminDocumentos3">
-                                    <p
-                                      className={`mt-2 ${
-                                        theme === "dark"
-                                      ? "hover:text-purple-400"
-                                          : "hover:text-blue-400"
-                                          
-                                      }`}
-                                    >
-                                       Administrar Deslinde
-                                    </p>
-                                  </Link>
-                                  <Link href="/adminLogo">
-                                    <p
-                                      className={`mt-2 ${
-                                        theme === "dark"
-                                         ? "hover:text-purple-400"
-                                          : "hover:text-blue-400"
-                                      }`}
-                                    >
-                                      Administrar Logo
-                                    </p>
-                                  </Link>
-                                </div>
-                              )}
                             </div>
                           )}
                         </div>
@@ -305,41 +218,61 @@ function Navbar() {
 
             <Link
               href="/ventaProducto"
+              onClick={closeMobileMenu}
               className={`flex flex-col items-center ${
-                theme === "dark"
-                ? "hover:text-purple-600"
-                                          : "hover:text-blue-600"
-                
+                theme === "dark" ? "hover:text-purple-600" : "hover:text-blue-600"
               }`}
             >
-             
               <FaShoppingCart className="w-6 h-6" />
               <span className="text-sm">Compras</span>
             </Link>
             <button
-              onClick={toggleTheme}
+              onClick={() => {
+                toggleTheme();
+                closeMobileMenu(); // Cierra el menú al cambiar el tema
+              }}
               className={`flex flex-col items-center ${
-                theme === "dark"
-                ? "hover:text-yellow-300"
-                                          : "hover:text-black-1000"
-              
+                theme === "dark" ? "hover:text-yellow-300" : "hover:text-black-1000"
               }`}
             >
               {theme === "dark" ? (
                 <>
                   <FaSun className="w-6 h-6" />
                   <span className="text-sm">Tema Claro</span>
-
                 </>
               ) : (
                 <>
                   <FaMoon className="w-6 h-6" />
-                  <span className="text-sm">Tema obscuro</span>
+                  <span className="text-sm">Tema oscuro</span>
                 </>
               )}
             </button>
           </div>
         </div>
+
+        {/* Menú móvil */}
+        {menuOpen && (
+          <div className="lg:hidden bg-gray-800 text-white p-4">
+            <Link href="/login" onClick={closeMobileMenu} className="block py-2">
+              Iniciar sesión
+            </Link>
+            <Link href="/register" onClick={closeMobileMenu} className="block py-2">
+              Crear Cuenta
+            </Link>
+            <Link href="/ventaProducto" onClick={closeMobileMenu} className="block py-2">
+              Compras
+            </Link>
+            <button
+              onClick={() => {
+                toggleTheme();
+                closeMobileMenu(); // Cierra el menú al cambiar el tema
+              }}
+              className="block py-2 text-sm"
+            >
+              Cambiar Tema
+            </button>
+          </div>
+        )}
       </nav>
     </>
   );
