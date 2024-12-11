@@ -10,7 +10,7 @@ function BrakePadView() {
         "Un reloj creativo y único en forma de dinosaurio, ideal para decorar cualquier espacio. Perfecto para amantes de los detalles originales.",
       price: "$350.00 MX",
       imgSrc: "/assets/cosa.jpg",
-      qrSrc: "/assets/qr1.jpg",
+      qrSrc: "",
       bgColor: "from-blue-50",
       textColor: "text-blue-800",
       buttonColor: "bg-blue-600",
@@ -22,7 +22,7 @@ function BrakePadView() {
         "Un peluche adorable y suave de Patricio Estrella, ideal para decorar, abrazar y coleccionar. Perfecto para los fans de Bob Esponja.",
       price: "$450.00 MX",
       imgSrc: "/assets/cosa2.jpg",
-      qrSrc: "/assets/qr2.jpg",
+      qrSrc: "/",
       bgColor: "from-yellow-50",
       textColor: "text-yellow-800",
       buttonColor: "bg-yellow-600",
@@ -57,7 +57,7 @@ function BrakePadView() {
                 {product.title}
               </h1>
               <div className="text-center">
-                <p className="text-xs text-gray-600">Escanea el siguiente QR para ver en 3D</p>
+                <p className="text-xs text-gray-600">Codio QR de producto 3D en proceso de desarrollo</p>
                 <Image
                   src={product.qrSrc}
                   alt={`QR de ${product.title}`}
