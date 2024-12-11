@@ -68,7 +68,7 @@ function Navbar() {
         className={`sticky top-0 w-full z-50 shadow-md ${
           theme === "dark"
             ? "bg-gray-800 border-gray-700 text-gray-200"
-            : "bg-[#5B88B2] border-gray-200 text-gray-700"
+            : "bg-gradient-to-r from-blue-300 to-purple-400 border-gray-200 text-gray-700"
         }`}
       >
         <div className="container mx-auto flex justify-between items-center py-4">
@@ -121,6 +121,8 @@ function Navbar() {
                 onClick={toggleDropdown}
                 className={`flex flex-col items-center ${
                   theme === "dark"
+                  ? "hover:text-purple-600"
+                                          : "hover:text-blue-600"
                     
                 }`}
               >
@@ -137,6 +139,7 @@ function Navbar() {
                     theme === "dark"
                       ? "bg-gray-800 text-gray-200"
                       : "bg-white text-gray-700"
+                      
                   }`}
                 >
                   {!isAuthenticated ? (
@@ -168,7 +171,7 @@ function Navbar() {
                            
                           }`}
                         >
-                          Ver perfil
+                         
                         </p>
                       </Link>
                       {user?.role === "admin" && (
@@ -177,10 +180,12 @@ function Navbar() {
                             onClick={toggleAdminMenu}
                             className={`w-full text-left font-semibold ${
                               theme === "dark"
+                              ? "hover:text-pink-400"
+                                          : "hover:text-green-600"
                                 
                             }`}
                           >
-                            Opciones de Admin
+                            Opciones de Administrador
                           </button>
                           {adminMenuOpen && (
                             <div
@@ -194,20 +199,24 @@ function Navbar() {
                                 <p
                                   className={`mt-2 ${
                                     theme === "dark"
+                                    ? "hover:text-purple-400"
+                                          : "hover:text-blue-400"
                                      
                                   }`}
                                 >
-                                  Panel admin 
+                                  Panel administrador
                                   </p>
                               </Link>
                               <Link href="/adminUsuarios">
                                 <p
                                   className={`mt-2 ${
                                     theme === "dark"
+                                    ? "hover:text-purple-400"
+                                          : "hover:text-blue-400"
                                       
                                   }`}
                                 >
-                                  Administrar Usuarios
+                                  Administracion Usuarios
                                 </p>
                               </Link>
                               {/* Menú adicional para gestión de documentos */}
@@ -215,6 +224,8 @@ function Navbar() {
                                 onClick={toggleDocumentAdminMenu}
                                 className={`mt-4 w-full text-left font-semibold ${
                                   theme === "dark"
+                                   ? "hover:text-pink-400"
+                                          : "hover:text-green-600"
                                   
                                 }`}
                               >
@@ -232,7 +243,8 @@ function Navbar() {
                                     <p
                                       className={`mt-2 ${
                                         theme === "dark"
-                                         
+                                       ? "hover:text-purple-400"
+                                          : "hover:text-blue-400"
                                       }`}
                                     >
                                       Administrar Políticas
@@ -242,6 +254,8 @@ function Navbar() {
                                     <p
                                       className={`mt-2 ${
                                         theme === "dark"
+                                        ? "hover:text-purple-400"
+                                          : "hover:text-blue-400"
                                          
                                       }`}
                                     >
@@ -252,6 +266,8 @@ function Navbar() {
                                     <p
                                       className={`mt-2 ${
                                         theme === "dark"
+                                      ? "hover:text-purple-400"
+                                          : "hover:text-blue-400"
                                           
                                       }`}
                                     >
@@ -262,8 +278,8 @@ function Navbar() {
                                     <p
                                       className={`mt-2 ${
                                         theme === "dark"
-                                          ? "hover:text-yellow-400"
-                                          : "hover:text-green-700"
+                                         ? "hover:text-purple-400"
+                                          : "hover:text-blue-400"
                                       }`}
                                     >
                                       Administrar Logo
@@ -291,6 +307,8 @@ function Navbar() {
               href="/ventaProducto"
               className={`flex flex-col items-center ${
                 theme === "dark"
+                ? "hover:text-purple-600"
+                                          : "hover:text-blue-600"
                 
               }`}
             >
@@ -302,6 +320,8 @@ function Navbar() {
               onClick={toggleTheme}
               className={`flex flex-col items-center ${
                 theme === "dark"
+                ? "hover:text-yellow-300"
+                                          : "hover:text-black-1000"
               
               }`}
             >
@@ -309,6 +329,7 @@ function Navbar() {
                 <>
                   <FaSun className="w-6 h-6" />
                   <span className="text-sm">Tema Claro</span>
+
                 </>
               ) : (
                 <>

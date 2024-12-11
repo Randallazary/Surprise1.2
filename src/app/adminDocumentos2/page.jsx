@@ -277,14 +277,14 @@ function TermsPage() {
         {/* Listar términos */}
         <div>
           <div className="shadow-lg rounded-lg overflow-hidden p-6 bg-gradient-to-r from-purple-300 to-purple-400">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">Listado de Términos</h2>
-            <table className="w-full table-auto text-left border-collapse">
+            <h2 className="text-3xl font-bold mb-6 text-center text-purple-600">Listado de Términos</h2>
+            <table className="min-w-full table-auto">
               <thead>
                 <tr>
-                  <th className="px-4 py-2">Título</th>
-                  <th className="px-4 py-2">Fecha de Creación</th>
-                  <th className="px-4 py-2">Fecha de Vigencia</th>
-                  <th className="px-4 py-2">Acciones</th>
+                  <th className="px-6 py-3 text-lg font-semibold">Título</th>
+                  <th className="px-6 py-3 text-lg font-semibold">Fecha de Creación</th>
+                  <th className="px-6 py-3 text-lg font-semibold">Fecha de Vigencia</th>
+                  <th className="px-6 py-3 text-lg font-semibold">Acciones</th>
                 </tr>
               </thead>
               <tbody>

@@ -58,8 +58,8 @@ function HomePage() {
             <Image
               src={producto.imagen}
               alt={producto.nombre}
-              width={300}
-              height={200}
+              width={700}
+              height={600}
               className="w-full h-48 object-cover"
             />
             <div className="p-4">
