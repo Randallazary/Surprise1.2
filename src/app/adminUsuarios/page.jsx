@@ -57,33 +57,33 @@ function AdminPage() {
 
   return (
     <div className="container mx-auto py-8 pt-36">
-      <h1 className="text-3xl font-bold text-center mb-8 text-purple-700">
-        Administracion de Usuarios
+      <h1 className="text-3xl font-bold text-center mb-8">
+        Panel de Administración
       </h1>
-  
-      <div className="bg-purple-200 shadow-md rounded-lg overflow-hidden p-6">
-        <h2 className="text-2xl font-bold mb-4 text-purple-700">Gestión de Usuarios</h2>
-  
-        <table className="min-w-full table-auto bg-white rounded-lg shadow-md">
-          <thead className="bg-yellow-100">
+
+      <div className="bg-white shadow-md rounded-lg overflow-hidden p-6">
+        <h2 className="text-2xl font-bold mb-4">Gestión de Usuarios</h2>
+
+        <table className="min-w-full table-auto">
+          <thead>
             <tr>
-              <th className="px-4 py-2 border text-left text-purple-700">Nombre</th>
-              <th className="px-4 py-2 border text-left text-purple-700">Email</th>
-              <th className="px-4 py-2 border text-left text-purple-700">Rol</th>
-              <th className="px-4 py-2 border text-left text-purple-700">Acciones</th>
+              <th className="px-4 py-2 border">Nombre</th>
+              <th className="px-4 py-2 border">Email</th>
+              <th className="px-4 py-2 border">Rol</th>
+              <th className="px-4 py-2 border">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {users.length > 0 ? (
               users.map((user) => (
-                <tr key={user._id} className="hover:bg-purple-100">
+                <tr key={user._id}>
                   <td className="px-4 py-2 border">{user.name}</td>
                   <td className="px-4 py-2 border">{user.email}</td>
                   <td className="px-4 py-2 border capitalize">{user.role}</td>
-                  <td className="px-4 py-2 border flex space-x-2">
+                  <td className="px-4 py-2 border">
                     {user.role !== "admin" && (
                       <button
-                        className="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600"
+                        className="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600 mr-2"
                         onClick={() => handleDelete(user._id)}
                       >
                         Eliminar
@@ -97,7 +97,7 @@ function AdminPage() {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="text-center py-4 text-purple-700">
+                <td colSpan="4" className="text-center py-4">
                   No hay usuarios registrados
                 </td>
               </tr>
@@ -108,4 +108,5 @@ function AdminPage() {
     </div>
   );
 }
+
 export default AdminPage;

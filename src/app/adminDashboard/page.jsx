@@ -206,22 +206,20 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="container mx-auto py-8 ">
-      <h1 className="text-4xl font-extrabold text-center mb-10 underline decoration-wavy decoration-purple-500">
-        Panel de Administrador
+    <div className="container mx-auto py-8 pt-36">
+      <h1 className="text-3xl font-bold mb-8 text-center pt-10">
+        Dashboard Admin
       </h1>
-  
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Usuarios Recientes */}
-        <div className="bg-purple-100 shadow-lg rounded-xl p-6 transition-transform transform hover:scale-105">
-          <h2 className="text-2xl font-bold text-purple-700 mb-4">
-            Usuarios Recientes
-          </h2>
+        <div className="bg-white shadow-md rounded-lg p-4">
+          <h2 className="text-xl font-semibold mb-4">Usuarios Recientes</h2>
           {recentUsers.length > 0 ? (
             recentUsers.map((user) => (
               <div
                 key={user._id}
-                className="bg-purple-200 rounded-lg p-4 mb-4 shadow-md"
+                className="bg-green-200 rounded-lg p-4 mb-4 shadow"
               >
                 <p>
                   <strong>Nombre:</strong> {user.name}
@@ -236,20 +234,20 @@ function AdminDashboard() {
               </div>
             ))
           ) : (
-            <p className="text-gray-600">No hay usuarios recientes</p>
+            <p>No hay usuarios recientes</p>
           )}
         </div>
-  
+
         {/* Usuarios Bloqueados */}
-        <div className="bg-red-100 shadow-lg rounded-xl p-6 transition-transform transform hover:scale-105">
-          <h2 className="text-2xl font-bold text-red-700 mb-4">
-            Usuarios Bloqueados
+        <div className="bg-white shadow-md rounded-lg p-4">
+          <h2 className="text-xl font-semibold mb-4">
+            Usuarios Bloqueados Recientemente
           </h2>
           {blockedUsers.length > 0 ? (
             blockedUsers.map((user) => (
               <div
                 key={user.id}
-                className={`rounded-lg p-4 mb-4 shadow-md ${
+                className={`rounded-lg p-4 mb-4 shadow ${
                   user.currentlyBlocked ? "bg-red-200" : "bg-yellow-200"
                 }`}
               >
@@ -270,11 +268,17 @@ function AdminDashboard() {
                 )}
                 <p>
                   <strong>Actualmente Bloqueado:</strong>{" "}
-                  {user.currentlyBlocked ? "Sí" : "No"}
+                  {user.currentlyBlocked
+                    ? "Sí"
+                    : "No (Desbloqueado Recientemente)"}
+                </p>
+                <p>
+                  <strong>Última Actualización:</strong>{" "}
+                  {new Date(user.lastUpdated).toLocaleString()}
                 </p>
                 {user.currentlyBlocked && (
                   <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600 transition"
+                    className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
                     onClick={() => unblockUser(user.id)}
                   >
                     Desbloquear
@@ -283,20 +287,20 @@ function AdminDashboard() {
               </div>
             ))
           ) : (
-            <p className="text-gray-600">No hay usuarios bloqueados</p>
+            <p>No hay usuarios bloqueados</p>
           )}
         </div>
-  
+
         {/* Intentos Fallidos */}
-        <div className="bg-yellow-100 shadow-lg rounded-xl p-6 transition-transform transform hover:scale-105">
-          <h2 className="text-2xl font-bold text-yellow-700 mb-4">
-            Intentos Fallidos
+        <div className="bg-white shadow-md rounded-lg p-4">
+          <h2 className="text-xl font-semibold mb-4">
+            Recientes Intentos Fallidos
           </h2>
           {failedAttempts.length > 0 ? (
             failedAttempts.map((user) => (
               <div
                 key={user.id}
-                className="bg-yellow-200 rounded-lg p-4 mb-4 shadow-md"
+                className="bg-yellow-200 rounded-lg p-4 mb-4 shadow"
               >
                 <p>
                   <strong>Nombre:</strong> {user.name}
@@ -308,15 +312,89 @@ function AdminDashboard() {
                   <strong>Intentos Fallidos:</strong> {user.failedLoginAttempts}
                 </p>
                 <button
-                  className="bg-red-500 text-white px-4 py-2 rounded mt-2 hover:bg-red-600 transition"
-                  onClick={() => blockUser(user.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded mt-2"
+                  onClick={() => blockUser(user.id)} // Aquí usamos el ID correcto
                 >
                   Bloquear
+                </button>
+                <button
+                  onClick={() => openModal(user.email)} // Envía el email en lugar del ID
+                  className="bg-blue-500 text-white px-4 py-2 rounded mt-2 ml-2"
+                >
+                  Bloquear Usuario Temporalmente
                 </button>
               </div>
             ))
           ) : (
-            <p className="text-gray-600">No hay intentos fallidos recientes</p>
+            <p>No hay intentos fallidos recientes</p>
+          )}
+        </div>
+
+        {/* Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white rounded-lg p-6 shadow-lg w-1/3">
+              <h2 className="text-xl font-semibold mb-4">
+                Bloquear Temporalmente
+              </h2>
+              <p>
+                Ingresa la duración (en horas) para bloquear al usuario con ID:{" "}
+                <strong>{modalData.email}</strong>
+              </p>
+              <input
+                type="number"
+                className="w-full border rounded-lg p-2 mt-4"
+                placeholder="Duración en horas"
+                value={modalData.duration}
+                onChange={(e) =>
+                  setModalData({ ...modalData, duration: e.target.value })
+                }
+              />
+              <div className="flex justify-end mt-4">
+                <button
+                  onClick={closeModal}
+                  className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={() => blockUserTemporarily(modalData)} // Acción del modal
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                  Bloquear
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+
+
+        {/* Inicios de Sesión Recientes */}
+        <div className="bg-white shadow-md rounded-lg p-4">
+          <h2 className="text-xl font-semibold mb-4">
+            Inicios de Sesión Recientes
+          </h2>
+          {recentLogins.length > 0 ? (
+            recentLogins.map((login) => (
+              <div
+                key={login._id}
+                className="bg-blue-200 rounded-lg p-4 mb-4 shadow"
+              >
+                <p>
+                  <strong>Nombre:</strong> {login.name}
+                </p>
+                <p>
+                  <strong>Correo:</strong> {login.email}
+                </p>
+                <p>
+                  <strong>Último Inicio de Sesión:</strong>{" "}
+                  {new Date(login.lastLogin).toLocaleString()}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>No hay inicios de sesión recientes</p>
           )}
         </div>
       </div>
