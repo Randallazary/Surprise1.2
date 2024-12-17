@@ -81,12 +81,13 @@ function TermsPage() {
       return;
     }
 
-    if (new Date(newTerms.effectiveDate) < new Date()) {
+    if (new Date(newTerms.effectiveDate).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)) {
       toast.error(
         "La fecha de vigencia no puede ser anterior a la fecha actual.",
         { position: "top-center" }
       );
       return;
+    
     }
 
     try {
