@@ -78,22 +78,10 @@ function PrivacyPolicyPage() {
   // Crear una nueva política
   const handleCreatePolicy = async () => {
     if (!newPolicy.title || !newPolicy.content || !newPolicy.effectiveDate) {
-      toast.error("Todos los campos son obligatorios.", {
-        position: "top-center",
-      });
+      toast.error("Todos los campos son obligatorios.", { position: "top-center" });
       return;
     }
-
- 
-    if (new Date(newTerms.effectiveDate).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)) {
-      toast.error(
-        "La fecha de vigencia no puede ser anterior a la fecha actual.",
-        { position: "top-center" }
-      );
-      return;
-    
-    }
-
+  
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
@@ -107,11 +95,9 @@ function PrivacyPolicyPage() {
           body: JSON.stringify(newPolicy),
         }
       );
-
+  
       if (response.ok) {
-        toast.success("Política creada exitosamente.", {
-          position: "top-center",
-        });
+        toast.success("Política creada exitosamente.", { position: "top-center" });
         fetchPolicies();
         fetchCurrentPolicy(); // Refresca la política actual
         setNewPolicy({ title: "", content: "", effectiveDate: "" });
@@ -123,6 +109,7 @@ function PrivacyPolicyPage() {
       toast.error("Error en el servidor.", { position: "top-center" });
     }
   };
+  
 
   // Actualizar una política existente
   const handleUpdatePolicy = async () => {
