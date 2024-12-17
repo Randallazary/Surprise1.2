@@ -11,7 +11,7 @@ function PoliticasPage() {
     // Llamada a la API para obtener las políticas actuales
     const fetchPoliticas = async () => {
       try {
-        const response = await fetch(`${CONFIGURACIONES.BASEURL2}/docs/privacy-policy/current`); // Ajusta la URL correcta
+        const response = await fetch(`${CONFIGURACIONES.BASEURL2}/docs/terms/current`); // Ajusta la URL correcta
         if (!response.ok) throw new Error("Error al obtener las políticas.");
         const data = await response.json();
         setPoliticas(data);

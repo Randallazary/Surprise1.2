@@ -20,21 +20,11 @@ function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm py-8 text-center">
           {/* Sección "Encuentra" */}
           <div>
-            <h3 className="font-bold mb-4 text-lg text-white">ENCUENTRA</h3>
+            <h3 className="font-bold mb-4 text-lg text-white">ENCUENTRANOS</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/ubicaciones">
                   <p className="hover:text-red-400 text-lg">Ubicación</p>
-                </Link>
-              </li>
-              <li>
-                <Link href="/marca">
-                  <p className="hover:text-red-400 text-lg">Marca</p>
-                </Link>
-              </li>
-              <li>
-                <Link href="/modelo">
-                  <p className="hover:text-red-400 text-lg">Modelo</p>
                 </Link>
               </li>
             </ul>
@@ -55,8 +45,13 @@ function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/terminos&condiciones">
+                <Link href="/terminos">
                   <p className="hover:text-red-400 text-lg">Términos y Condiciones</p>
+                </Link>
+              </li>
+              <li>
+                <Link href="/deslinde">
+                  <p className="hover:text-red-400 text-lg">Deslinde</p>
                 </Link>
               </li>
             </ul>
@@ -66,11 +61,6 @@ function Footer() {
           <div>
             <h3 className="font-bold mb-4 text-lg text-white">SERVICIO AL CLIENTE</h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="/factura">
-                  <p className="hover:text-green-400 text-lg">Factura</p>
-                </Link>
-              </li>
               <li>
                 <Link href="/contactos">
                   <p className="hover:text-red-400 text-lg">Contáctanos</p>

@@ -9,6 +9,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Nuevo estado para mostrar/ocultar contraseña
   const { login, theme } = useAuth(); // Obtén `login` y `theme` desde el contexto
   const router = useRouter();
 
@@ -91,7 +92,7 @@ const LoginPage = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 relative">
               <label
                 className={`block text-white-700 ${
                   theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
@@ -100,16 +101,26 @@ const LoginPage = () => {
                 Contraseña
               </label>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'} // Mostrar/ocultar contraseña
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Contraseña"
-                className={`w-full p-2 rounded-lg ${
+                className={`w-full p-2 rounded-lg pr-10 ${
                   theme === 'dark'
                     ? 'bg-gray-700 border-gray-600 text-gray-200'
                     : 'bg-white border-gray-300 text-gray-900'
                 }`}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)} // Alternar estado
+                className="absolute right-3 top-9 text-sm font-semibold cursor-pointer"
+                style={{
+                  color: theme === 'dark' ? '#9ae6b4' : '#2f855a',
+                }}
+              >
+                {showPassword ? 'Ocultar' : 'Mostrar'}
+              </button>
             </div>
 
             <button

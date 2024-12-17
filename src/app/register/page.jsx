@@ -23,20 +23,20 @@ function RegisterPage() {
   const [preguntaSecreta, setPreguntaSecreta] = useState("default");
   const [respuestaSecreta, setRespuestaSecreta] = useState("");
 
-  // Función para manejar el token generado por el CAPTCHA
+  const [respuestaError, setRespuestaError] = useState("");
+  const [telefonoError, setTelefonoError] = useState("");
+
   const handleRecaptchaChange = (token) => {
-    setRecaptchaToken(token); // Almacena el token generado por el CAPTCHA
+    setRecaptchaToken(token);
   };
 
   // Función para validar los requisitos de la contraseña
   const checkPasswordStrength = (password) => {
     let strength = 0;
-
     if (password.length >= 8 && password.length <= 30) strength++;
     if (/\d/.test(password)) strength++;
     if (/[a-zA-Z]/.test(password)) strength++;
     if (/[^A-Za-z0-9]/.test(password)) strength++;
-
     setPasswordStrength(strength);
   };
 
@@ -228,6 +228,37 @@ function RegisterPage() {
   };
 
 
+  const validateTelefono = (value) => {
+    if (/^0{10}$/.test(value)) {
+      setTelefonoError("El número no puede ser sólo ceros.");
+      return false;
+    } else if (/^(\d)\1{9}$/.test(value)) {
+      setTelefonoError("El número no puede tener todos los dígitos iguales.");
+      return false;
+    } else if (!/^\d{10}$/.test(value)) {
+      setTelefonoError("El número debe tener exactamente 10 dígitos.");
+      return false;
+    } else {
+      setTelefonoError("");
+      return true;
+    }
+  };
+  
+  const validateRespuestaSecreta = (value) => {
+    if (/[^A-Za-z\s]/.test(value)) {
+      setRespuestaError("Solo se permiten letras y espacios.");
+      return false;
+    } else if (/^\s*$/.test(value)) {
+      setRespuestaError("La respuesta no puede estar vacía.");
+      return false;
+    } else {
+      setRespuestaError("");
+      return true;
+    }
+  };
+  
+
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       {/* Sección izquierda: Formulario */}
@@ -282,23 +313,17 @@ function RegisterPage() {
 
             {/* Teléfono */}
             <div className="mb-4">
-              <label className="block text-gray-700">Teléfono</label>
+              <label className="block">Teléfono</label>
               <input
                 type="tel"
-                placeholder="Teléfono"
                 value={telefono}
                 onChange={(e) => setTelefono(e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded-lg"
-                pattern="[0-9]{10}" // Solo números y exactamente 10 dígitos
-                maxLength="10" // Máximo 10 caracteres
-                onInput={(e) => {
-                  e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Reemplaza cualquier caracter que no sea un número
-                }}
-                required // Campo obligatorio
+                onBlur={() => validateTelefono(telefono)}
+                className="w-full border p-2 rounded-lg"
+                placeholder="10 dígitos"
+                maxLength={10}
               />
-              <p className="text-sm text-gray-500 mt-2">
-                *Ingresa un número de teléfono válido (10 dígitos).
-              </p>
+              {telefonoError && <p className="text-red-500 text-sm">{telefonoError}</p>}
             </div>
 
 
@@ -329,14 +354,15 @@ function RegisterPage() {
 
             {/* Respuesta Secreta */}
             <div className="mb-4">
-              <label className="block text-gray-700">Respuesta Secreta</label>
+              <label className="block">Respuesta Secreta</label>
               <input
                 type="text"
-                placeholder="Respuesta Secreta"
                 value={respuestaSecreta}
                 onChange={(e) => setRespuestaSecreta(e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded-lg"
+                onBlur={() => validateRespuestaSecreta(respuestaSecreta)}
+                className="w-full border p-2 rounded-lg"
               />
+              {respuestaError && <p className="text-red-500 text-sm">{respuestaError}</p>}
             </div>
 
             {/* Contraseña */}
