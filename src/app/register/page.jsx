@@ -7,6 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import { CONFIGURACIONES } from '../config/config';
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 function RegisterPage() {
   const [password, setPassword] = useState("");
@@ -23,6 +24,8 @@ function RegisterPage() {
   const [preguntaSecreta, setPreguntaSecreta] = useState("default");
   const [respuestaSecreta, setRespuestaSecreta] = useState("");
 
+  const [nombreError, setNombreError] = useState("");
+  const [apellidoError, setApellidoError] = useState("");
   const [respuestaError, setRespuestaError] = useState("");
   const [telefonoError, setTelefonoError] = useState("");
 
@@ -89,6 +92,13 @@ function RegisterPage() {
       setPasswordMatch(true);
     }
   };
+  const requisitosContraseña = [
+    { id: 1, texto: "Debe tener al menos 8 caracteres", check: (password) => password.length >= 8 },
+    { id: 2, texto: "Debe contener una letra mayúscula", check: (password) => /[A-Z]/.test(password) },
+    { id: 3, texto: "Debe contener una letra minúscula", check: (password) => /[a-z]/.test(password) },
+    { id: 4, texto: "Debe contener un número", check: (password) => /\d/.test(password) },
+    { id: 5, texto: "Debe contener un carácter especial", check: (password) => /[!@#$%^&*(),.?":{}|<>]/.test(password) },
+  ];
 
   // Color de la barra según la fortaleza
   const getStrengthBarColor = () => {
@@ -203,8 +213,15 @@ function RegisterPage() {
       if (response.ok) {
         Swal.fire({
           icon: "success",
-          title: "Registro exitoso",
-          text: "¡Te has registrado con éxito! verifica tu correo electronico para activar tu cuenta",
+          title: "🎉 ¡Registro Exitoso! 🎁",
+          text: "¡Te has registrado con éxito! Revisa tu correo electrónico para activar tu cuenta.",
+          background: "#fff5e6",
+          color: "#8e44ad",
+          confirmButtonText: "Ir a Iniciar Sesión",
+          confirmButtonColor: "#ff4081",
+          imageUrl: "/images/gift.png", // Puedes poner una URL de imagen de un regalo
+          imageWidth: 100,
+          imageHeight: 100,
         }).then(() => {
           // Redireccionar al login después de que el usuario haga clic en "OK"
           router.push("/login");
@@ -212,21 +229,32 @@ function RegisterPage() {
       } else {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
+          
+          title: "🚨 Oops...",
           text: data.message,
+          background: "#ffe6e6",
+          color: "#c0392b",
+          confirmButtonColor: "#ff4081",
+        }).then(() => {
+
+          router.push("/error");//  // 🔹 Redirige a la página de error del servidor
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Error en el servidor",
-        text: "Ocurrió un error interno.",
+        title: "💥 Error en el servidor",
+        text: "Ocurrió un error interno, inténtalo de nuevo más tarde.",
+        background: "#ffe6e6",
+        color: "#c0392b",
+        confirmButtonColor: "#ff4081",
+      }).then(() => {
+        router.push(`/not-found?error=${encodeURIComponent(error.message)}`);
       });
     } finally {
       setOnSubmitLoading(false); // Dejar de mostrar loading
     }
   };
-
 
   const validateTelefono = (value) => {
     if (/^0{10}$/.test(value)) {
@@ -243,7 +271,7 @@ function RegisterPage() {
       return true;
     }
   };
-  
+
   const validateRespuestaSecreta = (value) => {
     if (/[^A-Za-z\s]/.test(value)) {
       setRespuestaError("Solo se permiten letras y espacios.");
@@ -256,51 +284,72 @@ function RegisterPage() {
       return true;
     }
   };
-  
+  const valiteApellido = (value) => {
+    if (/[^A-Az/z\s]/.test(value)){
+      setApellidoError("solo se permiten letras y espacios");
+    }else if (/^\s*$/.test(value)){
+      setApellidoError("el apellido no puede estar vacio.");
+      return false;
+    }else{
+      setApellidoError("");
+      return true;
+    }
+  };
 
+  const valiteNombre = (value) => {
+    if (/[^A-Az/z\s]/.test(value)){
+      setNombreError("solo se permiten letras y espacios");
+    }else if (/^\s*$/.test(value)){
+      setNombreError("el apellido no puede estar vacio.");
+      return false;
+    }else{
+      setNombreError("");
+      return true;
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      {/* Sección izquierda: Formulario */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-white p-8">
-        <div className="w-full max-w-md">
-          <Link href="/">
-            <p className="text-purple-700 font-bold mb-6 block">&larr; Atrás</p>
-          </Link>
+      <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg">
+        <Link href="/">
+          <p className="text-purple-700 font-bold mb-6 block">&larr; Atrás</p>
+        </Link>
 
-          {/* Logo */}
-          <div className="text-center mb-8"></div>
+        <h2 className="text-2xl font-bold mb-6 text-purple-700 text-center">
+          Crea tu cuenta
+        </h2>
 
-          <h2 className="text-2xl font-bold mb-4 text-purple-700 ">Crea tu cuenta</h2>
-
-          {/* El formulario ahora ejecuta la función onSubmit */}
-          <form onSubmit={onSubmit}>
-            {/* Nombre */}
-            <div className="mb-4">
+        <form onSubmit={onSubmit} className="grid grid-cols-2 gap-6">
+          {/* Columna izquierda */}
+          <div className="space-y-4">
+            <div>
               <label className="block text-gray-700">Nombre</label>
               <input
                 type="text"
                 placeholder="Nombre"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded-lg"
+                onBlur={()=>valiteNombre(nombre)}
+                className="w-full border border p-2 rounded-lg"
               />
+              {nombreError && <p className="text-red-500 text-sm">{nombreError}</p>}
             </div>
 
-            {/* Apellido */}
-            <div className="mb-4">
+            <div>
               <label className="block text-gray-700">Apellido</label>
               <input
                 type="text"
                 placeholder="Apellido"
                 value={apellido}
                 onChange={(e) => setApellido(e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded-lg"
+                onBlur={()=>valiteApellido(apellido)}
+                className="w-full border border p-2 rounded-lg"
               />
+              {apellidoError && <p className="text-red-500 text-sm">{apellidoError}</p>}
+
             </div>
 
-            {/* Correo Electrónico */}
-            <div className="mb-4">
+            <div>
               <label className="block text-gray-700">Correo Electrónico</label>
               <input
                 type="email"
@@ -311,9 +360,8 @@ function RegisterPage() {
               />
             </div>
 
-            {/* Teléfono */}
-            <div className="mb-4">
-              <label className="block">Teléfono</label>
+            <div>
+              <label className="block text-gray-700">Teléfono</label>
               <input
                 type="tel"
                 value={telefono}
@@ -325,12 +373,11 @@ function RegisterPage() {
               />
               {telefonoError && <p className="text-red-500 text-sm">{telefonoError}</p>}
             </div>
+          </div>
 
-
-
-            {/* Pregunta Secreta */}
-            {/* Pregunta Secreta */}
-            <div className="mb-4">
+          {/* Columna derecha */}
+          <div className="space-y-4">
+            <div>
               <label className="block text-gray-700">Pregunta Secreta</label>
               <select
                 value={preguntaSecreta}
@@ -352,11 +399,11 @@ function RegisterPage() {
               </select>
             </div>
 
-            {/* Respuesta Secreta */}
-            <div className="mb-4">
-              <label className="block">Respuesta Secreta</label>
+            <div>
+              <label className="block text-gray-700">Respuesta Secreta</label>
               <input
                 type="text"
+                placeholder="respuesta secreta"
                 value={respuestaSecreta}
                 onChange={(e) => setRespuestaSecreta(e.target.value)}
                 onBlur={() => validateRespuestaSecreta(respuestaSecreta)}
@@ -365,11 +412,10 @@ function RegisterPage() {
               {respuestaError && <p className="text-red-500 text-sm">{respuestaError}</p>}
             </div>
 
-            {/* Contraseña */}
-            <div className="mb-4 relative">
+            <div className="relative">
               <label className="block text-gray-700">Contraseña</label>
               <input
-                type={passwordVisible ? "text" : "password"} // Cambia entre "text" y "password"
+                type={passwordVisible ? "text" : "password"}
                 placeholder="Crear Contraseña"
                 value={password}
                 onChange={handlePasswordChange}
@@ -378,133 +424,70 @@ function RegisterPage() {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute right-9 top-8 text-gray-600"
+                className="absolute right-3 top-8 text-gray-600"
               >
                 {passwordVisible ? "(Ocultar)" : "(Mostrar)"}
               </button>
-              {passwordWarning && (
-                <p className="text-red-500 text-sm mt-1">{passwordWarning}</p>
-              )}
             </div>
 
-            {/* Barra de fortaleza */}
-            <div className="mb-4">
-              <div
-                className={`h-2 rounded-lg ${getStrengthBarColor()}`}
-                style={{ width: `${(passwordStrength / 4) * 100}%` }}
-              ></div>
-              <p className={`mt-1 ${getStrengthTextColor()}`}>
-                {getStrengthText()}
-              </p>
-            </div>
-
-            {/* Confirmar Contraseña */}
-            <div className="mb-4 relative">
-              <label className="block text-gray-700">
-                Confirmar Contraseña
-              </label>
+            <div className="relative">
+              <label className="block text-gray-700">Confirmar Contraseña</label>
               <input
                 type={confirmPasswordVisible ? "text" : "password"}
                 placeholder="Confirmar Contraseña"
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
-                className={`w-full border p-2 rounded-lg ${passwordMatch ? "border-gray-300" : "border-red-500"
-                  }`}
+                className={`w-full border p-2 rounded-lg ${passwordMatch ? "border-gray-300" : "border-red-500"}`}
               />
               <button
                 type="button"
                 onClick={toggleConfirmPasswordVisibility}
-                className="absolute right-9 top-8 text-gray-600"
+                className="absolute right-3 top-8 text-gray-600"
               >
                 {confirmPasswordVisible ? "(Ocultar)" : "(Mostrar)"}
               </button>
               {!passwordMatch && (
-                <p className="text-red-500 text-sm mt-1">
-                  Las contraseñas no coinciden
-                </p>
+                <p className="text-red-500 text-sm mt-1">Las contraseñas no coinciden</p>
               )}
             </div>
 
-            {/* Requisitos de contraseña */}
-            <div className="mb-4 text-sm">
-              <p>Tu contraseña debe tener:</p>
-              <ul className="list-disc pl-5">
-                <li
-                  className={
-                    password.length >= 8 && password.length <= 30
-                      ? "text-green-600"
-                      : "text-gray-600"
-                  }
-                >
-                  De 8 a 30 caracteres
-                </li>
-                <li
-                  className={
-                    /\d/.test(password) ? "text-green-600" : "text-gray-600"
-                  }
-                >
-                  Al menos 1 número
-                </li>
-                <li
-                  className={
-                    /[a-zA-Z]/.test(password)
-                      ? "text-green-600"
-                      : "text-gray-600"
-                  }
-                >
-                  Al menos 1 letra
-                </li>
-                <li
-                  className={
-                    /[^A-Za-z0-9]/.test(password)
-                      ? "text-green-600"
-                      : "text-gray-600"
-                  }
-                >
-                  Un símbolo especial
-                </li>
-              </ul>
+            {/* Requisitos de la contraseña */}
+            <div className="text-sm mt-2">
+              {requisitosContraseña.map((req) => {
+                const cumple = req.check(password);
+                return (
+                  <p key={req.id} className={`flex items-center gap-2 ${cumple ? "text-green-600" : "text-gray-500"}`}>
+                    {cumple ? <FaCheckCircle className="text-green-600" /> : <FaTimesCircle className="text-gray-500" />}
+                    {req.texto}
+                  </p>
+                );
+              })}
             </div>
 
-            <div className="mb-4">
+            <div>
               <ReCAPTCHA
                 sitekey="6LefaGgqAAAAADhSAE93iQBu95_kdAgBoBmrMUb7"
                 onChange={handleRecaptchaChange}
               />
             </div>
+          </div>
 
-            {/* Botón de Crear Cuenta */}
+          {/* Botón Crear Cuenta al centro */}
+          <div className="col-span-2 flex justify-center mt-4">
             <button
               type="submit"
-              className={`w-full py-2 px-4 rounded-lg ${passwordMatch && recaptchaToken && !onSubmitLoading
-                  ? "bg-purple-700"
-                  : "bg-gray-400"
-                } text-white hover:bg-purple-600`}
-              disabled={!passwordMatch || !recaptchaToken || onSubmitLoading} // Deshabilitar cuando está cargando
+              className={`w-1/2 py-2 px-4 rounded-lg ${passwordMatch && recaptchaToken && !onSubmitLoading ? "bg-purple-700" : "bg-gray-400"} text-white hover:bg-purple-600`}
+              disabled={!passwordMatch || !recaptchaToken || onSubmitLoading}
             >
               {onSubmitLoading ? "Cargando..." : "Crear Cuenta"}
             </button>
-
-            {/* Términos y Condiciones */}
-            <span className="text-xs text-gray-500 mt-4">
-              Al dar clic en Crear Cuenta aceptas nuestros{" "}
-              <Link href="/terminos">
-                <p className="text-green-700">Términos y Condiciones</p>
-              </Link>{" "}
-              y nuestra{" "}
-              <Link href="/privacidad">
-                <p className="text-green-700">Política de Privacidad</p>
-              </Link>
-              .
-            </span>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-
-
-
     </div>
   );
+
+
 }
 
 export default RegisterPage;

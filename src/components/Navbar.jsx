@@ -20,10 +20,27 @@ function Navbar() {
   const router = useRouter();
   const {logoUrl} = useLogo();
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const toggleAdminMenu = () => setAdminMenuOpen(!adminMenuOpen);
   const toggleDocumentAdminMenu = () => setDocumentAdminMenuOpen(!documentAdminMenuOpen);
 
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+    setFiltersVisible(event.target.value.length > 0); // Mostrar filtros si hay algo en la búsqueda
+  };
+
+  // Filtrar productos (puedes ajustar esto según tu lógica)
+  const handleFilterChange = () => {
+    // Aquí puedes hacer un filtro real basado en el estado de los filtros
+    console.log("Filtrando por:", { searchQuery, selectedCategory, selectedPriceRange });
+  };
+
+  
   // Este useEffect asegura que el componente se renderice solo después de que esté montado en el cliente
   useEffect(() => {
     setIsMounted(true);
@@ -339,6 +356,7 @@ function Navbar() {
               )}
             </button>
           </div>
+          
         </div>
       </nav>
     </>
