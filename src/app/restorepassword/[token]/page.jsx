@@ -81,6 +81,9 @@ function ResetPasswordPage({ params }) {
     }
   };
 
+  // Deshabilitar el botón si no se cumplen las condiciones
+  const isButtonDisabled = password !== confirmPassword || validatePassword(password).length > 0;
+
   return (
     <div
       className={`min-h-screen flex items-center justify-center ${
@@ -161,9 +164,9 @@ function ResetPasswordPage({ params }) {
 
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || isButtonDisabled}
                 className={`w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500 ${
-                  isLoading ? "opacity-50 cursor-not-allowed" : ""
+                  isLoading || isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
                 {isLoading ? "Procesando..." : "Restablecer Contraseña"}
