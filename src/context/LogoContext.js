@@ -1,4 +1,5 @@
 // context/LogoContext.js
+"use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { CONFIGURACIONES } from '../app/config/config'; // Importar las configuraciones
 const LogoContext = createContext();
@@ -11,12 +12,14 @@ export function LogoProvider({ children }) {
       const response = await fetch(`${CONFIGURACIONES.BASEURL2}/logo/ultimo`);
       if (response.ok) {
         const data = await response.json();
+        // Aseguramos que el navegador no use caché, añadiendo un timestamp
         setLogoUrl(`${data.url}?timestamp=${new Date().getTime()}`);
       }
     } catch (error) {
       console.error("Error al obtener el logo:", error);
     }
   };
+
 
   useEffect(() => {
     fetchLogo(); // Cargar logo al iniciar la app

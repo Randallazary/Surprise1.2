@@ -19,8 +19,17 @@ module.exports = {
         frenchGray: '#EDEDED',
         background: "var(--background)",
         foreground: "var(--foreground)",
+        
+
+      },
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(45deg, #ab46d2, #6081ff, #00aaff, #00caff, #00e4f9, #00e5f5, #00e6f1, #00e7ec, #00d2fc, #00b9ff, #009cff, #0079ff), linear-gradient(135deg, #ab46d2, #6081ff, #00aaff, #00caff, #00e4f9, #00e5f5, #00e6f1, #00e7ec, #00d2fc, #00b9ff, #009cff, #0079ff)',
+
       },
     },
   },
   plugins: [],
+
 };
+
+

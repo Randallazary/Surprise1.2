@@ -19,6 +19,7 @@ const LoginPage = () => {
     try {
       const result = await login(email, password);
       if (result.success) {
+        console.log("Usuario completo tras login:", result.user);
         setMessage('Inicio de sesión exitoso');
         router.push('/');
       } else {
@@ -30,13 +31,13 @@ const LoginPage = () => {
     }
   };
 
+  
   return (
     <div
-      className={`min-h-screen flex flex-col justify-center items-center ${
-        theme === 'dark'
+      className={`min-h-screen flex flex-col justify-center items-center ${theme === 'dark'
           ? 'bg-gray-900 text-gray-100'
           : 'bg-white text-gray-900'
-      }`}
+        }`}
       style={{
         backgroundImage:
           theme === 'light' ? "../assets/fondoLogin.jpg" : 'none',
@@ -45,18 +46,16 @@ const LoginPage = () => {
       }}
     >
       <div
-        className={`w-full md:w-1/2 flex flex-col justify-center items-center p-8 ${
-          theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-        }`}
+        className={`w-full md:w-1/2 flex flex-col justify-center items-center p-8 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+          }`}
       >
         <div className="w-full max-w-md">
           <Link href="/">
             <p
-              className={`font-bold mb-6 flex ${
-                theme === 'dark'
+              className={`font-bold mb-6 flex ${theme === 'dark'
                   ? 'text-purple-400 hover:text-purple-300'
                   : 'text-purple-700 font-bold mb-6 flex hover:text-purple-600'
-              }`}
+                }`}
             >
               &larr; Atrás
             </p>
@@ -73,9 +72,8 @@ const LoginPage = () => {
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
-                className={`block text-white-700 ${
-                  theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                }`}
+                className={`block text-white-700 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}
               >
                 Correo electrónico
               </label>
@@ -84,19 +82,17 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Correo electrónico"
-                className={`w-full p-2 rounded-lg ${
-                  theme === 'dark'
+                className={`w-full p-2 rounded-lg ${theme === 'dark'
                     ? 'bg-gray-700 border-gray-600 text-gray-200'
                     : 'bg-white border-gray-300 text-gray-900'
-                }`}
+                  }`}
               />
             </div>
 
             <div className="mb-4 relative">
               <label
-                className={`block text-white-700 ${
-                  theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                }`}
+                className={`block text-white-700 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}
               >
                 Contraseña
               </label>
@@ -105,11 +101,10 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Contraseña"
-                className={`w-full p-2 rounded-lg pr-10 ${
-                  theme === 'dark'
+                className={`w-full p-2 rounded-lg pr-10 ${theme === 'dark'
                     ? 'bg-gray-700 border-gray-600 text-gray-200'
                     : 'bg-white border-gray-300 text-gray-900'
-                }`}
+                  }`}
               />
               <button
                 type="button"
@@ -131,9 +126,8 @@ const LoginPage = () => {
             </button>
 
             <p
-              className={`text-sm mt-4 text-center ${
-                theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
-              }`}
+              className={`text-sm mt-4 text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
+                }`}
             >
               ¿No tienes una cuenta?{' '}
               <Link href="/register">
@@ -149,9 +143,8 @@ const LoginPage = () => {
             </p>
 
             <p
-              className={`text-sm mt-4 text-center ${
-                theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
-              }`}
+              className={`text-sm mt-4 text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
+                }`}
             >
               ¿Olvidaste tu contraseña?{' '}
               <Link href="/resetpassword">

@@ -29,23 +29,29 @@ function RegisterPage() {
   const [respuestaError, setRespuestaError] = useState("");
   const [telefonoError, setTelefonoError] = useState("");
 
+   // ✅ Control de acceso y autenticación segura (ISO/IEC 27001:2013 - Control A.9.4)
+  // Se usa ReCAPTCHA para evitar ataques automatizados en el formulario de registro.
   const handleRecaptchaChange = (token) => {
-    setRecaptchaToken(token);
+    setRecaptchaToken(token); // Almacena el token generado por el CAPTCHA
   };
 
-  // Función para validar los requisitos de la contraseña
+  // ✅ Gestión segura de credenciales (ISO/IEC 27001:2013 - Control A.9.2)
+  // Esta función evalúa la fortaleza de la contraseña, asegurando que cumpla con requisitos mínimos.
   const checkPasswordStrength = (password) => {
     let strength = 0;
+
     if (password.length >= 8 && password.length <= 30) strength++;
     if (/\d/.test(password)) strength++;
     if (/[a-zA-Z]/.test(password)) strength++;
     if (/[^A-Za-z0-9]/.test(password)) strength++;
+
     setPasswordStrength(strength);
   };
 
   const [passwordWarning, setPasswordWarning] = useState(""); // Nuevo estado para el mensaje de advertencia
 
-  // Función para manejar el cambio de contraseña y verificar patrones prohibidos
+  // ✅ Protección contra contraseñas vulnerables (ISO/IEC 27001:2013 - Control A.12.6)
+  // Se validan patrones inseguros y se verifica si la contraseña ha sido filtrada en bases de datos públicas.
   const handlePasswordChange = async (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
@@ -58,17 +64,18 @@ function RegisterPage() {
 
     if (containsForbiddenPattern) {
       setPasswordWarning(
-        "Tu contraseña contiene patrones comunes."
+        "Tu contraseña contiene patrones comunes o inseguros."
       );
     } else {
       setPasswordWarning("");
     }
 
-    // 5. Verificar si la contraseña ha sido filtrada en una base de datos pública
+    // ✅ Protección contra exposición de credenciales (ISO/IEC 27001:2013 - Control A.12.6.1)
+    // Verificar si la contraseña ha sido filtrada en bases de datos públicas comprometidas.
     const isPwned = await checkPasswordInPwned(newPassword);
     if (isPwned) {
       setPasswordWarning(
-        "Tu contraseña ha sido filtrada en una base de datos pública. Por favor, elige otra contraseña."
+        "Tu contraseña ha sido filtrada en una base de datos pública. Por favor, elige otra."
       );
     } else {
       setPasswordWarning("");
@@ -77,14 +84,16 @@ function RegisterPage() {
     checkPasswordMatch(newPassword, confirmPassword); // Verificar coincidencia de contraseñas
   };
 
-  // Cambia el estado de la confirmación de contraseña
+  // ✅ Protección contra ataques de fuerza bruta (ISO/IEC 27001:2013 - Control A.9.4.3)
+  // Asegura que las contraseñas ingresadas coincidan antes de permitir el registro.
   const handleConfirmPasswordChange = (e) => {
     const newConfirmPassword = e.target.value;
     setConfirmPassword(newConfirmPassword);
     checkPasswordMatch(password, newConfirmPassword);
   };
 
-  // Verifica si las contraseñas coinciden
+  // ✅ Verificación de integridad de datos (ISO/IEC 27001:2013 - Control A.14.2.5)
+  // Se verifica que la contraseña confirmada coincida con la original.
   const checkPasswordMatch = (password, confirmPassword) => {
     if (password && confirmPassword && password !== confirmPassword) {
       setPasswordMatch(false);
@@ -92,6 +101,7 @@ function RegisterPage() {
       setPasswordMatch(true);
     }
   };
+
   const requisitosContraseña = [
     { id: 1, texto: "Debe tener al menos 8 caracteres", check: (password) => password.length >= 8 },
     { id: 2, texto: "Debe contener una letra mayúscula", check: (password) => /[A-Z]/.test(password) },

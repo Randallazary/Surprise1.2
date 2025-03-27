@@ -14,26 +14,29 @@ function AdminLogoPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  // Redirigir a login si no está autenticado o no es admin
+  // Verificar si el usuario es admin; si no, redirigir
   useEffect(() => {
     if (!isAuthenticated || user?.role !== "admin") {
-      window.location.href = "/login";
+      router.push("/login");
     }
   }, [isAuthenticated, user]);
 
-  // Validar tipo de archivo en el frontend
+  // Manejar selección de archivo
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
+    if (file) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      if (!allowedTypes.includes(file.type)) {
+        setLogo(null);
+        setMessage("Formato de imagen no permitido. Usa JPG, PNG o GIF.");
+        return;
+      }
       setLogo(file);
       setMessage("");
-    } else {
-      setLogo(null);
-      setMessage("Por favor, selecciona un archivo de imagen válido (JPG, PNG, etc.).");
     }
   };
 
-  // Subir el archivo al backend
+  // Subir el logo a tu servidor
   const handleUploadLogo = async () => {
     if (!logo) {
       setMessage("Selecciona un archivo antes de subir.");
@@ -45,14 +48,11 @@ function AdminLogoPage() {
     formData.append("file", logo);
     formData.append("autor", user.name);
 
-    const token = localStorage.getItem("token");
-
     try {
+      // Enviamos la cookie automáticamente con credentials: 'include'
       const response = await fetch(`${CONFIGURACIONES.BASEURL2}/logo/subir`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: "include", // <-- Enviar cookie con el token
         body: formData,
       });
 
@@ -60,7 +60,8 @@ function AdminLogoPage() {
         const data = await response.json();
         setMessage("Logo subido correctamente.");
         setLogo(null);
-        await fetchLogo(); // Refresca el logo en el frontend
+        // Refresca el logo en el front
+        await fetchLogo();
       } else {
         const error = await response.json();
         setMessage(error.message || "Error al subir el logo.");
@@ -75,31 +76,28 @@ function AdminLogoPage() {
 
   return (
     <div
-      className={`container mx-auto py-8  ${
+      className={`container mx-auto py-8 pt-36 ${
         theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"
       }`}
     >
-      <h1 className="text-4xl font-extrabold text-center mb-10 underline decoration-wavy decoration-purple-500">
+      <h1 className="text-3xl font-bold text-center mb-8">
         Administración de Logo
       </h1>
-  
+
       <div
-        className={`shadow-lg rounded-2xl p-8 transform transition duration-300 ${
+        className={`shadow-md rounded-lg overflow-hidden p-6 ${
           theme === "dark"
-            ? "bg-gray-800 text-gray-100 "
-            : "bg-purple-200 text-gray-900 "
+            ? "bg-gray-800 text-gray-100"
+            : "bg-white text-gray-900"
         }`}
       >
-        {/* Encabezado del formulario */}
-        <h2 className="text-3xl font-bold mb-6 text-center text-yellow-500">
-          Subir Nuevo Logo
-        </h2>
-  
+        <h2 className="text-2xl font-bold mb-4">Subir Nuevo Logo</h2>
+
         {/* Input para subir imágenes */}
-        <div className="mb-6">
+        <div className="mb-4">
           <label
-            className={`block mb-2 text-lg font-semibold ${
-              theme === "dark" ? "text-gray-300" : "text-purple-700"
+            className={`block mb-2 ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
             }`}
           >
             Selecciona un logo
@@ -108,38 +106,34 @@ function AdminLogoPage() {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className={`w-full border p-3 rounded-lg focus:outline-none focus:ring-4 transition ${
+            className={`w-full border p-2 rounded-lg ${
               theme === "dark"
-                ? "bg-gray-700 border-gray-600 text-gray-200 focus:ring-yellow-500"
-                : "border-purple-400 bg-purple-100 focus:ring-purple-500"
+                ? "bg-gray-700 border-gray-600 text-gray-200"
+                : "border-gray-300"
             }`}
           />
         </div>
-  
+
         {/* Botón para subir */}
-        <div className="text-center mb-6">
-          <button
-            onClick={handleUploadLogo}
-            disabled={isLoading}
-            className={`py-3 px-6 rounded-full font-bold text-lg shadow-md transform transition-all ${
-              isLoading
-                ? "bg-gray-400 text-gray-800 cursor-not-allowed"
-                : theme === "dark"
-                ? "bg-green-600 text-white hover:bg-green-500 hover:scale-110"
-                : "bg-pink-500 text-white hover:bg-pink-400 hover:scale-110"
-            }`}
-          >
-            {isLoading ? "Subiendo..." : "Subir Logo"}
-          </button>
-        </div>
-  
-        {/* Mensajes de estado */}
+        <button
+          onClick={handleUploadLogo}
+          disabled={isLoading}
+          className={`py-2 px-4 rounded ${
+            isLoading
+              ? "bg-gray-400"
+              : theme === "dark"
+              ? "bg-green-600 text-white hover:bg-green-700"
+              : "bg-green-700 text-white hover:bg-green-800"
+          }`}
+        >
+          {isLoading ? "Subiendo..." : "Subir Logo"}
+        </button>
+
+        {/* Mostrar mensajes */}
         {message && (
           <p
-            className={`mt-6 text-center text-xl font-semibold transition-all ${
-              message.includes("Error")
-                ? "text-red-500 animate-pulse"
-                : "text-green-500 animate-bounce"
+            className={`mt-4 text-center ${
+              message.includes("Error") ? "text-red-500" : "text-green-500"
             }`}
           >
             {message}
@@ -148,7 +142,6 @@ function AdminLogoPage() {
       </div>
     </div>
   );
-  
 }
 
 export default AdminLogoPage;

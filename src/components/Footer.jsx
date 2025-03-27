@@ -4,13 +4,11 @@ import {
   FaBoxOpen,
   FaBriefcase,
   FaFacebook,
-  FaTwitter,
-  FaYoutube,
   FaInstagram,
   FaWhatsapp,
   FaTiktok,
 } from "react-icons/fa"; // Importamos los íconos
-import Image from "next/image";
+
 
 function Footer() {
   return (
@@ -23,7 +21,7 @@ function Footer() {
             <h3 className="font-bold mb-4 text-lg text-white">ENCUENTRANOS</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/ubicaciones">
+                <Link href="/ubicacion">
                   <p className="hover:text-red-400 text-lg">Ubicación</p>
                 </Link>
               </li>
@@ -41,7 +39,7 @@ function Footer() {
               </li>
               <li>
                 <Link href="/politicas">
-                  <p className="hover:text-red-400 text-lg">Políticas de Privacidad</p>
+                  <p className="hover:text-red-400 text-lg">Políticas de privacidad</p>
                 </Link>
               </li>
               <li>
@@ -62,13 +60,18 @@ function Footer() {
             <h3 className="font-bold mb-4 text-lg text-white">SERVICIO AL CLIENTE</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/contactos">
+                <Link href="/contactanos">
                   <p className="hover:text-red-400 text-lg">Contáctanos</p>
                 </Link>
               </li>
               <li>
-                <Link href="/faq">
+                <Link href="/Faq">
                   <p className="hover:text-red-400 text-lg">Preguntas frecuentes</p>
+                </Link>
+              </li>
+              <li>
+                <Link href="/PolitivasPriv">
+                  <p className="hover:text-red-400 text-lg">Politicas de envio</p>
                 </Link>
               </li>
             </ul>
