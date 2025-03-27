@@ -375,7 +375,7 @@ function AdminProductsPage() {
                     Gorras
                   </option>
                   <option value="Playeras">
-                    Playeras
+                    Playeras  
                   </option>
                   <option value="Tazas">
                     Tazas
