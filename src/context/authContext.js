@@ -73,7 +73,7 @@ useEffect(() => {
       }
     } catch (error) {
       console.error('Error en la solicitud de login:', error);
-      return { success: false, message: 'Error interno del servidor' };
+      //return { success: false, message: 'Error interno del servidor' };
     }
   };
 
