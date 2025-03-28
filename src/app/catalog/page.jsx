@@ -76,6 +76,7 @@ function ProductosPage() {
     setFiltroRangoPrecio(newValue);
   };
 
+
   return (
     <Suspense fallback={<p>Cargando...</p>}>
       <div className={`container mx-auto py-8 pt-36 ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"}`}>
@@ -84,25 +85,25 @@ function ProductosPage() {
           <div className="w-full md:w-1/4">
             <div className={`shadow-md rounded-lg overflow-hidden p-6 mb-8 ${theme === "dark" ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"}`}>
               <h2 className="text-2xl font-bold mb-4">Filtrar Productos</h2>
-              
+
               {/* Buscador general */}
               <div className="mb-6">
                 <label className="block mb-2">Buscar</label>
-                <input 
-                  type="text" 
-                  placeholder="Buscar productos..." 
-                  value={busquedaGeneral} 
-                  onChange={(e) => setBusquedaGeneral(e.target.value)} 
-                  className={`w-full border p-2 rounded-lg ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "border-gray-300"}`} 
+                <input
+                  type="text"
+                  placeholder="Buscar productos..."
+                  value={busquedaGeneral}
+                  onChange={(e) => setBusquedaGeneral(e.target.value)}
+                  className={`w-full border p-2 rounded-lg ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "border-gray-300"}`}
                 />
               </div>
-              
+
               {/* Filtro por categoría */}
               <div className="mb-6">
                 <label className="block mb-2">Categoría</label>
-                <select 
-                  value={filtroCategoria} 
-                  onChange={(e) => setFiltroCategoria(e.target.value)} 
+                <select
+                  value={filtroCategoria}
+                  onChange={(e) => setFiltroCategoria(e.target.value)}
                   className={`w-full border p-2 rounded-lg ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "border-gray-300"}`}
                 >
                   <option value="">Selecciona una categoría</option>
@@ -118,72 +119,108 @@ function ProductosPage() {
               {/* Filtro por rango de precio con Slider */}
               <div className="mb-6">
                 <label className="block mb-2">Rango de Precio</label>
-                <Slider 
-                  value={filtroRangoPrecio} 
-                  onChange={handlePriceChange} 
-                  valueLabelDisplay="auto" 
-                  min={0} 
-                  max={1000} 
-                  step={10} 
+                <Slider
+                  value={filtroRangoPrecio}
+                  onChange={handlePriceChange}
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={1000}
+                  step={10}
                   className="text-blue-400"
                 />
               </div>
             </div>
           </div>
 
-          {/* Lista de productos */}
-          <div className="w-full md:w-3/4">
-            {isLoading ? (
-              <p className="text-center">Cargando productos...</p>
-            ) : error ? (
-              <p className="text-center text-red-500">{error}</p>
-            ) : (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {productos.map((producto) => (
-                    <div 
-                      key={producto.id} 
-                      className={`shadow-md rounded-lg overflow-hidden flex flex-col h-full ${theme === "dark" ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"}`}
-                    >
-                      <div className="flex items-center justify-center min-h-[200px] max-h-[300px] overflow-hidden">
-                        {producto.images?.length > 0 ? (
-                          <Image 
-                            src={producto.images[0].url} 
-                            alt={producto.name} 
-                            width={300} 
-                            height={300} 
-                            className="w-full h-auto object-contain" 
-                          />
-                        ) : (
-                          <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center">
-                            <span className="text-gray-500">Sin imagen</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-4 flex-grow flex flex-col">
-                        <h2 className="text-xl font-bold mb-2">{producto.name}</h2>
-                        <p className="text-sm mb-2">{producto.description}</p>
-                        <div className="mt-auto">
-                          <p className="text-lg font-bold">${producto.price}</p>
-                          <p className="text-sm">Categoría: {producto.category}</p>
-                          <p className="text-sm">Stock: {producto.stock}</p>
+         {/* Lista de productos */}
+        <div className="w-full md:w-3/4">
+          {isLoading ? (
+            <p className="text-center">Cargando productos...</p>
+          ) : error ? (
+            <p className="text-center text-red-500">{error}</p>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {productos.map((producto) => (
+                  <div 
+                    key={producto.id} 
+                    className={`shadow-md rounded-lg overflow-hidden flex flex-col h-full transition-all duration-300 ${
+                      theme === "dark" 
+                        ? "bg-gray-800 text-gray-100 hover:bg-gray-700" 
+                        : "bg-white text-gray-900 hover:bg-gray-50"
+                    }`}
+                  >
+                    {/* Contenedor de imagen optimizado para tema oscuro/claro */}
+                    <div className={`relative w-full h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden flex items-center justify-center ${
+                      theme === "dark" ? "bg-gray-700" : "bg-gray-100"
+                    }`}>
+                      {producto.images?.length > 0 ? (
+                        <Image 
+                          src={producto.images[0].url} 
+                          alt={producto.name} 
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                          className="object-scale-down p-2 transition-transform duration-300 hover:scale-105"
+                          priority={false}
+                          style={{
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                          }}
+                        />
+                      ) : (
+                        <div className={`w-full h-full flex items-center justify-center ${
+                          theme === "dark" ? "bg-gray-600" : "bg-gray-200"
+                        }`}>
+                          <span className={theme === "dark" ? "text-gray-300" : "text-gray-500"}>
+                            Sin imagen
+                          </span>
                         </div>
+                      )}
+                    </div>
+                    
+                    {/* Contenido del producto */}
+                    <div className="p-4 flex-grow flex flex-col">
+                      <h2 className="text-xl font-bold mb-2">{producto.name}</h2>
+                      <p className={`text-sm mb-2 ${
+                        theme === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}>
+                        {producto.description}
+                      </p>
+                      <div className="mt-auto">
+                        <p className="text-lg font-bold text-green-500">${producto.price}</p>
+                        <p className={`text-sm ${
+                          theme === "dark" ? "text-gray-400" : "text-gray-500"
+                        }`}>
+                          Categoría: {producto.category}
+                        </p>
+                        <p className={`text-sm ${
+                          theme === "dark" ? "text-gray-400" : "text-gray-500"
+                        }`}>
+                          Stock: {producto.stock}
+                        </p>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
 
-                {/* Paginación */}
-                {paginacion.totalPaginas > 1 && (
-                  <div className="flex justify-center mt-8">
-                    {Array.from({ length: paginacion.totalPaginas }, (_, i) => (
-                      <button
-                        key={i + 1}
-                        onClick={() => cambiarPagina(i + 1)}
-                        className={`mx-1 px-4 py-2 rounded ${paginacion.paginaActual === i + 1 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"}`}
-                      >
-                        {i + 1}
-                      </button>
+              {/* Paginación (con estilos para tema oscuro) */}
+              {paginacion.totalPaginas > 1 && (
+                <div className="flex justify-center mt-8">
+                  {Array.from({ length: paginacion.totalPaginas }, (_, i) => (
+                    <button
+                      key={i + 1}
+                      onClick={() => cambiarPagina(i + 1)}
+                      className={`mx-1 px-4 py-2 rounded transition-colors ${
+                        paginacion.paginaActual === i + 1
+                          ? "bg-green-600 text-white"
+                          : theme === "dark"
+                            ? "bg-gray-700 text-gray-200 hover:bg-gray-600"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
                     ))}
                   </div>
                 )}
