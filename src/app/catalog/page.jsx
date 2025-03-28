@@ -1,11 +1,25 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../context/authContext";
 import { CONFIGURACIONES } from "../config/config";
 import { useSearchParams } from "next/navigation";
 import Image from 'next/image';
 import Slider from '@mui/material/Slider';
+import { Suspense } from 'react';
+import { motion } from 'framer-motion';
+
+export default function ProductosPageWrapper() {
+  return (
+    <Suspense fallback={
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    }>
+      <ProductosPage />
+    </Suspense>
+  );
+}
 
 function ProductosPage() {
   const { user, isAuthenticated, theme } = useAuth();
@@ -25,6 +39,20 @@ function ProductosPage() {
 
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search");
+
+  // Animaciones
+  const cardVariants = {
+    hover: {
+      y: -10,
+      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  };
+
+  const buttonVariants = {
+    hover: { scale: 1.05, transition: { duration: 0.2 } },
+    tap: { scale: 0.95 }
+  };
 
   useEffect(() => {
     if (searchTerm) {
@@ -76,81 +104,81 @@ function ProductosPage() {
     setFiltroRangoPrecio(newValue);
   };
 
-
   return (
-    <Suspense fallback={<p>Cargando...</p>}>
-      <div className={`container mx-auto py-8 pt-36 ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"}`}>
-        <h1 className="text-3xl font-bold text-center mb-8">Productos</h1>
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="w-full md:w-1/4">
-            <div className={`shadow-md rounded-lg overflow-hidden p-6 mb-8 ${theme === "dark" ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"}`}>
-              <h2 className="text-2xl font-bold mb-4">Filtrar Productos</h2>
+    <div className={`container mx-auto py-8 pt-36 ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"}`}>
+      <h1 className="text-3xl font-bold text-center mb-8">Productos</h1>
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Filtros */}
+        <div className="w-full md:w-1/4">
+          <div className={`shadow-md rounded-lg overflow-hidden p-6 mb-8 ${theme === "dark" ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"}`}>
+            <h2 className="text-2xl font-bold mb-4">Filtrar Productos</h2>
+            
+            <div className="mb-6">
+              <label className="block mb-2">Buscar</label>
+              <input
+                type="text"
+                placeholder="Buscar productos..."
+                value={busquedaGeneral}
+                onChange={(e) => setBusquedaGeneral(e.target.value)}
+                className={`w-full border p-2 rounded-lg ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "border-gray-300"}`}
+              />
+            </div>
 
-              {/* Buscador general */}
-              <div className="mb-6">
-                <label className="block mb-2">Buscar</label>
-                <input
-                  type="text"
-                  placeholder="Buscar productos..."
-                  value={busquedaGeneral}
-                  onChange={(e) => setBusquedaGeneral(e.target.value)}
-                  className={`w-full border p-2 rounded-lg ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "border-gray-300"}`}
-                />
-              </div>
+            <div className="mb-6">
+              <label className="block mb-2">Categoría</label>
+              <select
+                value={filtroCategoria}
+                onChange={(e) => setFiltroCategoria(e.target.value)}
+                className={`w-full border p-2 rounded-lg ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "border-gray-300"}`}
+              >
+                <option value="">Selecciona una categoría</option>
+                <option value="Peluches">Peluches</option>
+                <option value="Juguetes">Juguetes</option>
+                <option value="Playeras">Playeras</option>
+                <option value="Tazas">Tazas</option>
+                <option value="Gorras">Gorras</option>
+                <option value="Accesorios">Accesorios</option>
+              </select>
+            </div>
 
-              {/* Filtro por categoría */}
-              <div className="mb-6">
-                <label className="block mb-2">Categoría</label>
-                <select
-                  value={filtroCategoria}
-                  onChange={(e) => setFiltroCategoria(e.target.value)}
-                  className={`w-full border p-2 rounded-lg ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "border-gray-300"}`}
-                >
-                  <option value="">Selecciona una categoría</option>
-                  <option value="Peluches">Peluches</option>
-                  <option value="Jugetes">Jugetes</option>
-                  <option value="Playeras">Playeras</option>
-                  <option value="Tazas">Tazas</option>
-                  <option value="Gorras">Gorras</option>
-                  <option value="Accesorios">Accesorios</option>
-                </select>
-              </div>
-
-              {/* Filtro por rango de precio con Slider */}
-              <div className="mb-6">
-                <label className="block mb-2">Rango de Precio</label>
-                <Slider
-                  value={filtroRangoPrecio}
-                  onChange={handlePriceChange}
-                  valueLabelDisplay="auto"
-                  min={0}
-                  max={1000}
-                  step={10}
-                  className="text-blue-400"
-                />
-              </div>
+            <div className="mb-6">
+              <label className="block mb-2">Rango de Precio</label>
+              <Slider
+                value={filtroRangoPrecio}
+                onChange={handlePriceChange}
+                valueLabelDisplay="auto"
+                min={0}
+                max={1000}
+                step={10}
+                className="text-blue-400"
+              />
             </div>
           </div>
+        </div>
 
-         {/* Lista de productos */}
+        {/* Lista de productos */}
         <div className="w-full md:w-3/4">
           {isLoading ? (
-            <p className="text-center">Cargando productos...</p>
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
           ) : error ? (
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {productos.map((producto) => (
-                  <div 
-                    key={producto.id} 
-                    className={`shadow-md rounded-lg overflow-hidden flex flex-col h-full transition-all duration-300 ${
+                  <motion.div
+                    key={producto.id}
+                    initial="rest"
+                    whileHover="hover"
+                    variants={cardVariants}
+                    className={`shadow-md rounded-lg overflow-hidden flex flex-col h-full ${
                       theme === "dark" 
                         ? "bg-gray-800 text-gray-100 hover:bg-gray-700" 
                         : "bg-white text-gray-900 hover:bg-gray-50"
                     }`}
                   >
-                    {/* Contenedor de imagen optimizado para tema oscuro/claro */}
                     <div className={`relative w-full h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden flex items-center justify-center ${
                       theme === "dark" ? "bg-gray-700" : "bg-gray-100"
                     }`}>
@@ -160,12 +188,8 @@ function ProductosPage() {
                           alt={producto.name} 
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                          className="object-scale-down p-2 transition-transform duration-300 hover:scale-105"
+                          className="object-contain p-2"
                           priority={false}
-                          style={{
-                            maxWidth: '100%',
-                            maxHeight: '100%',
-                          }}
                         />
                       ) : (
                         <div className={`w-full h-full flex items-center justify-center ${
@@ -178,7 +202,6 @@ function ProductosPage() {
                       )}
                     </div>
                     
-                    {/* Contenido del producto */}
                     <div className="p-4 flex-grow flex flex-col">
                       <h2 className="text-xl font-bold mb-2">{producto.name}</h2>
                       <p className={`text-sm mb-2 ${
@@ -199,12 +222,34 @@ function ProductosPage() {
                           Stock: {producto.stock}
                         </p>
                       </div>
+
+                      <div className="flex gap-2 mt-4">
+                        <motion.button
+                          variants={buttonVariants}
+                          whileHover="hover"
+                          whileTap="tap"
+                          className={`flex-1 py-2 rounded-lg font-medium ${
+                            theme === "dark" 
+                              ? "bg-gray-600 hover:bg-gray-500" 
+                              : "bg-gray-200 hover:bg-gray-300"
+                          }`}
+                        >
+                          Ver detalles
+                        </motion.button>
+                        <motion.button
+                          variants={buttonVariants}
+                          whileHover="hover"
+                          whileTap="tap"
+                          className="flex-1 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium"
+                        >
+                          Comprar
+                        </motion.button>
+                      </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
-              {/* Paginación (con estilos para tema oscuro) */}
               {paginacion.totalPaginas > 1 && (
                 <div className="flex justify-center mt-8">
                   {Array.from({ length: paginacion.totalPaginas }, (_, i) => (
@@ -221,16 +266,14 @@ function ProductosPage() {
                     >
                       {i + 1}
                     </button>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
-    </Suspense>
+    </div>
   );
 }
 
-export default ProductosPage;
