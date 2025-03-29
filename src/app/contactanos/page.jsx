@@ -24,13 +24,13 @@ export default function ContactPage() {
           </p>
           <div className="space-y-4">
             <p className="flex items-center gap-2">
-              📍 <strong>Dirección:</strong> 123 Calle Principal, Ciudad, País
+              📍 <strong>Dirección:</strong> Avenida Juarez, Col.Centro Huejutla de Reyes Hidalgo
             </p>
             <p className="flex items-center gap-2">
-              📧 <strong>Email:</strong> contacto@miempresa.com
+              📧 <strong>Email:</strong> surprisecentro@gmail.com
             </p>
             <p className="flex items-center gap-2">
-              📞 <strong>Teléfono:</strong> +123 456 7890
+              📞 <strong>Teléfono:</strong> 77 13 53 88 53
             </p>
           </div>
         </div>

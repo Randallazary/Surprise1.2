@@ -25,15 +25,15 @@ export default function UbicacionPage() {
           <div className="space-y-4">
             <p className="flex items-center gap-2">
               <FaMapMarkerAlt className="text-red-500" />
-              <strong>Dirección:</strong> 123 Calle Principal, Ciudad, País
+              <strong>Dirección:</strong> Avenida Juarez, Col.Centro Huejutla de Reyes Hidalgo
             </p>
             <p className="flex items-center gap-2">
               <FaEnvelope className="text-blue-500" />
-              <strong>Email:</strong> contacto@miempresa.com
+              <strong>Email:</strong> surprisecentro@gmail.com
             </p>
             <p className="flex items-center gap-2">
               <FaPhone className="text-green-500" />
-              <strong>Teléfono:</strong> +123 456 7890
+              <strong>Teléfono:</strong> 77 13 53 88 53 
             </p>
           </div>
         </div>

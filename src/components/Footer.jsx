@@ -81,7 +81,10 @@ function Footer() {
           <div>
             <h3 className="font-bold mb-4 text-lg text-white">Síguenos</h3>
             <div className="flex justify-center space-x-6 py-4">
+              <link href="https://www.facebook.com/share/1BtkYyLYmj/"passHerf legacyBehavior/>
+              <a target="_black" rel="noopener noreferrer" >
               <FaFacebook className="w-6 h-6 cursor-pointer hover:text-red-400" />
+              </a>
               <FaInstagram className="w-6 h-6 cursor-pointer hover:text-red-400" />
               <FaWhatsapp className="w-6 h-6 cursor-pointer hover:text-red-400" />
               <FaTiktok className="w-6 h-6 cursor-pointer hover:text-red-400" />
