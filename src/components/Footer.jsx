@@ -95,8 +95,10 @@ function Footer() {
                   <FaFacebook className="w-6 h-6 cursor-pointer" />
                 </a>
               </Link>
+
+              {/*Instagram */}
               <Link
-                href="https://www.facebook.com/share/1BtkYyLYmj/"
+                href="https://www.instagram.com/disenosyregalossurprise?igsh=ZXI2Ym0xNmxrY2xl"
                 passHref
                 legacyBehavior>
                   <a
