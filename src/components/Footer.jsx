@@ -95,7 +95,19 @@ function Footer() {
                   <FaFacebook className="w-6 h-6 cursor-pointer" />
                 </a>
               </Link>
-              <FaInstagram className="w-6 h-6 cursor-pointer hover:text-red-400" />
+              <Link
+                href="https://www.facebook.com/share/1BtkYyLYmj/"
+                passHref
+                legacyBehavior>
+                  <a
+                  target="_black"
+                  rel="noopener noreferrer"
+                  className="hover:text-red-400"
+                  >
+                    <FaInstagram className="w-6 h-6 cursor-pointer hover:text-red-400" />
+                  </a>
+                
+              </Link>
               <FaWhatsapp className="w-6 h-6 cursor-pointer hover:text-red-400" />
               <FaTiktok className="w-6 h-6 cursor-pointer hover:text-red-400" />
             </div>
