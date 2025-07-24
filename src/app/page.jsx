@@ -10,12 +10,32 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function HomePage() {
   const { theme } = useAuth();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [productos, setProductos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // Obtener productos desde la API
+  useEffect(() => {
+    const fetchProductos = async () => {
+      try {
+        const response = await fetch('/api/productos');
+        const data = await response.json();
+        setProductos(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductos();
+  }, []);
+
+  // Datos estáticos para banners y testimonios
   const banners = [
     '¡Envío gratis en compras mayores a $500 MXN!',
     'Descuentos del 20% en todos los productos este mes',
@@ -23,54 +43,31 @@ function HomePage() {
     'Compra 2 productos y obtén el 3ro con 50% de descuento',
   ];
 
-  const images = [
-    { src: '/assets/producto1.jpg', alt: 'Reloj Unicornio' },
-    { src: '/assets/cosa.jpg', alt: 'Reloj Dinosaurio' },
-    { src: '/assets/cosa2.jpg', alt: 'Peluche Patricio' },
-    { src: '/assets/tasa.jpg', alt: 'Taza Gravity Falls' },
-    { src: '/assets/gorradebobsponja.jpg', alt: 'Gorra Bob Esponja' },
+  const testimonios = [
+    {
+      quote: 'Me encantaron los productos, excelente calidad y servicio!',
+      author: 'María López'
+    },
+    {
+      quote: 'La entrega fue rápida y segura. Recomiendo 100%!',
+      author: 'Juan Pérez'
+    },
+    {
+      quote: 'Los precios y promociones son increíbles. Volveré a comprar!',
+      author: 'Ana Torres'
+    }
   ];
 
-  const productos = [
-    {
-      id: 1,
-      nombre: 'Reloj rosa en forma de unicornio',
-      descripcion: 'Reloj decorativo en forma de unicornio de color rosa.',
-      precio: '$250 MXN',
-      imagen: '/assets/producto1.jpg'
-    },
-    {
-      id: 2,
-      nombre: 'Reloj blanco en forma de dinosaurio',
-      descripcion: 'Reloj decorativo en forma de dinosaurio de color blanco',
-      precio: '$100 MXN',
-      imagen: '/assets/cosa.jpg'
-    },
-    {
-      id: 3,
-      nombre: 'Peluche de Patricio',
-      descripcion: 'Peluche de Patricio de la serie de Bob Esponja',
-      precio: '$200 MXN',
-      imagen: '/assets/cosa2.jpg'
-    },
-    {
-      id: 4,
-      nombre: 'Taza de la serie de Gravity Falls',
-      descripcion: 'Taza con la imagen del personaje de pato de la serie de Gravity Falls',
-      precio: '$150 MXN',
-      imagen: '/assets/tasa.jpg'
-    },
-    {
-      id: 5,
-      nombre: 'Gorra de Bob Esponja',
-      descripcion: 'Gorra de color amarillo con la cara del personaje de Bob Esponja',
-      precio: '$250 MXN',
-      imagen: '/assets/gorradebobsponja.jpg'
-    },
-  ];
+  if (loading) {
+    return (
+      <div className={`flex justify-center items-center h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className={`${theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 text-gray-900'}`}>
+    <div className={`${theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-white'}`}>
       {/* Banner Promocional Deslizante */}
       <div className="overflow-hidden whitespace-nowrap bg-gradient-to-r from-red-500 to-red-600 text-white text-lg font-semibold py-3">
         <div className="inline-block min-w-full animate-marquee">
@@ -95,8 +92,8 @@ function HomePage() {
             onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             className="overflow-visible"
           >
-            {images.map((image, index) => (
-              <SwiperSlide key={index} className="flex justify-center">
+            {productos.slice(0, 5).map((producto, index) => (
+              <SwiperSlide key={producto.id} className="flex justify-center">
                 <motion.div
                   initial={{ opacity: 0.5, scale: 0.8 }}
                   animate={{
@@ -104,15 +101,17 @@ function HomePage() {
                     scale: activeIndex === index ? 1 : 0,
                   }}
                   transition={{ duration: 0.2 }}
-                  className={`relative w-[500px] h-[550px] shadow-lg rounded-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-700' : 'bg-white'
-                    }`}
+                  className={`relative w-[500px] h-[550px] shadow-lg rounded-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-700' : 'bg-white'}`}
                 >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
+                  {producto.images.length > 0 && (
+                    <Image
+                      src={producto.images[0].url}
+                      alt={producto.name}
+                      fill
+                      className="object-cover rounded-lg"
+                      priority
+                    />
+                  )}
                 </motion.div>
               </SwiperSlide>
             ))}
@@ -142,28 +141,38 @@ function HomePage() {
           {productos.map((producto) => (
             <div
               key={producto.id}
-              className={`relative shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105 ${theme === 'dark' ? 'bg-gray-700 text-gray-100' : 'bg-white text-gray-900'
-                }`}
+              className={`relative shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105 ${theme === 'dark' ? 'bg-gray-700 text-gray-100' : 'bg-white text-gray-900'}`}
             >
-              <div className="relative w-full h-80">
-                <Image
-                  src={producto.imagen}
-                  alt={producto.nombre}
-                  fill
-                  className="object-contain"
-                />
-                {/* Botón de Vistazo Rápido */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50">
-                  <button className="bg-teal-500 text-white px-4 py-2 rounded-lg font-semibold shadow-lg">
-                    Vistazo rápido
-                  </button>
+              <Link href={`/productos/${producto.id}`}>
+                <div className="relative w-full h-80">
+                  {producto.images.length > 0 && (
+                    <Image
+                      src={producto.images[0].url}
+                      alt={producto.name}
+                      fill
+                      className="object-contain"
+                    />
+                  )}
+                  {/* Botón de Vistazo Rápido */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50">
+                    <button className="bg-teal-500 text-white px-4 py-2 rounded-lg font-semibold shadow-lg">
+                      Ver detalles
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="p-4 text-center">
-                <h2 className="text-lg font-bold mb-1">{producto.nombre}</h2>
-                <p className="mb-2">{producto.descripcion}</p>
-                <p className="text-xl font-bold">{producto.precio}</p>
-              </div>
+                <div className="p-4 text-center">
+                  <h2 className="text-lg font-bold mb-1">{producto.name}</h2>
+                  <p className="mb-2 line-clamp-2">{producto.description}</p>
+                  <p className="text-xl font-bold">
+                    ${producto.price.toFixed(2)}
+                    {producto.discount > 0 && (
+                      <span className="ml-2 text-sm line-through text-gray-500">
+                        ${(producto.price / (1 - producto.discount / 100)).toFixed(2)}
+                      </span>
+                    )}
+                  </p>
+                </div>
+              </Link>
             </div>
           ))}
         </div>
@@ -172,24 +181,10 @@ function HomePage() {
         <div className="container mx-auto py-8">
           <h2 className="text-3xl font-bold text-center mb-6">Lo que dicen nuestros clientes</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                quote: 'Me encantaron los productos, excelente calidad y servicio!',
-                author: 'María López'
-              },
-              {
-                quote: 'La entrega fue rápida y segura. Recomiendo 100%!',
-                author: 'Juan Pérez'
-              },
-              {
-                quote: 'Los precios y promociones son increíbles. Volveré a comprar!',
-                author: 'Ana Torres'
-              }
-            ].map((testimonio, index) => (
+            {testimonios.map((testimonio, index) => (
               <div
                 key={index}
-                className={`shadow-md rounded-lg p-6 text-center ${theme === 'dark' ? 'bg-gray-700' : 'bg-white'
-                  }`}
+                className={`shadow-md rounded-lg p-6 text-center ${theme === 'dark' ? 'bg-gray-700' : 'bg-white'}`}
               >
                 <p className="italic">&quot;{testimonio.quote}&quot;</p>
                 <p className="mt-2 font-bold">- {testimonio.author}</p>
