@@ -10,7 +10,7 @@ const ServerErrorPage = () => {
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"}`}>
       <Image
-        src="/assets/error500.png" // 🔹 Imagen fija de error 500
+        src="/assets/error 500.png" // 🔹 Imagen fija de error 500
         alt="Error del servidor"
         width={256}
         height={256}

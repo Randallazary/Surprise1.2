@@ -4,12 +4,13 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { CartProvider } from '../context/CartContext';
 import Breadcrumb from "@/components/Breadcrumb";
 import { AuthProvider, useAuth } from "../context/authContext"; // Importa el theme desde AuthProvider
 import { LogoProvider } from "../context/LogoContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ChatBox from "@/components/ChatBox";
+
 
 // Definir los fonts como localFont
 const geistSans = localFont({
@@ -41,7 +42,7 @@ function Layout({ children }) {
       <Footer />
       <ToastContainer position="top-center" autoClose={3000} />
       <div className="fixed bottom-4 right-4 z-50">
-        <ChatBox />
+        
       </div>
     </body>
   );
@@ -52,7 +53,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <AuthProvider>
         <LogoProvider>
+          <CartProvider>
           <Layout>{children}</Layout>
+          </CartProvider>
         </LogoProvider>
       </AuthProvider>
     </html>
