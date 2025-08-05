@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { useAuth } from "../../context/authContext"
 import { useCart } from "../../context/CartContext"
@@ -40,65 +40,63 @@ function OcasionesPage() {
     if (ocasionParam) setFiltroOcasion(ocasionParam)
   }, [searchTerm, ocasionParam])
 
-  // Función para obtener productos
-  const fetchProductos = async () => {
-  setIsLoading(true);
-  setError("");
-  try {
-    const params = new URLSearchParams();
-    
-    if (busquedaGeneral) params.append('search', busquedaGeneral);
-    if (filtroOcasion) params.append('ocasion', filtroOcasion);
-    if (filtroRangoPrecio[0]) params.append('minPrice', filtroRangoPrecio[0]);
-    if (filtroRangoPrecio[1]) params.append('maxPrice', filtroRangoPrecio[1]);
-    if (filtroStock) params.append('stock', filtroStock);
-    
-    params.append('page', paginacion.paginaActual);
-    params.append('pageSize', 12);
+  // Función para obtener productos con useCallback para memoización
+  const fetchProductos = useCallback(async () => {
+    setIsLoading(true);
+    setError("");
+    try {
+      const params = new URLSearchParams();
+      
+      if (busquedaGeneral) params.append('search', busquedaGeneral);
+      if (filtroOcasion) params.append('ocasion', filtroOcasion);
+      if (filtroRangoPrecio[0]) params.append('minPrice', filtroRangoPrecio[0]);
+      if (filtroRangoPrecio[1]) params.append('maxPrice', filtroRangoPrecio[1]);
+      if (filtroStock) params.append('stock', filtroStock);
+      
+      params.append('page', paginacion.paginaActual);
+      params.append('pageSize', 12);
 
-    const response = await fetch(`${CONFIGURACIONES.BASEURL2}/productos?${params}`, {
-      credentials: "include",
-      cache: "no-store",
-    });
+      const response = await fetch(`${CONFIGURACIONES.BASEURL2}/productos?${params}`, {
+        credentials: "include",
+        cache: "no-store",
+      });
 
-    if (!response.ok) {
-      throw new Error(`Error HTTP: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Respuesta completa del backend:", data);
+
+      if (!data || !data.productos || !data.paginacion) {
+        throw new Error("Estructura de respuesta inválida del servidor");
+      }
+
+      setProductos(data.productos);
+      setPaginacion({
+        paginaActual: data.paginacion.paginaActual || 1,
+        totalPaginas: data.paginacion.totalPaginas || 1,
+        totalProductos: data.paginacion.totalProductos || 0
+      });
+
+    } catch (error) {
+      console.error("Error fetching productos:", error);
+      setError(error.message || "Error al cargar los productos");
+      Swal.fire({
+        title: "Error",
+        text: "No se pudieron cargar los productos. Por favor intenta nuevamente.",
+        icon: "error"
+      });
+    } finally {
+      setIsLoading(false);
     }
-
-    const data = await response.json();
-    console.log("Respuesta completa del backend:", data); // Para depuración
-
-    // Verificación de estructura de respuesta
-    if (!data || !data.productos || !data.paginacion) {
-      throw new Error("Estructura de respuesta inválida del servidor");
-    }
-
-    setProductos(data.productos);
-    setPaginacion({
-      paginaActual: data.paginacion.paginaActual || 1,
-      totalPaginas: data.paginacion.totalPaginas || 1,
-      totalProductos: data.paginacion.totalProductos || 0
-    });
-
-  } catch (error) {
-    console.error("Error fetching productos:", error);
-    setError(error.message || "Error al cargar los productos");
-    // Opcional: mostrar notificación al usuario
-    Swal.fire({
-      title: "Error",
-      text: "No se pudieron cargar los productos. Por favor intenta nuevamente.",
-      icon: "error"
-    });
-  } finally {
-    setIsLoading(false);
-  }
-};
+  }, [busquedaGeneral, filtroOcasion, filtroRangoPrecio, filtroStock, paginacion.paginaActual]);
 
   // Obtener productos al cargar o cambiar filtros
   useEffect(() => {
     const debounceTimer = setTimeout(fetchProductos, 300)
     return () => clearTimeout(debounceTimer)
-  }, [busquedaGeneral, filtroOcasion, filtroRangoPrecio, filtroStock, paginacion.paginaActual])
+  }, [fetchProductos])
 
   // Prefetch de páginas de productos
   useEffect(() => {
@@ -147,17 +145,32 @@ function OcasionesPage() {
 
   // Agregar al carrito
   const agregarAlCarrito = async (productId, e) => {
-    e.stopPropagation()
+    e?.stopPropagation()
+    if (!isAuthenticated) {
+      const result = await Swal.fire({
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para agregar productos al carrito",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ir a login",
+        cancelButtonText: "Cancelar",
+        background: theme === "dark" ? "#1e1b4b" : "#ffffff",
+        color: theme === "dark" ? "#ffffff" : "#1e1b4b",
+      })
+      if (result.isConfirmed) router.push("/login")
+      return
+    }
+    
     setIsAddingToCart(true)
     try {
-      const response = await fetch(`${CONFIGURACIONES.BASEURL2}/cart/add`, {
+      const response = await fetch(`${CONFIGURACIONES.BASEURL2}/carrito/agregar`, {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          productId,
+          productId: Number(productId),
           quantity: 1,
         }),
       })
@@ -166,13 +179,18 @@ function OcasionesPage() {
 
       const data = await response.json()
       
+      if (data.recomendados) {
+        setRecomendaciones(data.recomendados)
+      }
+      
       if (data.success) {
         await refreshCart()
         Swal.fire({
           title: "¡Producto agregado!",
           text: "El producto se ha añadido a tu carrito",
           icon: "success",
-          confirmButtonColor: "#6366f1",
+          background: theme === "dark" ? "#1e1b4b" : "#ffffff",
+          color: theme === "dark" ? "#ffffff" : "#1e1b4b",
         })
       } else {
         throw new Error(data.message || "Error al agregar al carrito")
@@ -183,7 +201,8 @@ function OcasionesPage() {
         title: "Error",
         text: error.message || "No se pudo agregar el producto al carrito",
         icon: "error",
-        confirmButtonColor: "#6366f1",
+        background: theme === "dark" ? "#1e1b4b" : "#ffffff",
+        color: theme === "dark" ? "#ffffff" : "#1e1b4b",
       })
     } finally {
       setIsAddingToCart(false)
@@ -192,17 +211,34 @@ function OcasionesPage() {
 
   // Comprar ahora
   const comprarAhora = async (productId, e) => {
-    e.stopPropagation()
+    e?.stopPropagation()
+    if (!isAuthenticated) {
+      const result = await Swal.fire({
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para comprar productos",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ir a login",
+        cancelButtonText: "Cancelar",
+        background: theme === "dark" ? "#1e1b4b" : "#ffffff",
+        color: theme === "dark" ? "#ffffff" : "#1e1b4b",
+      })
+      if (result.isConfirmed) {
+        router.push("/login")
+      }
+      return
+    }
+    
     setIsAddingToCart(true)
     try {
-      const response = await fetch(`${CONFIGURACIONES.BASEURL2}/cart/add`, {
+      const response = await fetch(`${CONFIGURACIONES.BASEURL2}/carrito/agregar`, {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          productId,
+          productId: Number(productId),
           quantity: 1,
         }),
       })
@@ -211,9 +247,13 @@ function OcasionesPage() {
 
       const data = await response.json()
       
+      if (data.recomendados) {
+        setRecomendaciones(data.recomendados)
+      }
+      
       if (data.success) {
         await refreshCart()
-        router.push("/checkout")
+        router.push("/carrito")
       } else {
         throw new Error(data.message || "Error al agregar al carrito")
       }
@@ -223,7 +263,8 @@ function OcasionesPage() {
         title: "Error",
         text: error.message || "No se pudo agregar el producto al carrito",
         icon: "error",
-        confirmButtonColor: "#6366f1",
+        background: theme === "dark" ? "#1e1b4b" : "#ffffff",
+        color: theme === "dark" ? "#ffffff" : "#1e1b4b",
       })
     } finally {
       setIsAddingToCart(false)
@@ -421,7 +462,7 @@ function OcasionesPage() {
                     theme === "dark" ? "bg-indigo-800/50" : "bg-white"
                   }`}
                 >
-                  <FiSearch className="mr-1" /> "{busquedaGeneral}"
+                  <FiSearch className="mr-1" /> &quot;{busquedaGeneral}&quot;
                 </span>
               )}
               {filtroOcasion && (
