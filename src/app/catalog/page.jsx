@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import Image from "next/image"
 import { useAuth } from "../../context/authContext"
 import { useCart } from "../../context/CartContext"
@@ -11,7 +11,7 @@ import { FiSearch, FiFilter, FiDollarSign, FiTag, FiShoppingCart, FiPlus } from 
 import { FaBoxOpen, FaChevronDown } from "react-icons/fa"
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from "react-icons/io"
 
-function ProductosPage() {
+function CatalogContent() {
   const { refreshCart, setRecomendaciones } = useCart()
   const router = useRouter()
   const { user, isAuthenticated, theme } = useAuth()
@@ -98,13 +98,7 @@ function ProductosPage() {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
-  // Definir las migas de pan
-  const breadcrumbsPages = [
-    { name: "Home", path: "/" },
-    { name: "Productos", path: "/ventaProducto" },
-  ]
-
-  // Categorías disponibles - ACTUALIZADAS
+  // Categorías disponibles
   const categorias = ["Peluches", "Reloj", "Accesorios", "Gorras", "Playeras", "Tazas", "Llaveros", "Caja De Regalos"]
 
   // Limpiar todos los filtros
@@ -143,8 +137,6 @@ function ProductosPage() {
       })
       const data = await res.json()
       
-      console.log("Respuesta completa (comprarAhora):", data)
-      console.log("Recomendados:", data.recomendados || data.recommendations || [])
       if (data.recomendados) {
         setRecomendaciones(data.recomendados)
       }
@@ -190,14 +182,10 @@ function ProductosPage() {
         body: JSON.stringify({ productId: Number(productId), quantity: 1 }),
       })
       const data = await res.json()
-      console.log("Respuesta completa:", data)
       if (data.recomendados) {
         setRecomendaciones(data.recomendados)
       }
       if (!res.ok) throw new Error(data.message || "Error al agregar")
-
-      console.log("Respuesta completa:", data)
-      console.log(data.recomendations)
       refreshCart()
       Swal.fire({
         title: "Agregado",
@@ -621,7 +609,7 @@ function ProductosPage() {
                         </div>
                       </div>
 
-                      {/* Botones de acción - Solo carrito, sin favoritos */}
+                      {/* Botones de acción */}
                       <div className="px-6 pb-6">
                         <div className="flex gap-2">
                           <button
@@ -668,7 +656,7 @@ function ProductosPage() {
                   ))}
                 </div>
 
-                {/* Paginación mejorada */}
+                {/* Paginación */}
                 <div className="flex items-center justify-between mt-12">
                   <button
                     onClick={() => cambiarPagina(Math.max(1, paginacion.paginaActual - 1))}
@@ -717,4 +705,10 @@ function ProductosPage() {
   )
 }
 
-export default ProductosPage
+export default function ProductosPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Cargando catálogo...</div>}>
+      <CatalogContent />
+    </Suspense>
+  )
+}
