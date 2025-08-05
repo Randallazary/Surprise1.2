@@ -432,6 +432,7 @@ function AdminProductsPage() {
                     <option value="Playeras">Playeras</option>
                     <option value="Tazas">Tazas</option>
                     <option value="Llaveros">Llaveros</option>
+                    <option value="Llaveros">Caja De Regalos</option>
                   </select>
                 </div>
 
@@ -727,6 +728,7 @@ function AdminProductsPage() {
                     <option value="Playeras">Playeras</option>
                     <option value="Tazas">Tazas</option>
                     <option value="Llaveros">Llaveros</option>
+                    <option value="Cajas">Caja</option>
                   </select>
                 </div>
 

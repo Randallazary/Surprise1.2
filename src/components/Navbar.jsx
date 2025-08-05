@@ -19,7 +19,9 @@ import {
   FaTruck,
   FaSignInAlt,
   FaUserPlus,
+
 } from "react-icons/fa"
+import { MdCelebration } from "react-icons/md";
 import { FiSearch } from "react-icons/fi"
 import { useLogo } from "../context/LogoContext"
 import { useAuth } from "../context/authContext"
@@ -75,7 +77,7 @@ function Navbar() {
   const mainNavItems = [
     { name: "Inicio", path: "/", icon: FaHome },
     { name: "Catálogo", path: "/catalog", icon: FaBoxes },
-  
+    { name: "Ocaciones", path: "/ocasiones", icon: MdCelebration },
     { name: "Ofertas y Descuentos", path: "/ofertas", icon: FaTags },
  
     ...(isAuthenticated ? [{ name: "Seguimiento", path: "/mispedidos", icon: FaTruck }] : []),
@@ -203,20 +205,7 @@ function Navbar() {
                 )}
               </Link>
 
-              {/* Facturación (solo visible para usuarios autenticados) */}
-              {(isAuthenticated || user?.role === "admin") && (
-                <Link
-                  href="/cotizador"
-                  className={`p-2 rounded-full ${
-                    theme === "dark"
-                      ? "text-sky-200 hover:bg-indigo-900 hover:text-pink-400"
-                      : "text-indigo-800 hover:bg-indigo-50 hover:text-pink-600"
-                  }`}
-                  aria-label="Facturación"
-                >
-                  <FaFileInvoice className="w-5 h-5" />
-                </Link>
-              )}
+            
 
               {/* Usuario con tooltip */}
               <div className="relative" ref={dropdownRef}>

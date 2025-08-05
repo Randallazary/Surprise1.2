@@ -108,10 +108,35 @@ function Footer() {
                   >
                     <FaInstagram className="w-6 h-6 cursor-pointer hover:text-red-400" />
                   </a>
-                
               </Link>
-              <FaWhatsapp className="w-6 h-6 cursor-pointer hover:text-red-400" />
-              <FaTiktok className="w-6 h-6 cursor-pointer hover:text-red-400" />
+              
+              {/*Wpp */}
+              <Link
+                href="https://wa.me/7713538853"
+                passHref
+                legacyBehavior>
+                  <a
+                  target="_black"
+                  rel="noopener noreferrer"
+                  className="hover:text-red-400"
+                  >
+                    <FaWhatsapp className="w-6 h-6 cursor-pointer hover:text-red-400" />
+                  </a>
+              </Link>
+              
+              {/* TikTok */}
+              <Link
+                href="https://www.tiktok.com/@surpriseregalos53?_t=ZS-8xqT2OsYUYE&_r=1"
+                passHref
+                legacyBehavior>
+                  <a
+                  target="_black"
+                  rel="noopener noreferrer"
+                  className="hover:text-red-400"
+                  >
+                    <FaTiktok className="w-6 h-6 cursor-pointer hover:text-red-400" />
+                  </a>
+              </Link>
             </div>
           </div>
         </div>
