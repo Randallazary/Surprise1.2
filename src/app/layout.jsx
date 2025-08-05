@@ -5,7 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from '../context/CartContext';
-import Breadcrumb from "@/components/Breadcrumb";
+import Breadcrumb from "../components/Breadcrumb";
 import { AuthProvider, useAuth } from "../context/authContext"; // Importa el theme desde AuthProvider
 import { LogoProvider } from "../context/LogoContext";
 import { ToastContainer } from "react-toastify";
