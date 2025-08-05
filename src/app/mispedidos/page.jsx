@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/authContext";
@@ -310,4 +310,4 @@ function MisPedidosPage() {
   );
 }
 
-export default MisPedidosPage;
+export default MisPedidosPage;*/
