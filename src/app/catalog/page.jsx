@@ -105,7 +105,7 @@ function ProductosPage() {
   ]
 
   // Categorías disponibles - ACTUALIZADAS
-  const categorias = ["Peluches", "Reloj", "Accesorios", "Gorras", "Playeras", "Tazas", "Llaveros","Caja De Regalos"]
+  const categorias = ["Peluches", "Reloj", "Accesorios", "Gorras", "Playeras", "Tazas", "Llaveros", "Caja De Regalos"]
 
   // Limpiar todos los filtros
   const limpiarFiltros = () => {
@@ -143,7 +143,6 @@ function ProductosPage() {
       })
       const data = await res.json()
       
-
       console.log("Respuesta completa (comprarAhora):", data)
       console.log("Recomendados:", data.recomendados || data.recommendations || [])
       if (data.recomendados) {
@@ -244,8 +243,6 @@ function ProductosPage() {
       </div>
 
       <div className="container px-4 mx-auto relative z-10">
-      
-
         {/* Encabezado elegante */}
         <div
           className={`p-8 rounded-3xl shadow-2xl mb-8 backdrop-blur-md border relative overflow-hidden ${
@@ -439,7 +436,7 @@ function ProductosPage() {
                     theme === "dark" ? "bg-indigo-800/50" : "bg-white"
                   }`}
                 >
-                  <FiSearch className="mr-1" /> "{busquedaGeneral}"
+                  <FiSearch className="mr-1" /> &quot;{busquedaGeneral}&quot;
                 </span>
               )}
               {filtroCategoria && (
