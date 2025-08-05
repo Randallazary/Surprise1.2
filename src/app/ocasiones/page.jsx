@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, Suspense } from "react"
 import Image from "next/image"
 import { useAuth } from "../../context/authContext"
 import { useCart } from "../../context/CartContext"
@@ -11,7 +11,7 @@ import { FiSearch, FiFilter, FiDollarSign, FiTag, FiShoppingCart, FiPlus } from 
 import { FaBoxOpen, FaChevronDown, FaGift, FaHeart, FaBirthdayCake } from "react-icons/fa"
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from "react-icons/io"
 
-function OcasionesPage() {
+function OcasionesContent() {
   const { refreshCart, setRecomendaciones } = useCart()
   const router = useRouter()
   const { user, isAuthenticated, theme } = useAuth()
@@ -713,6 +713,14 @@ function OcasionesPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function OcasionesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Cargando...</div>}>
+      <OcasionesContent />
+    </Suspense>
   )
 }
 
