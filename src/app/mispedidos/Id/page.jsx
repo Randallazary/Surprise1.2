@@ -17,11 +17,6 @@ function DetallePedidoPage({ params }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const breadcrumbsPages = [
-    { name: "Inicio", path: "/" },
-    { name: "Mis Pedidos", path: "/misPedidos" },
-    { name: `Pedido #${id}`, path: `/misPedidos/${id}` },
-  ];
 
   useEffect(() => {
     if (!isAuthLoading && !isAuthenticated) {
@@ -169,7 +164,7 @@ function DetallePedidoPage({ params }) {
   return (
     <div className={`min-h-screen py-8 pt-32 ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"}`}>
       <div className="container mx-auto px-4 max-w-6xl">
-        <Breadcrumbs pages={breadcrumbsPages} />
+       
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
