@@ -1,4 +1,4 @@
-/*"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/authContext";
@@ -201,27 +201,27 @@ function MisPedidosPage() {
                       </div>
                     </div>
                     
-                    <Link 
+                    {/* <Link 
                       href={`/mispedidos/${pedido.id}`}
                       className="flex items-center text-blue-600 hover:text-blue-800 transition"
                     >
                       Ver detalles <FiChevronRight className="ml-1" />
-                    </Link>
+                    </Link> */}
                   </div>
 
                   <div className="border-t pt-4">
                     <h3 className="font-medium mb-3 flex items-center gap-2">
-                      <FiBox /> Productos ({pedido.items?.length || 0})
+                      <FiBox /> Productos ({pedido.pedidoitem?.length || 0})
                     </h3>
                     
                     <ul className="divide-y">
-                      {pedido.items?.slice(0, 2).map((item, idx) => (
+                      {pedido.pedidoitem?.map((item, idx) => (
                         <li key={idx} className="py-3 flex items-start gap-4">
-                          {item.producto?.images?.[0]?.url && (
+                          {item.productos?.imagenes?.[0]?.url && (
                             <div className="relative w-16 h-16 flex-shrink-0">
                               <Image
-                                src={item.producto.images[0].url}
-                                alt={item.producto.name}
+                                src={item.productos.imagenes[0].url}
+                                alt={item.productos.NAME}
                                 fill
                                 className="rounded-lg object-cover"
                                 sizes="64px"
@@ -229,7 +229,7 @@ function MisPedidosPage() {
                             </div>
                           )}
                           <div className="flex-1">
-                            <h3 className="font-medium">{item.producto?.name}</h3>
+                            <h3 className="font-medium">{item.productos?.NAME}</h3>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm mt-1">
                               <p className="text-gray-500">
                                 <span className="font-medium">Cantidad:</span> {item.cantidad}
@@ -246,18 +246,18 @@ function MisPedidosPage() {
                       ))}
                     </ul>
                     
-                    {pedido.items?.length > 2 && (
+                    {/* {pedido.pedidoitem?.length > 2 && (
                       <div className="text-center mt-3 text-sm text-gray-500">
-                        +{pedido.items.length - 2} productos más...
+                        +{pedido.pedidoitem.length - 2} productos más...
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   <div className="border-t pt-4 mt-4 flex justify-between items-center">
                     <div className="text-sm text-gray-500">
                       {pedido.cliente && (
                         <p className="flex items-center gap-1">
-                          <FiUser /> {pedido.cliente.name} {pedido.cliente.lastname}
+                          <FiUser /> {pedido.usuarios.NAME} {pedido.usuarios.lastname}
                         </p>
                       )}
                     </div>
@@ -310,4 +310,4 @@ function MisPedidosPage() {
   );
 }
 
-export default MisPedidosPage;*/
+export default MisPedidosPage;

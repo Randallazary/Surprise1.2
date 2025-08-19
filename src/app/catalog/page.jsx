@@ -507,15 +507,15 @@ function CatalogContent() {
                         onClick={() => router.push(`/producto/${producto.id}`)}
                         role="button"
                         tabIndex="0"
-                        aria-label={`Ver detalles de ${producto.name}`}
+                        aria-label={`Ver detalles de ${producto.NAME}`}
                         onKeyDown={(e) => e.key === "Enter" && router.push(`/producto/${producto.id}`)}
                       >
                         {/* Imagen del producto */}
                         <div className="relative bg-gradient-to-br from-indigo-100 to-purple-100 h-60">
-                          {producto.images.length > 0 ? (
+                          {producto.imagenes.length > 0 ? (
                             <Image
-                              src={producto.images[0].url || "/placeholder.svg"}
-                              alt={producto.name}
+                              src={producto.imagenes[0].url || "/placeholder.svg"}
+                              alt={producto.NAME}
                               fill
                               className="object-contain transition-transform duration-500 group-hover:scale-110 p-4"
                               unoptimized={true}

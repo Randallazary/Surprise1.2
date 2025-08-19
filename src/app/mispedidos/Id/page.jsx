@@ -1,4 +1,4 @@
-/*"use client";
+"use client";
 
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
@@ -198,7 +198,7 @@ function DetallePedidoPage({ params }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Columna izquierda: Productos y Resumen *//*
+          {/* Columna izquierda: Productos y Resumen */}
           <div className="lg:col-span-2 space-y-6">
             <div className={`p-6 rounded-xl shadow-lg ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
               <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -254,7 +254,7 @@ function DetallePedidoPage({ params }) {
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-gray-600">Envío:</span>
-                  <span className="font-medium">$0.00</span> {/* Asumiendo envío gratuito *//*
+                  <span className="font-medium">$0.00</span> {/* Asumiendo envío gratuito */}
                 </div>
                 <div className="flex justify-between items-center text-lg font-bold mt-4 pt-4 border-t">
                   <span>Total:</span>
@@ -264,7 +264,7 @@ function DetallePedidoPage({ params }) {
             </div>
           </div>
 
-          {/* Columna derecha: Información de envío y cliente *//*
+          {/* Columna derecha: Información de envío y cliente */}
           <div className="space-y-6">
             <div className={`p-6 rounded-xl shadow-lg ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
               <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -316,4 +316,4 @@ function DetallePedidoPage({ params }) {
   );
 }
 
-export default DetallePedidoPage;/*/
+export default DetallePedidoPage;
