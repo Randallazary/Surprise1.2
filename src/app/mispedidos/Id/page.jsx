@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { CONFIGURACIONES } from "@/app/config/config";
 import Image from "next/image";
 import Link from "next/link";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 
 function DetallePedidoPage({ params }) {
   const { id } = params;
@@ -136,7 +136,7 @@ function DetallePedidoPage({ params }) {
     return (
       <div className={`min-h-screen py-8 pt-32 ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"}`}>
         <div className="container mx-auto px-4 max-w-4xl">
-          <Breadcrumbs pages={breadcrumbsPages} />
+          
           
           <div className={`p-8 rounded-xl text-center ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
             <FiAlertCircle className="mx-auto text-5xl text-red-500 mb-4" />
