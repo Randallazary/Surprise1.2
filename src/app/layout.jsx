@@ -5,12 +5,11 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from '../context/CartContext';
-import Breadcrumb from "@/components/Breadcrumb";
-import { AuthProvider, useAuth } from "../context/authContext"; // Importa el theme desde AuthProvider
-import { LogoProvider } from "../context/LogoContext";
+import Breadcrumb from "../components/Breadcrumb";
+import { AuthProvider, useAuth } from "../context/authContext";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 // Definir los fonts como localFont
 const geistSans = localFont({
@@ -31,19 +30,36 @@ function Layout({ children }) {
   return (
     <body
       className={`${geistSans.variable} ${geistMono.variable} antialiased transition-all ${
-        theme === "dark" ? "bg-gray-900 text-gray-200" : "bg-[#BFECFF] text-gray-900"
+        theme === "dark"
+          ? "bg-gray-900 text-gray-200"
+          : "bg-[#BFECFF] text-gray-900"
       }`}
     >
       <Navbar />
       <div className="container mx-auto py-4">
-        <Breadcrumb /> {/* Breadcrumb en todas las páginas */}
+        <Breadcrumb />
         {children}
       </div>
       <Footer />
       <ToastContainer position="top-center" autoClose={3000} />
-      <div className="fixed bottom-4 right-4 z-50">
-        
-      </div>
+
+      {/* Contenedor flotante vacío */}
+      <div className="fixed bottom-4 right-4 z-50"></div>
+
+      {/* ⭐ Aquí agregamos el SW como en tu ejemplo */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            if ("serviceWorker" in navigator) {
+              window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/sw.js")
+                  .then(reg => console.log("SW registrado:", reg))
+                  .catch(err => console.error("Error al registrar el SW:", err));
+              });
+            }
+          `,
+        }}
+      />
     </body>
   );
 }
@@ -52,11 +68,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <AuthProvider>
-        <LogoProvider>
+       
           <CartProvider>
-          <Layout>{children}</Layout>
+            <Layout>{children}</Layout>
           </CartProvider>
-        </LogoProvider>
+       
       </AuthProvider>
     </html>
   );

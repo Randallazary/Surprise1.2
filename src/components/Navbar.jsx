@@ -23,7 +23,7 @@ import {
 } from "react-icons/fa"
 import { MdCelebration } from "react-icons/md";
 import { FiSearch } from "react-icons/fi"
-import { useLogo } from "../context/LogoContext"
+
 import { useAuth } from "../context/authContext"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/context/CartContext"
@@ -40,8 +40,7 @@ function Navbar() {
   const dropdownRef = useRef(null)
   const { cartCount } = useCart()
   const router = useRouter()
-  const { logoUrl } = useLogo()
-
+  
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen)
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen)
 
@@ -103,18 +102,17 @@ function Navbar() {
                 <FaBars className="w-5 h-5" />
               </button>
               <Link href="/" className="flex items-center">
-                {logoUrl ? (
                   <Image
-                    src={logoUrl || "/assets/logo-actual.png"}
+                    src={"/logo-actual.png"}
                     alt="Logo de la empresa"
                     width={120}
                     height={50}
                     className="object-contain"
                     priority
                   />
-                ) : (
+                
                   <div className="w-[120px] h-[50px] bg-indigo-200 animate-pulse" />
-                )}
+                
               </Link>
             </div>
 
