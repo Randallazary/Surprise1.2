@@ -7,6 +7,16 @@ importScripts(
 // =====================================
 workbox.precaching.precacheAndRoute([
   { url: "/offline.html", revision: "1" },
+
+  { url: "/deslinde", revision: null },
+  { url: "/ofertas", revision: null },
+  { url: "/catalog", revision: null },
+  { url: "/nosotros", revision: null },
+  { url: "/contacto", revision: null },
+  { url: "/politicas", revision: null },
+  { url: "/terminos", revision: null },
+  { url: "/ubicacion", revision: null }
+  
 ]);
 
 // =====================================

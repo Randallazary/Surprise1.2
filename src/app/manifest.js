@@ -9,15 +9,18 @@ export default function manifest() {
     theme_color: "#000000",
     icons: [
       {
-        src: "/logo-actual.png",
+        src: "/android-192.png",
         sizes: "192x192",
-        type: "logo-actual/png",
+        type: "image/png",
+        purpose: "any"
       },
+     
       {
-        src: "/logo-actual.png",
+        src: "/android-512.png",
         sizes: "512x512",
-        type: "logo-actual/png",
-      },
-    ],
+        type: "image/png",
+        purpose: "any"
+      }
+    ]
   };
 }

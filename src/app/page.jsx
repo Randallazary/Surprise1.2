@@ -17,6 +17,7 @@ import {
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi"
+import NotificacionesButton from "@/components/NotificacionesButton"
 
 function HomePage() {
   const { theme } = useAuth()
@@ -99,6 +100,7 @@ function HomePage() {
             }`}
           ></div>
         </div>
+        
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -284,6 +286,11 @@ function HomePage() {
           </div>
         </div>
       </section>
+      
+      {/* ⬅ BOTÓN DE NOTIFICACIONES */}
+        <div className="flex justify-center mt-6 mb-12">
+          <NotificacionesButton />
+        </div>
 
       {/* Productos Destacados con Carrusel */}
       <section className="py-20">

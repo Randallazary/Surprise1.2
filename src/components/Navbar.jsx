@@ -103,7 +103,7 @@ function Navbar() {
               </button>
               <Link href="/" className="flex items-center">
                   <Image
-                    src={"/logo-actual.png"}
+                    src="/logo-actual.png"
                     alt="Logo de la empresa"
                     width={120}
                     height={50}

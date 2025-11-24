@@ -10,7 +10,26 @@ export default function UbicacionPage() {
     const address = "Avenida Juarez, Col.Centro, Huejutla de Reyes, Hidalgo, México"
     const encodedAddress = encodeURIComponent(address)
     window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`, "_blank")
+    
   }
+   // 🔧 Función para solicitar permiso de ubicación REAL
+  const solicitarPermisoUbicacion = () => {
+    if (!navigator.geolocation) {
+      alert("Tu navegador no soporta geolocalización");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        alert(`Permiso concedido. Tu ubicación: ${latitude}, ${longitude}`);
+      },
+      (err) => {
+        alert("Permiso denegado o no disponible");
+      }
+    );
+  };
+
 
   return (
     <div className={`min-h-screen py-8 pt-36 ${theme === "dark" ? "bg-indigo-950" : "bg-indigo-50"}`}>
@@ -198,6 +217,15 @@ export default function UbicacionPage() {
                   </div>
                 </div>
               </div>
+               {/* ✅ Botón para solicitar permiso de ubicación */}
+      <div className="flex justify-center mb-4">
+        <button
+          onClick={solicitarPermisoUbicacion}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          Activar permiso de ubicación
+        </button>
+      </div>
 
               {/* Botón de direcciones */}
               <button
