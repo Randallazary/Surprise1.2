@@ -3,24 +3,27 @@ importScripts(
 );
 
 // =====================================
-// PRECACHE
+// CONTROL INMEDIATO DEL SW
+// =====================================
+workbox.core.skipWaiting();
+workbox.core.clientsClaim();
+
+// =====================================
+// PRECACHE ESTÁTICO
 // =====================================
 workbox.precaching.precacheAndRoute([
-  { url: "/offline.html", revision: "1" },
-
-  { url: "/deslinde", revision: null },
-  { url: "/ofertas", revision: null },
-  { url: "/catalog", revision: null },
-  { url: "/nosotros", revision: null },
-  { url: "/contacto", revision: null },
-  { url: "/politicas", revision: null },
-  { url: "/terminos", revision: null },
-  { url: "/ubicacion", revision: null }
+  { url: "/pages/deslinde.html", revision: "1" },
   
+  { url: "/pages/nosotros.html", revision: "1" },
+  { url: "/pages/contacto.html", revision: "1" },
+  { url: "/pages/politicas.html", revision: "1" },
+  { url: "/pages/terminos.html", revision: "1" },
+  { url: "/pages/ubicacion.html", revision: "1" },
+  { url: "/offline.html", revision: "1" }
 ]);
 
 // =====================================
-// STATIC FILES (Scripts, CSS)
+// ARCHIVOS ESTÁTICOS (CSS / JS)
 // =====================================
 workbox.routing.registerRoute(
   ({ request }) =>
@@ -33,7 +36,7 @@ workbox.routing.registerRoute(
 );
 
 // =====================================
-// CLOUDINARY IMAGES
+// IMÁGENES CLOUDINARY
 // =====================================
 workbox.routing.registerRoute(
   ({ url }) => url.origin === "https://res.cloudinary.com",
@@ -49,28 +52,12 @@ workbox.routing.registerRoute(
 );
 
 // =====================================
-// NEXT STATIC (_next/static/)
+// ARCHIVOS DE NEXT (si usas Next.js)
 // =====================================
 workbox.routing.registerRoute(
   ({ url }) => url.pathname.startsWith("/_next/static/"),
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: "next-static",
-  })
-);
-
-// =====================================
-// NAVIGATION (HTML PAGES)
-// =====================================
-workbox.routing.registerRoute(
-  ({ request }) => request.mode === "navigate",
-  new workbox.strategies.NetworkFirst({
-    cacheName: "html-pages",
-    networkTimeoutSeconds: 4,
-    plugins: [
-      new workbox.expiration.ExpirationPlugin({
-        maxEntries: 30,
-      }),
-    ],
   })
 );
 
@@ -92,29 +79,15 @@ workbox.routing.registerRoute(
 );
 
 // =====================================
-// GLOBAL CATCH HANDLER (a prueba de fallos)
+// FALLBACK GLOBAL
 // =====================================
 workbox.routing.setCatchHandler(async ({ event, request }) => {
-  // Fallback solo para navegación
   if (request && request.destination === "document") {
-    try {
-      const cache = await caches.open(workbox.core.cacheNames.precache);
-      const cachedOffline = await cache.match("/offline.html");
-
-      if (cachedOffline) {
-        return cachedOffline;
-      }
-    } catch (e) {
-      // ignorar errores
-    }
-
-    // Fallback final (si offline.html NO existe)
-    return new Response(
-      `<h1>Sin conexión</h1><p>No se pudo cargar esta página.</p>`,
-      { headers: { "Content-Type": "text/html" } }
-    );
+    const cache = await caches.open(workbox.core.cacheNames.precache);
+    const offlinePage = await cache.match("/offline.html");
+    return offlinePage || new Response("<h1>Offline</h1>", {
+      headers: { "Content-Type": "text/html" }
+    });
   }
-
-  // Para images, scripts, APIs → respuesta de error genérica
   return Response.error();
 });
