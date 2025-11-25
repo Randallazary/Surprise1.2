@@ -46,16 +46,19 @@ function Layout({ children }) {
       {/* Contenedor flotante vacío */}
       <div className="fixed bottom-4 right-4 z-50"></div>
 
-      {/* ⭐ Aquí agregamos el SW como en tu ejemplo */}
+      {/* ⭐ SW corregido: evita doble registro y evita recargar 2 veces */}
       <script
         dangerouslySetInnerHTML={{
           __html: `
             if ("serviceWorker" in navigator) {
-              window.addEventListener("load", () => {
-                navigator.serviceWorker.register("/sw.js")
+              if (!window.__SW_REGISTERED__) {
+                window.__SW_REGISTERED__ = true;
+
+                navigator.serviceWorker
+                  .register("/sw.js")
                   .then(reg => console.log("SW registrado:", reg))
                   .catch(err => console.error("Error al registrar el SW:", err));
-              });
+              }
             }
           `,
         }}
@@ -68,11 +71,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <AuthProvider>
-       
-          <CartProvider>
-            <Layout>{children}</Layout>
-          </CartProvider>
-       
+        <CartProvider>
+          <Layout>{children}</Layout>
+        </CartProvider>
       </AuthProvider>
     </html>
   );
