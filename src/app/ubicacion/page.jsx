@@ -221,9 +221,9 @@ export default function UbicacionPage() {
       <div className="flex justify-center mb-4">
         <button
           onClick={solicitarPermisoUbicacion}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
         >
-          Activar permiso de ubicación
+          Activar permiso de ubicación para saber donde localizarte 
         </button>
       </div>
 
