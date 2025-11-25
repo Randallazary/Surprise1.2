@@ -22,7 +22,7 @@ export default function NotificacionesButton() {
   return (
     <button
       onClick={pedirPermiso}
-      className="bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-500 transition-all"
+      className="bg-purple-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-500 transition-all"
     >
       Activa las notificaiones para ofertas y productos en descuento
     </button>
