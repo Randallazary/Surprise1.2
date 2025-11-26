@@ -1,11 +1,247 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Términos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Términos y Condiciones</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    .animate-float-delayed {
+      animation: float 8s ease-in-out infinite;
+      animation-delay: 2s;
+    }
+  </style>
 </head>
-<body>
-  <h1>Página Términos (Versión Estática)</h1>
-  <p>Este archivo es solo para precache.</p>
+<body class="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 text-sky-200">
+  
+  <!-- Formas decorativas de fondo -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-72 h-72 rounded-full opacity-10 bg-pink-500 blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 rounded-full opacity-10 bg-purple-500 blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+    <div class="absolute top-1/2 left-1/2 w-64 h-64 rounded-full opacity-5 bg-indigo-500 blur-3xl animate-float"></div>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="container mx-auto px-4 py-8 pt-24 relative z-10">
+    
+    <!-- Encabezado elegante -->
+    <div class="p-8 rounded-3xl shadow-2xl mb-8 backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-500/10"></div>
+      <div class="relative z-10">
+        <div class="text-center">
+          <h1 class="text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+            Términos y Condiciones
+          </h1>
+          <p class="text-lg text-indigo-300">Última actualización: Enero 2025</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido de términos -->
+    <div class="space-y-6">
+      
+      <!-- Sección 1: Aceptación de términos -->
+      <div class="p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-3 bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent">
+              1. Aceptación de Términos
+            </h2>
+            <p class="text-indigo-300 leading-relaxed">
+              Al acceder y utilizar este sitio web, usted acepta estar sujeto a estos términos y condiciones de uso. 
+              Si no está de acuerdo con alguno de estos términos, no debe usar nuestros servicios.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 2: Uso del servicio -->
+      <div class="p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+              2. Uso del Servicio
+            </h2>
+            <p class="text-indigo-300 leading-relaxed mb-3">
+              Usted se compromete a utilizar nuestro sitio web únicamente para fines legales y de manera que no infrinja los derechos de terceros.
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-indigo-300">
+              <li>No utilizar el sitio para actividades fraudulentas o ilegales</li>
+              <li>No intentar obtener acceso no autorizado a sistemas o cuentas</li>
+              <li>No publicar contenido ofensivo, difamatorio o ilegal</li>
+              <li>Respetar la propiedad intelectual de terceros</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 3: Productos y precios -->
+      <div class="p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-3 bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+              3. Productos y Precios
+            </h2>
+            <p class="text-indigo-300 leading-relaxed mb-3">
+              Nos esforzamos por mantener la información de productos y precios actualizada, sin embargo:
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-indigo-300">
+              <li>Los precios están sujetos a cambios sin previo aviso</li>
+              <li>Nos reservamos el derecho de modificar o descontinuar productos</li>
+              <li>Las imágenes son ilustrativas y pueden variar del producto real</li>
+              <li>La disponibilidad está sujeta a existencias</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 4: Política de compra -->
+      <div class="p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-indigo-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-3 bg-gradient-to-r from-pink-400 to-indigo-500 bg-clip-text text-transparent">
+              4. Política de Compra
+            </h2>
+            <p class="text-indigo-300 leading-relaxed mb-3">
+              Al realizar una compra en nuestro sitio, usted acepta:
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-indigo-300">
+              <li>Proporcionar información precisa y actualizada</li>
+              <li>Pagar el monto total indicado al momento de la compra</li>
+              <li>Cumplir con los términos de pago establecidos</li>
+              <li>Revisar cuidadosamente su pedido antes de confirmar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 5: Envíos y entregas -->
+      <div class="p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+              5. Envíos y Entregas
+            </h2>
+            <p class="text-indigo-300 leading-relaxed mb-3">
+              Información importante sobre envíos:
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-indigo-300">
+              <li>Los tiempos de entrega son estimados y pueden variar</li>
+              <li>No somos responsables de retrasos por causas ajenas a nosotros</li>
+              <li>El cliente debe verificar el producto al momento de recibirlo</li>
+              <li>Envío gratis en compras mayores a $500</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 6: Privacidad y datos -->
+      <div class="p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-3 bg-gradient-to-r from-indigo-400 to-pink-500 bg-clip-text text-transparent">
+              6. Privacidad y Protección de Datos
+            </h2>
+            <p class="text-indigo-300 leading-relaxed">
+              Nos comprometemos a proteger su información personal. Los datos recopilados se utilizan únicamente para procesar 
+              pedidos y mejorar nuestros servicios. Consulte nuestra Política de Privacidad para más detalles.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 7: Limitación de responsabilidad -->
+      <div class="p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-3 bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent">
+              7. Limitación de Responsabilidad
+            </h2>
+            <p class="text-indigo-300 leading-relaxed">
+              No seremos responsables por daños indirectos, incidentales o consecuentes que resulten del uso o la 
+              incapacidad de usar nuestros servicios. Nuestra responsabilidad se limita al monto pagado por el producto o servicio.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 8: Modificaciones -->
+      <div class="p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 hover:shadow-xl transition-all duration-300">
+        <div class="flex items-start">
+          <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-indigo-500 bg-clip-text text-transparent">
+              8. Modificaciones de Términos
+            </h2>
+            <p class="text-indigo-300 leading-relaxed">
+              Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. 
+              Las modificaciones entrarán en vigor inmediatamente después de su publicación en el sitio web. 
+              Es responsabilidad del usuario revisar periódicamente estos términos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer con contacto -->
+    <div class="mt-12 p-6 rounded-3xl shadow-2xl backdrop-blur-md border border-indigo-800/50 bg-indigo-900/50 text-center">
+      <p class="text-indigo-300 mb-2">
+        Si tiene alguna pregunta sobre estos términos y condiciones, contáctenos:
+      </p>
+      <a href="mailto:contacto@example.com" class="text-pink-400 hover:text-pink-300 font-semibold transition-colors">
+        contacto@example.com
+      </a>
+    </div>
+
+  </div>
+
 </body>
 </html>

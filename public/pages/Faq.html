@@ -1,11 +1,297 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>FAQ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preguntas Frecuentes - FAQ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-float-delayed { animation: float 8s ease-in-out infinite 2s; }
+    .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+  </style>
 </head>
-<body>
-  <h1>FAQ (versión estática)</h1>
-  <p>Esta es una réplica estática para precache.</p>
+<body class="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 text-white relative overflow-x-hidden">
+  
+  <!-- Formas decorativas de fondo -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+    <div class="absolute top-1/3 right-20 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute bottom-20 left-1/4 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl animate-float-delayed"></div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="relative z-10 container mx-auto px-4 py-16">
+    
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <div class="inline-block mb-6">
+        <svg class="w-20 h-20 mx-auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="faqGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="url(#faqGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="url(#faqGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 17H12.01" stroke="url(#faqGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+        Preguntas Frecuentes
+      </h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+        Encuentra respuestas rápidas a las preguntas más comunes sobre nuestros productos y servicios
+      </p>
+    </div>
+
+    <!-- Categorías de FAQ -->
+    <div class="max-w-4xl mx-auto space-y-6">
+      
+      <!-- General -->
+      <div class="backdrop-blur-xl bg-white/10 rounded-3xl p-8 border border-white/20 shadow-2xl hover:shadow-pink-500/20 transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <svg class="w-8 h-8 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="generalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10" stroke="url(#generalGradient)" stroke-width="2"/>
+            <path d="M12 6V12L16 14" stroke="url(#generalGradient)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          General
+        </h2>
+        
+        <div class="space-y-4">
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Qué tipo de productos ofrecen?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Ofrecemos una amplia gama de productos incluyendo peluches, relojes, accesorios, gorras, playeras, tazas y llaveros de alta calidad. Todos nuestros productos están cuidadosamente seleccionados para garantizar la mejor experiencia.
+            </div>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Cómo puedo realizar un pedido?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Navega por nuestro catálogo, selecciona los productos que desees, agrégalos al carrito y procede al checkout. Aceptamos pagos a través de PayPal y Mercado Pago para tu comodidad y seguridad.
+            </div>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Necesito crear una cuenta para comprar?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Sí, necesitas crear una cuenta para realizar compras. Esto nos permite mantener un historial de tus pedidos, guardar tus direcciones de envío y ofrecerte una experiencia personalizada.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Envíos -->
+      <div class="backdrop-blur-xl bg-white/10 rounded-3xl p-8 border border-white/20 shadow-2xl hover:shadow-purple-500/20 transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <svg class="w-8 h-8 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="shipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="url(#shipGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Envíos y Entregas
+        </h2>
+        
+        <div class="space-y-4">
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Cuánto cuesta el envío?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              El costo de envío es de $99 MXN. Sin embargo, obtienes envío GRATIS en compras superiores a $500 MXN. Aprovecha esta promoción para ahorrar en tus pedidos.
+            </div>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Cuánto tarda la entrega?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Los tiempos de entrega varían según tu ubicación. Generalmente, los pedidos dentro de México se entregan en 3-7 días hábiles. Recibirás un número de rastreo para seguir tu pedido en tiempo real.
+            </div>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Realizan envíos internacionales?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Actualmente solo realizamos envíos dentro de México. Estamos trabajando para expandir nuestro servicio a otros países en el futuro cercano.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Pagos -->
+      <div class="backdrop-blur-xl bg-white/10 rounded-3xl p-8 border border-white/20 shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <svg class="w-8 h-8 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="payGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect x="2" y="5" width="20" height="14" rx="2" stroke="url(#payGradient)" stroke-width="2"/>
+            <path d="M2 10H22" stroke="url(#payGradient)" stroke-width="2"/>
+          </svg>
+          Pagos y Facturación
+        </h2>
+        
+        <div class="space-y-4">
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Qué métodos de pago aceptan?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Aceptamos pagos a través de PayPal y Mercado Pago. Ambas plataformas son seguras y te permiten pagar con tarjetas de crédito, débito o saldos en cuenta.
+            </div>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Es seguro pagar en línea?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Absolutamente. Utilizamos plataformas de pago certificadas y encriptación SSL para proteger tu información. Nunca almacenamos datos de tarjetas en nuestros servidores.
+            </div>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Puedo obtener una factura?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Sí, proporcionamos facturas electrónicas. Puedes solicitarla al momento de realizar tu compra o contactarnos posteriormente con tu número de orden.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Devoluciones -->
+      <div class="backdrop-blur-xl bg-white/10 rounded-3xl p-8 border border-white/20 shadow-2xl hover:shadow-pink-500/20 transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <svg class="w-8 h-8 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="returnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="url(#returnGradient)" stroke-width="2"/>
+            <path d="M9 22V12H15V22" stroke="url(#returnGradient)" stroke-width="2"/>
+          </svg>
+          Devoluciones y Cambios
+        </h2>
+        
+        <div class="space-y-4">
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Cuál es su política de devoluciones?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Aceptamos devoluciones dentro de los 30 días posteriores a la recepción del producto. El artículo debe estar sin usar, en su empaque original y con todas las etiquetas intactas.
+            </div>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Cómo inicio una devolución?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Contáctanos a través de nuestro formulario de contacto o por email con tu número de orden. Te proporcionaremos instrucciones detalladas y una etiqueta de devolución prepagada.
+            </div>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+              <span class="font-semibold">¿Cuándo recibiré mi reembolso?</span>
+              <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="mt-4 pl-4 text-gray-300">
+              Una vez que recibamos y verifiquemos el producto devuelto, procesaremos tu reembolso en 5-10 días hábiles. El tiempo de acreditación depende de tu método de pago original.
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA Final -->
+    <div class="text-center mt-16">
+      <div class="backdrop-blur-xl bg-white/10 rounded-3xl p-8 border border-white/20 shadow-2xl max-w-2xl mx-auto">
+        <h3 class="text-2xl font-bold mb-4">¿No encuentras lo que buscas?</h3>
+        <p class="text-gray-300 mb-6">
+          Nuestro equipo de soporte está listo para ayudarte con cualquier pregunta adicional
+        </p>
+        <a href="/contacto" class="inline-block bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+          Contáctanos
+        </a>
+      </div>
+    </div>
+
+  </div>
+
 </body>
 </html>

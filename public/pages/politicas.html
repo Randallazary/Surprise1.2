@@ -1,11 +1,309 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Políticas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Políticas de Privacidad</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    @keyframes float-delayed {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(-5deg); }
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    .animate-float-delayed {
+      animation: float-delayed 8s ease-in-out infinite;
+    }
+  </style>
 </head>
-<body>
-  <h1>Página Políticas (Versión Estática)</h1>
-  <p>Este archivo es solo para precache.</p>
+<body class="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 text-gray-100">
+  
+  <!-- Formas decorativas de fondo -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-float-delayed"></div>
+    <div class="absolute top-1/2 left-1/2 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl animate-float"></div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="relative z-10 container mx-auto px-4 py-20">
+    
+    <!-- Encabezado -->
+    <div class="text-center mb-12 backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl">
+      <div class="flex justify-center mb-4">
+        <svg class="w-20 h-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="policyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="url(#policyGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 8V12" stroke="url(#policyGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 16H12.01" stroke="url(#policyGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+        Políticas de Privacidad
+      </h1>
+      <p class="text-gray-300 text-lg">
+        Última actualización: Enero 2024
+      </p>
+    </div>
+
+    <!-- Introducción -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl mb-8">
+      <p class="text-gray-300 leading-relaxed">
+        En nuestra empresa, nos comprometemos a proteger tu privacidad y tus datos personales. Esta política de privacidad 
+        describe cómo recopilamos, usamos, almacenamos y protegemos tu información cuando utilizas nuestros servicios.
+      </p>
+    </div>
+
+    <!-- Sección 1: Información que recopilamos -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl mb-8 hover:bg-white/10 transition-all duration-300">
+      <div class="flex items-start mb-4">
+        <div class="mr-4 mt-1">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="infoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="url(#infoGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="url(#infoGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-pink-300">1. Información que Recopilamos</h2>
+          <div class="space-y-3 text-gray-300">
+            <p><span class="font-semibold text-white">Información personal:</span> Nombre, correo electrónico, teléfono, dirección de envío.</p>
+            <p><span class="font-semibold text-white">Información de pago:</span> Datos de tarjeta, información de facturación (procesada de forma segura).</p>
+            <p><span class="font-semibold text-white">Información de navegación:</span> Dirección IP, tipo de navegador, páginas visitadas, tiempo de permanencia.</p>
+            <p><span class="font-semibold text-white">Información del dispositivo:</span> Tipo de dispositivo, sistema operativo, identificadores únicos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 2: Cómo usamos tu información -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl mb-8 hover:bg-white/10 transition-all duration-300">
+      <div class="flex items-start mb-4">
+        <div class="mr-4 mt-1">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="useGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M9 11L12 14L22 4" stroke="url(#useGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="url(#useGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-purple-300">2. Cómo Usamos tu Información</h2>
+          <ul class="space-y-2 text-gray-300 list-disc list-inside">
+            <li>Procesar y completar tus pedidos</li>
+            <li>Comunicarnos contigo sobre tu cuenta y pedidos</li>
+            <li>Personalizar tu experiencia en nuestro sitio</li>
+            <li>Mejorar nuestros productos y servicios</li>
+            <li>Enviarte promociones y ofertas (con tu consentimiento)</li>
+            <li>Prevenir fraudes y garantizar la seguridad</li>
+            <li>Cumplir con obligaciones legales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 3: Compartir información -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl mb-8 hover:bg-white/10 transition-all duration-300">
+      <div class="flex items-start mb-4">
+        <div class="mr-4 mt-1">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="shareGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M17 11C18.6569 11 20 9.65685 20 8C20 6.34315 18.6569 5 17 5C15.3431 5 14 6.34315 14 8C14 9.65685 15.3431 11 17 11Z" stroke="url(#shareGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 15C8.65685 15 10 13.6569 10 12C10 10.3431 8.65685 9 7 9C5.34315 9 4 10.3431 4 12C4 13.6569 5.34315 15 7 15Z" stroke="url(#shareGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 19C18.6569 19 20 17.6569 20 16C20 14.3431 18.6569 13 17 13C15.3431 13 14 14.3431 14 16C14 17.6569 15.3431 19 17 19Z" stroke="url(#shareGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9.7 13.3L14.3 15.7" stroke="url(#shareGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9.7 10.7L14.3 8.3" stroke="url(#shareGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-indigo-300">3. Compartir tu Información</h2>
+          <div class="space-y-3 text-gray-300">
+            <p>No vendemos tu información personal. Solo compartimos tus datos con:</p>
+            <p><span class="font-semibold text-white">Proveedores de servicios:</span> Para procesar pagos, envíos y análisis.</p>
+            <p><span class="font-semibold text-white">Socios comerciales:</span> Con tu consentimiento explícito.</p>
+            <p><span class="font-semibold text-white">Autoridades legales:</span> Cuando sea requerido por ley.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 4: Seguridad -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl mb-8 hover:bg-white/10 transition-all duration-300">
+      <div class="flex items-start mb-4">
+        <div class="mr-4 mt-1">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="securityGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="url(#securityGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-pink-300">4. Seguridad de la Información</h2>
+          <div class="space-y-2 text-gray-300">
+            <p>Implementamos medidas de seguridad técnicas y organizativas para proteger tu información:</p>
+            <ul class="list-disc list-inside ml-4 space-y-2 mt-2">
+              <li>Encriptación SSL/TLS para todas las transacciones</li>
+              <li>Almacenamiento seguro de contraseñas con hash</li>
+              <li>Acceso restringido a datos personales</li>
+              <li>Auditorías de seguridad regulares</li>
+              <li>Protección contra malware y ataques cibernéticos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 5: Tus derechos -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl mb-8 hover:bg-white/10 transition-all duration-300">
+      <div class="flex items-start mb-4">
+        <div class="mr-4 mt-1">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="rightsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="url(#rightsGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" stroke="url(#rightsGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 11L19 13L23 9" stroke="url(#rightsGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-purple-300">5. Tus Derechos</h2>
+          <div class="text-gray-300 space-y-2">
+            <p>Tienes derecho a:</p>
+            <ul class="list-disc list-inside ml-4 space-y-2 mt-2">
+              <li><span class="font-semibold text-white">Acceder:</span> Solicitar una copia de tu información personal</li>
+              <li><span class="font-semibold text-white">Rectificar:</span> Corregir datos inexactos o incompletos</li>
+              <li><span class="font-semibold text-white">Eliminar:</span> Solicitar la eliminación de tus datos</li>
+              <li><span class="font-semibold text-white">Restringir:</span> Limitar el procesamiento de tu información</li>
+              <li><span class="font-semibold text-white">Portabilidad:</span> Recibir tus datos en un formato estructurado</li>
+              <li><span class="font-semibold text-white">Oposición:</span> Oponerte al procesamiento de tus datos</li>
+              <li><span class="font-semibold text-white">Revocar consentimiento:</span> En cualquier momento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 6: Cookies -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl mb-8 hover:bg-white/10 transition-all duration-300">
+      <div class="flex items-start mb-4">
+        <div class="mr-4 mt-1">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="cookieGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10" stroke="url(#cookieGradient)" stroke-width="2"/>
+            <circle cx="8" cy="10" r="1" fill="url(#cookieGradient)"/>
+            <circle cx="12" cy="15" r="1" fill="url(#cookieGradient)"/>
+            <circle cx="15" cy="9" r="1" fill="url(#cookieGradient)"/>
+            <circle cx="16" cy="14" r="1" fill="url(#cookieGradient)"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-indigo-300">6. Uso de Cookies</h2>
+          <div class="space-y-3 text-gray-300">
+            <p>Utilizamos cookies y tecnologías similares para:</p>
+            <p><span class="font-semibold text-white">Cookies esenciales:</span> Necesarias para el funcionamiento del sitio.</p>
+            <p><span class="font-semibold text-white">Cookies de rendimiento:</span> Para analizar el uso del sitio.</p>
+            <p><span class="font-semibold text-white">Cookies de funcionalidad:</span> Para recordar tus preferencias.</p>
+            <p><span class="font-semibold text-white">Cookies de publicidad:</span> Para mostrar anuncios relevantes.</p>
+            <p class="mt-4">Puedes gestionar tus preferencias de cookies en la configuración de tu navegador.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 7: Cambios -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl mb-8 hover:bg-white/10 transition-all duration-300">
+      <div class="flex items-start mb-4">
+        <div class="mr-4 mt-1">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="changesGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M1 4V10H7" stroke="url(#changesGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M23 20V14H17" stroke="url(#changesGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20.49 9C19.9828 7.56678 19.1209 6.28542 17.9845 5.27542C16.8482 4.26541 15.4745 3.55976 13.9917 3.22426C12.5089 2.88875 10.9652 2.93434 9.50481 3.35677C8.04437 3.77921 6.71475 4.56471 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4353 15.9556 20.2208 14.4952 20.6432C13.0348 21.0657 11.4911 21.1112 10.0083 20.7757C8.52547 20.4402 7.1518 19.7346 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15" stroke="url(#changesGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-pink-300">7. Cambios en la Política</h2>
+          <p class="text-gray-300 leading-relaxed">
+            Nos reservamos el derecho de modificar esta política de privacidad en cualquier momento. 
+            Los cambios significativos serán notificados a través de nuestro sitio web o por correo electrónico. 
+            Te recomendamos revisar periódicamente esta página para estar al tanto de cualquier actualización.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contacto -->
+    <div class="backdrop-blur-xl bg-white/5 rounded-3xl p-8 border border-white/10 shadow-2xl">
+      <div class="flex items-start mb-4">
+        <div class="mr-4 mt-1">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="contactGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="url(#contactGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-purple-300">Contacto</h2>
+          <p class="text-gray-300 mb-4">
+            Si tienes preguntas sobre esta política de privacidad o deseas ejercer tus derechos, contáctanos:
+          </p>
+          <div class="space-y-2 text-gray-300">
+            <p><span class="font-semibold text-white">Email:</span> privacidad@empresa.com</p>
+            <p><span class="font-semibold text-white">Teléfono:</span> +52 (55) 1234-5678</p>
+            <p><span class="font-semibold text-white">Dirección:</span> Av. Principal 123, Ciudad de México, CP 12345</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </body>
 </html>
