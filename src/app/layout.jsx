@@ -1,17 +1,18 @@
-"use client"; // Indicar que es un Client Component
+"use client";
 
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { CartProvider } from '../context/CartContext';
+import { CartProvider } from "../context/CartContext";
 import Breadcrumb from "../components/Breadcrumb";
 import { AuthProvider, useAuth } from "../context/authContext";
 
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
-// Definir los fonts como localFont
+// Definir fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -23,9 +24,41 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-// Componente Layout con Theme
+// =============================================
+// ⭐ DETECTOR DE ESTADO DE INTERNET
+// =============================================
+function useNetworkStatusListener() {
+  useEffect(() => {
+    function handleOffline() {
+      toast.error("❌ Sin conexión a Internet", {
+        position: "top-center",
+      });
+    }
+
+    function handleOnline() {
+      toast.success("✅ Conectado nuevamente", {
+        position: "top-center",
+      });
+    }
+
+    window.addEventListener("offline", handleOffline);
+    window.addEventListener("online", handleOnline);
+
+    return () => {
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("online", handleOnline);
+    };
+  }, []);
+}
+
+// =============================================
+// Layout principal
+// =============================================
 function Layout({ children }) {
-  const { theme } = useAuth(); // Obtener el tema actual
+  const { theme } = useAuth();
+
+  // Activar el listener de red
+  useNetworkStatusListener();
 
   return (
     <body
@@ -41,22 +74,18 @@ function Layout({ children }) {
         {children}
       </div>
       <Footer />
+
       <ToastContainer position="top-center" autoClose={3000} />
 
-      {/* Contenedor flotante vacío */}
-      <div className="fixed bottom-4 right-4 z-50"></div>
-
-      {/* ⭐ SW corregido: evita doble registro y evita recargar 2 veces */}
       <script
         dangerouslySetInnerHTML={{
           __html: `
             if ("serviceWorker" in navigator) {
               if (!window.__SW_REGISTERED__) {
                 window.__SW_REGISTERED__ = true;
-
                 navigator.serviceWorker
                   .register("/sw.js")
-                  .then(reg => console.log("SW registrado:", reg))
+                  .then(r => console.log("SW registrado:", r))
                   .catch(err => console.error("Error al registrar el SW:", err));
               }
             }
@@ -69,7 +98,7 @@ function Layout({ children }) {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <AuthProvider>
         <CartProvider>
           <Layout>{children}</Layout>
