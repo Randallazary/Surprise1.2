@@ -111,7 +111,7 @@ function Navbar() {
                     priority
                   />
                 
-                  <div className="w-[120px] h-[50px] bg-indigo-200 animate-pulse" />
+                  
                 
               </Link>
             </div>
